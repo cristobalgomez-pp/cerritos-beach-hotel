@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Fonts */
+  --font-sans: var(--font-dm-sans), "DM Sans", sans-serif;
+  --font-serif: var(--font-playfair), "Playfair Display", serif;
+
+  /* Color Palette — Desert Luxury Surf */
+  --color-sand: #E8DCC8;
+  --color-gold: #C4953A;
+  --color-ocean: #1B3A4B;
+  --color-terracotta: #C45D3E;
+  --color-offwhite: #FAF7F2;
+  --color-charcoal: #2D2D2D;
+
+  /* Semantic aliases */
+  --color-background: var(--color-offwhite);
+  --color-foreground: var(--color-charcoal);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+}
