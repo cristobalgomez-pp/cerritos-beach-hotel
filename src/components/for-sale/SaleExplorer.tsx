@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import type { Unit } from "@/lib/units";
 
 export interface SaleLabels {
@@ -52,20 +52,8 @@ export default function SaleExplorer({
   const [validation, setValidation] = useState("");
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  const openForm = () => {
-    document.body.style.overflow = "hidden";
-    dialogRef.current?.showModal();
-  };
+  const openForm = () => dialogRef.current?.showModal();
   const closeForm = () => dialogRef.current?.close();
-
-  // Lock page scroll while the dialog is open
-  useEffect(() => {
-    const d = dialogRef.current;
-    if (!d) return;
-    const onClose = () => (document.body.style.overflow = "");
-    d.addEventListener("close", onClose);
-    return () => d.removeEventListener("close", onClose);
-  }, []);
 
   const toggle = (id: string) =>
     setSelected((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
