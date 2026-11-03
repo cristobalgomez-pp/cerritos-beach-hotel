@@ -139,15 +139,17 @@ function computeNight(date: string, clouds: CloudPoint[]): Night {
   const noon = localNoon(date);
   const today = SunCalc.getTimes(noon, LAT, LNG);
   const tomorrow = SunCalc.getTimes(new Date(noon.getTime() + DAY_MS), LAT, LNG);
-  const darkStart = today.night;
-  const darkEnd = tomorrow.nightEnd;
+  // At this latitude the sun always sets and the sky always gets fully dark, so these are never null
+  const sunset = today.sunset!;
+  const darkStart = today.night!;
+  const darkEnd = tomorrow.nightEnd!;
 
   const mid = new Date((darkStart.getTime() + darkEnd.getTime()) / 2);
   const illum = SunCalc.getMoonIllumination(mid);
   const moonToday = SunCalc.getMoonTimes(noon, LAT, LNG);
   const moonTomorrow = SunCalc.getMoonTimes(new Date(noon.getTime() + DAY_MS), LAT, LNG);
   // Next rise/set after sunset
-  const after = (d?: Date) => (d && d.getTime() >= today.sunset.getTime() - 3600_000 ? d : undefined);
+  const after = (d?: Date) => (d && d.getTime() >= sunset.getTime() - 3600_000 ? d : undefined);
   const moonrise = after(moonToday.rise) ?? moonTomorrow.rise;
   const moonset = after(moonToday.set) ?? moonTomorrow.set;
 
@@ -177,7 +179,7 @@ function computeNight(date: string, clouds: CloudPoint[]): Night {
 
   return {
     date,
-    sunset: today.sunset,
+    sunset,
     darkStart,
     darkEnd,
     moonPhase: phaseName(illum.phase),
