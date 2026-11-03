@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Unit } from "@/lib/units";
 
 export interface SaleLabels {
@@ -12,9 +12,8 @@ export interface SaleLabels {
   available: string;
   sold: string;
   selected: string;
-  askSelected: string;
   formTitle: string;
-  formIntro: string;
+  pickHint: string;
   name: string;
   email: string;
   phone: string;
@@ -30,6 +29,11 @@ export interface SaleLabels {
 type Status = "idle" | "sending" | "sent" | "error";
 
 const usd = (n: number) => `$${Math.round(n / 1000)}k`;
+
+// Smallest step between towers (px); on wide screens it grows so the form fits above the low towers
+const MIN_STEP = 28;
+// Columns (from the right) that sit under the form on wide screens
+const COLUMNS_UNDER_FORM = 3;
 
 export default function SaleExplorer({
   units,
@@ -47,11 +51,37 @@ export default function SaleExplorer({
   const [selected, setSelected] = useState<string[]>([]);
   const [status, setStatus] = useState<Status>("idle");
   const [validation, setValidation] = useState("");
+  const [step, setStep] = useState(MIN_STEP);
+  const formRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  // On wide screens the form floats in the empty top-right corner of the stepped building.
+  // Grow the step until the first tower under the form starts below it.
+  useEffect(() => {
+    const form = formRef.current;
+    const grid = gridRef.current;
+    if (!form || !grid) return;
+    const firstUnderForm = towers.length - COLUMNS_UNDER_FORM;
+    const measure = () => {
+      if (!window.matchMedia("(min-width: 1024px)").matches) {
+        setStep(MIN_STEP);
+        return;
+      }
+      const overlap = form.getBoundingClientRect().bottom - grid.getBoundingClientRect().top + 24;
+      setStep(Math.max(MIN_STEP, Math.ceil(overlap / firstUnderForm)));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(form);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [towers.length, status, validation]);
 
   const toggle = (id: string) =>
     setSelected((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
-
-  const goToForm = () => document.getElementById("inquiry")?.scrollIntoView({ behavior: "smooth", block: "start" });
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -87,19 +117,18 @@ export default function SaleExplorer({
   const unit = (tower: number, letter: "A" | "B") => units.find((u) => u.id === `${tower}${letter}`);
 
   return (
-    <>
-      {/* Building diagram: one column per tower, A on top and B below */}
-      <section className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
-        <div className="max-w-2xl">
+    <section className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
+      <div className="relative">
+        <div className="max-w-xl lg:max-w-[calc(4/7*100%-1.5rem)]">
           <h2 className="text-4xl font-bold md:text-5xl">{labels.pickTitle}</h2>
           <p className="mt-4 text-lg text-ink/75">{labels.pickIntro}</p>
         </div>
 
+        {/* Building diagram: one column per tower, A on top and B below, stepped like the real building */}
         <div className="mt-12 overflow-x-auto pb-2">
-          {/* Stepped like the real building: the first column is the highest tower */}
-          <div className="grid min-w-[640px] grid-cols-7 gap-3">
+          <div ref={gridRef} className="grid min-w-[640px] grid-cols-7 gap-3">
             {towers.map((tower, i) => (
-              <div key={tower} className="flex flex-col gap-2" style={{ paddingTop: `${i * 1.75}rem` }}>
+              <div key={tower} className="flex flex-col gap-2" style={{ paddingTop: i * step }}>
                 {(["A", "B"] as const).map((letter) => {
                   const u = unit(tower, letter);
                   if (!u) return null;
@@ -149,56 +178,28 @@ export default function SaleExplorer({
           </span>
           <span>A = {labels.upper.toLowerCase()} · B = {labels.lower.toLowerCase()}</span>
         </div>
-        {selected.length > 0 && (
-          <button
-            type="button"
-            onClick={goToForm}
-            className="mt-8 inline-flex rounded-full bg-adobe px-6 py-3 text-[15px] font-semibold text-white transition-colors hover:bg-[#a83e23]"
-          >
-            {labels.askSelected} {selected.join(", ")}
-          </button>
-        )}
-      </section>
 
-      {/* Inquiry form */}
-      <section id="inquiry" className="scroll-mt-24 bg-sand">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-20 md:px-8 md:py-28 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <h2 className="text-4xl font-bold md:text-5xl">{labels.formTitle}</h2>
-            <p className="mt-4 text-lg leading-relaxed text-ink/75">{labels.formIntro}</p>
-          </div>
+        {/* Inquiry form: below the map on small screens, top-right corner on wide screens */}
+        <div
+          ref={formRef}
+          id="inquiry"
+          className="mt-12 rounded-3xl bg-sand p-6 lg:absolute lg:right-0 lg:top-0 lg:mt-0 lg:w-[calc(3/7*100%-0.5rem)]"
+        >
+          <h3 className="text-2xl font-bold">{labels.formTitle}</h3>
 
           {status === "sent" ? (
-            <p className="rounded-3xl bg-white p-8 font-display text-2xl font-bold lg:col-span-7" role="status">
+            <p className="mt-4 font-display text-xl font-bold" role="status">
               {labels.success}
             </p>
           ) : (
-            <form onSubmit={onSubmit} noValidate className="space-y-5 rounded-3xl bg-white p-6 md:p-8 lg:col-span-7">
-              <fieldset>
-                <legend className="text-sm font-semibold text-ink/70">{labels.units}</legend>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {units
-                    .filter((u) => u.status === "available")
-                    .map((u) => {
-                      const on = selected.includes(u.id);
-                      return (
-                        <button
-                          key={u.id}
-                          type="button"
-                          onClick={() => toggle(u.id)}
-                          aria-pressed={on}
-                          className={`rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${
-                            on ? "border-adobe bg-adobe text-white" : "border-ink/20 hover:border-ink"
-                          }`}
-                        >
-                          {u.id}
-                        </button>
-                      );
-                    })}
-                </div>
-              </fieldset>
-
-              <div className="grid gap-5 sm:grid-cols-2">
+            <form onSubmit={onSubmit} noValidate className="mt-4 space-y-3">
+              <div>
+                <p className="text-sm font-semibold text-ink/70">{labels.units}</p>
+                <p className={`mt-1 font-display text-lg font-bold ${selected.length ? "text-adobe" : "text-ink/45"}`}>
+                  {selected.length ? selected.join(", ") : labels.pickHint}
+                </p>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
                 <Field label={labels.name} name="name" autoComplete="name" required />
                 <Field label={labels.email} name="email" type="email" autoComplete="email" required />
               </div>
@@ -207,8 +208,8 @@ export default function SaleExplorer({
                 <span className="text-sm font-semibold text-ink/70">{labels.message}</span>
                 <textarea
                   name="message"
-                  rows={4}
-                  className="mt-2 w-full rounded-xl border border-ink/20 bg-bone px-4 py-3 outline-none focus:border-pacific"
+                  rows={2}
+                  className="mt-1 w-full rounded-xl border border-ink/15 bg-white px-3 py-2 outline-none focus:border-pacific"
                 />
               </label>
 
@@ -232,15 +233,15 @@ export default function SaleExplorer({
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="w-full rounded-full bg-adobe py-4 text-base font-semibold text-white transition-colors hover:bg-[#a83e23] disabled:opacity-60"
+                className="w-full rounded-full bg-adobe py-3 text-base font-semibold text-white transition-colors hover:bg-[#a83e23] disabled:opacity-60"
               >
                 {status === "sending" ? labels.sending : labels.send}
               </button>
             </form>
           )}
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
 
@@ -265,7 +266,7 @@ function Field({
         type={type}
         autoComplete={autoComplete}
         required={required}
-        className="mt-2 w-full rounded-xl border border-ink/20 bg-bone px-4 py-3 outline-none focus:border-pacific"
+        className="mt-1 w-full rounded-xl border border-ink/15 bg-white px-3 py-2 outline-none focus:border-pacific"
       />
     </label>
   );

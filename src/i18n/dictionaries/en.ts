@@ -250,7 +250,6 @@ const en = {
     available: "Available",
     sold: "Sold",
     selected: "Selected",
-    askSelected: "Ask about",
     highlightsTitle: "Why buy here",
     highlights: [
       { title: "On the wave", body: "The closest building to the surf point in Cerritos Beach, 15 minutes from Todos Santos." },
@@ -258,7 +257,7 @@ const en = {
       { title: "Yours to manage", body: "No rental program: each owner decides how to use, rent or maintain their apartment." },
     ],
     formTitle: "Ask about an apartment",
-    formIntro: "Leave your details and we'll get back to you with availability, floor plans and next steps.",
+    pickHint: "Tap apartments on the map",
     name: "Full name",
     email: "Email",
     phone: "Phone (optional)",

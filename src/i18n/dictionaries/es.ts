@@ -254,7 +254,6 @@ const es: Dictionary = {
     available: "Disponible",
     sold: "Vendido",
     selected: "Seleccionado",
-    askSelected: "Pedir información de",
     highlightsTitle: "Por qué comprar aquí",
     highlights: [
       { title: "Frente a la ola", body: "El edificio más cerca del punto de surf de Playa Cerritos, a 15 minutos de Todos Santos." },
@@ -262,7 +261,7 @@ const es: Dictionary = {
       { title: "Lo administras tú", body: "Sin programa de renta: cada dueño decide cómo usar, rentar o mantener su departamento." },
     ],
     formTitle: "Pide información de un departamento",
-    formIntro: "Déjanos tus datos y te contactamos con disponibilidad, planos y siguientes pasos.",
+    pickHint: "Toca departamentos en el mapa",
     name: "Nombre completo",
     email: "Correo",
     phone: "Teléfono (opcional)",
