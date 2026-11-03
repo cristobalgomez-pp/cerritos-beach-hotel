@@ -56,6 +56,9 @@ export const TRIP_COORDS: Record<string, LonLat> = {
   balandra: [-110.327, 24.322],
 };
 
+// Vertical nudge for labels in the crowded area around the hotel
+const LABEL_DY: Record<string, number> = { "las-palmas": -12, "todos-santos": -8 };
+
 // Which side each label goes, so nearby places don't collide
 const LABEL_SIDE: Record<string, "left" | "right"> = {
   "todos-santos": "right",
@@ -96,7 +99,7 @@ export default function TripsMap({
 
       {/* La Paz as a quiet reference point */}
       <circle cx={laPaz[0]} cy={laPaz[1]} r={3} className="fill-ink/40" />
-      <text x={laPaz[0] + 8} y={laPaz[1] + 4} className="fill-ink/50 text-[12px]">
+      <text x={laPaz[0] - 8} y={laPaz[1] + 4} textAnchor="end" className="fill-ink/50 text-[12px]">
         La Paz
       </text>
 
@@ -106,28 +109,30 @@ export default function TripsMap({
         const [x, y] = project(coords);
         const side = LABEL_SIDE[trip.id] ?? "right";
         const dx = side === "right" ? 16 : -16;
+        const dy = LABEL_DY[trip.id] ?? 0;
         return (
           <g key={trip.id}>
             <circle cx={x} cy={y} r={11} className="fill-adobe stroke-sand" strokeWidth={2} />
             <text x={x} y={y + 4} textAnchor="middle" className="fill-white text-[12px] font-bold">
               {trip.number}
             </text>
-            <text
-              x={x + dx}
-              y={y - 2}
-              textAnchor={side === "right" ? "start" : "end"}
-              className={`text-[13px] font-semibold ${side === "left" ? "fill-white" : "fill-ink"}`}
-            >
-              {trip.title}
-            </text>
-            <text
-              x={x + dx}
-              y={y + 13}
-              textAnchor={side === "right" ? "start" : "end"}
-              className={`text-[12px] ${side === "left" ? "fill-white/75" : "fill-ink/60"}`}
-            >
-              {trip.time}
-            </text>
+            {(() => {
+              // Label on a light pill so it reads on land and on water
+              const w = Math.max(trip.title.length * 7.4, trip.time.length * 6.8) + 16;
+              const lx = side === "right" ? x + dx - 6 : x + dx - w + 6;
+              const ly = y - 17 + dy;
+              return (
+                <>
+                  <rect x={lx} y={ly} width={w} height={36} rx={8} className="fill-bone" opacity={0.95} />
+                  <text x={lx + 8} y={ly + 15} className="fill-ink text-[13px] font-semibold">
+                    {trip.title}
+                  </text>
+                  <text x={lx + 8} y={ly + 29} className="fill-adobe text-[12px] font-semibold">
+                    {trip.time}
+                  </text>
+                </>
+              );
+            })()}
           </g>
         );
       })}
