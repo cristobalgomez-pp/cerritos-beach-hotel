@@ -132,12 +132,9 @@ export default function SaleExplorer({
                     </button>
                   );
                 })}
-                {/* The hill under each tower, so the steps read as terrain */}
-                <div className="flex min-h-12 flex-1 items-end justify-center rounded-b-2xl rounded-t-md bg-sand pb-3">
-                  <p className="text-sm font-semibold text-ink/70">
-                    {labels.tower} {tower}
-                  </p>
-                </div>
+                <p className="pt-1 text-center text-sm font-semibold text-ink/60">
+                  {labels.tower} {tower}
+                </p>
               </div>
             ))}
           </div>
