@@ -46,7 +46,7 @@ const es: Dictionary = {
       "Todos los cuartos tienen baño privado, aire acondicionado y Wi‑Fi rápido. La mayoría tiene cocineta y vista al mar.",
     surfTitle: "Olas de clase mundial, para todos los niveles",
     surfBody:
-      "Los principiantes encuentran espuma suave en la orilla y los expertos encuentran el punto. Te reservamos clases de surf y un fotógrafo para tu mejor ola.",
+      "Los principiantes encuentran espuma suave en la orilla y los expertos encuentran el punto. Te reservamos una clase de surf con un instructor local.",
     surfCta: "Qué hacer cerca",
     barTitle: "Rip Tide Bar & Grill",
     barBody:
@@ -163,53 +163,57 @@ const es: Dictionary = {
   activities: {
     title: "Qué hacer en Playa Cerritos",
     intro:
-      "El surf es la razón por la que casi todos vienen. Estas son otras cosas que les encantan a nuestros huéspedes, desde caminar a una playa escondida hasta un día en La Paz.",
+      "El surf es la razón por la que casi todos vienen. Esto es lo demás que les encanta a nuestros huéspedes, desde caminar a una playa escondida hasta un día en La Paz.",
     surfTitle: "Clases de surf",
     surfBody:
-      "Cerritos tiene olas para todo tipo de surfista, no importa si eres principiante o experto. Pídenos que te reservemos una clase; también podemos conseguir un fotógrafo para que se vea tu progreso.",
+      "Cerritos tiene olas para todo tipo de surfista, no importa si eres principiante o experto: la orilla es suave y noble, el punto es para cuando estés listo. Pídenos y te reservamos una clase con un instructor local.",
     askFrontDesk: "Pregunta en recepción",
-    items: [
+    nearbyTitle: "Saliendo del hotel",
+    nearbyIntro: "Sin coche. Pregunta en recepción y te lo organizamos.",
+    nearby: [
       {
         title: "Caminatas",
-        distance: "Saliendo del hotel",
-        body: "Camina hacia el norte desde el hotel y encontrarás playas escondidas, acantilados donde revientan las olas y el mejor lugar para ver el atardecer.",
-        destination: "",
-      },
-      {
-        title: "Playa Las Palmas",
-        distance: "20 min en coche",
-        body: "Una playa larga rodeada de palmeras y con buenas olas, por camino de terracería. Ten cuidado, la corriente puede ponerse fuerte.",
-        destination: "Playa Las Palmas, Baja California Sur",
-      },
-      {
-        title: "Todos Santos",
-        distance: "15 min en coche",
-        body: "Un Pueblo Mágico con mucho ambiente artístico: la iglesia, el teatro, el centro cultural, galerías, un festival de arte anual y el famoso Hotel California.",
-        destination: "Todos Santos, Baja California Sur",
-      },
-      {
-        title: "Balandra",
-        distance: "Día de paseo a La Paz",
-        body: "Famosa por su piedra en forma de hongo, manglares y dunas, con el agua del Mar de Cortés en todos los tonos de azul.",
-        destination: "Playa Balandra, La Paz, Baja California Sur",
+        body: "Camina hacia el norte por la costa y encontrarás playas escondidas, acantilados donde revientan las olas y el mejor lugar para ver el atardecer.",
       },
       {
         title: "Paseos en cuatrimoto",
-        distance: "Pregunta en recepción",
         body: "Recorre con familia y amigos las huertas y las playas de El Pescadero. Incluye todo el equipo.",
-        destination: "",
       },
       {
         title: "Pesca",
-        distance: "Lugares cercanos",
-        body: "Salidas de curricán por Gaspareño, la casa abandonada, Cerritos y Punta Lobos para sacar dorado, pez gallo, sierra, jurel y más.",
-        destination: "",
+        body: "Salidas de curricán por Gaspareño, Cerritos y Punta Lobos para sacar dorado, pez gallo, sierra, jurel y más.",
+      },
+    ],
+    tripsTitle: "Paseos de un día",
+    tripsIntro: "Tiempos aproximados en coche desde el hotel. Toca un lugar para ver cómo llegar.",
+    mapLabel: "Mapa de Baja California Sur con el hotel y los paseos cercanos",
+    hotelLabel: "Desert Moon",
+    pacific: "Océano Pacífico",
+    cortez: "Mar de Cortés",
+    trips: [
+      {
+        id: "todos-santos",
+        title: "Todos Santos",
+        time: "15 min",
+        body: "Un Pueblo Mágico con mucho ambiente artístico: la iglesia, el teatro, el centro cultural, galerías, un festival de arte anual y el famoso Hotel California.",
       },
       {
+        id: "las-palmas",
+        title: "Playa Las Palmas",
+        time: "20 min",
+        body: "Una playa larga rodeada de palmeras y con buenas olas, por camino de terracería. Ten cuidado, la corriente puede ponerse fuerte.",
+      },
+      {
+        id: "cabo",
         title: "Cabo San Lucas",
-        distance: "Aprox. 1 hora",
-        body: "Uno de los destinos top de México: El Arco, buceo, avistamiento de ballenas, pesca y vida nocturna.",
-        destination: "Cabo San Lucas, Baja California Sur",
+        time: "1 h",
+        body: "El Arco, buceo, avistamiento de ballenas, pesca deportiva y vida nocturna en la punta de la península.",
+      },
+      {
+        id: "balandra",
+        title: "Balandra",
+        time: "1 h 45 min",
+        body: "Pasando La Paz, famosa por su piedra en forma de hongo, manglares y dunas, con el agua del Mar de Cortés en todos los tonos de azul.",
       },
     ],
   },
