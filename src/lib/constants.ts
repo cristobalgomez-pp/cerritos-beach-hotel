@@ -1,3 +1,5 @@
+export const SITE_URL = "https://cerritosbeachhotel.com";
+
 export const BOOKING_URL =
   "https://14910.staygrid.com/webreservation/index/index/hidHotelIdWebOut/QV5TX0ZSczM0XzE0OTEwX0Y1dGVyOTA4N3NfKWRoZl9kcnRlcjdfMTQ5MTBfaGdmaF9nXmQ4NTQ";
 
@@ -8,6 +10,8 @@ export const CONTACT = {
   address: "Parcela 2740, El Pescadero, La Paz, Baja California Sur, México",
 } as const;
 
+export const telHref = (phone: string) => `tel:${phone.replace(/\s/g, "")}`;
+
 export const HOTEL = {
   name: "Cerritos Beach Hotel Desert Moon",
   shortName: "Desert Moon",
@@ -16,14 +20,18 @@ export const HOTEL = {
     lat: 23.3317986,
     lng: -110.1783617,
   },
-  googleMapsUrl:
-    "https://maps.google.com/maps/dir//Cerritos+Beach+Hotel+Sin+Nombre,+Sin+Numero+El+Pescadero+23310+La+Paz,+B.C.S./@23.3317986,-110.1783617,16z",
 } as const;
+
+export const MAP_EMBED_URL = `https://maps.google.com/maps?q=${HOTEL.coordinates.lat},${HOTEL.coordinates.lng}&z=14&output=embed`;
+export const MAP_DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=${HOTEL.coordinates.lat},${HOTEL.coordinates.lng}`;
+
+/** Google Maps directions from the hotel to a destination */
+export const directionsFromHotel = (destination: string) =>
+  `https://www.google.com/maps/dir/?api=1&origin=${HOTEL.coordinates.lat},${HOTEL.coordinates.lng}&destination=${encodeURIComponent(destination)}`;
 
 export const SOCIAL = {
   instagram: "https://www.instagram.com/desertmoonhotel",
   facebook: "https://www.facebook.com/desertmoonhotel",
-  tripadvisor: "",
 } as const;
 
 export const RENT_A_CAR = [

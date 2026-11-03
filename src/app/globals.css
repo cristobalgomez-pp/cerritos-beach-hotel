@@ -1,29 +1,70 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Fonts */
-  --font-sans: var(--font-dm-sans), "DM Sans", sans-serif;
-  --font-serif: var(--font-playfair), "Playfair Display", serif;
+  --font-display: var(--font-bricolage), "Bricolage Grotesque", system-ui, sans-serif;
+  --font-sans: var(--font-figtree), "Figtree", system-ui, sans-serif;
 
-  /* Color Palette — Desert Luxury Surf */
-  --color-sand: #E8DCC8;
-  --color-gold: #C4953A;
-  --color-ocean: #1B3A4B;
-  --color-terracotta: #C45D3E;
-  --color-offwhite: #FAF7F2;
-  --color-charcoal: #2D2D2D;
+  /* Desert Moon palette — taken from the hotel itself */
+  --color-night: #18233a; /* desert night sky */
+  --color-pacific: #0e5566; /* deep water off Cerritos */
+  --color-adobe: #c24a2c; /* the building's painted walls */
+  --color-sand: #efe6d8; /* dunes and stucco */
+  --color-bone: #fbfaf7; /* page background */
+  --color-ink: #1d232b; /* body text */
+  --color-moon: #f3e3b3; /* moonlight, used sparingly */
+}
 
-  /* Semantic aliases */
-  --color-background: var(--color-offwhite);
-  --color-foreground: var(--color-charcoal);
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 body {
-  background: var(--color-background);
-  color: var(--color-foreground);
+  background: var(--color-bone);
+  color: var(--color-ink);
   font-family: var(--font-sans);
+  font-feature-settings: "ss01";
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif);
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-adobe);
+  outline-offset: 3px;
+}
+
+/* Hero photos: slow crossfade + gentle zoom */
+@keyframes hero-zoom {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.hero-zoom {
+  animation: hero-zoom 9s ease-out both;
 }
