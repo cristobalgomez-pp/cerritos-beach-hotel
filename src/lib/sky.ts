@@ -1,4 +1,4 @@
-import SunCalc from "suncalc";
+import * as SunCalc from "suncalc";
 import { HOTEL } from "./constants";
 
 /**
