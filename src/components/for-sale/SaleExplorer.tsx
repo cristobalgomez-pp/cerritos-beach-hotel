@@ -155,7 +155,7 @@ export default function SaleExplorer({
         </div>
 
         {/* Same pop-up from the bottom, for people who scrolled past the corner (the corner prompt already sits here on small screens) */}
-        <div className="mt-8 hidden items-center gap-4 lg:flex">
+        <div className="mt-10 hidden flex-col items-center gap-3 lg:flex">
           <button
             type="button"
             onClick={openForm}
