@@ -154,6 +154,18 @@ export default function SaleExplorer({
           <span>A = {labels.upper.toLowerCase()} · B = {labels.lower.toLowerCase()}</span>
         </div>
 
+        {/* Same pop-up from the bottom, for people who scrolled past the corner (the corner prompt already sits here on small screens) */}
+        <div className="mt-8 hidden items-center gap-4 lg:flex">
+          <button
+            type="button"
+            onClick={openForm}
+            className="rounded-full bg-adobe px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#a83e23]"
+          >
+            {labels.formTitle}
+          </button>
+          {selected.length > 0 && <span className="font-display text-lg font-bold text-adobe">{selected.join(", ")}</span>}
+        </div>
+
         {/* Subtle prompt in the empty top-right corner (below the map on small screens) */}
         <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-ink/10 pt-5 lg:absolute lg:right-0 lg:top-2 lg:mt-0 lg:w-[calc(3/7*100%-0.5rem)] lg:flex-col lg:items-start lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
           <div>
