@@ -59,6 +59,7 @@ export default async function ForSalePage({ params }: Props) {
           selected: f.selected,
           formTitle: f.formTitle,
           pickHint: f.pickHint,
+          close: getDictionary(lang).rooms.closeGallery,
           name: f.name,
           email: f.email,
           phone: f.phone,

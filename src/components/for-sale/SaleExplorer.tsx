@@ -14,6 +14,7 @@ export interface SaleLabels {
   selected: string;
   formTitle: string;
   pickHint: string;
+  close: string;
   name: string;
   email: string;
   phone: string;
@@ -30,10 +31,8 @@ type Status = "idle" | "sending" | "sent" | "error";
 
 const usd = (n: number) => `$${Math.round(n / 1000)}k`;
 
-// Smallest step between towers (px); on wide screens it grows so the form fits above the low towers
-const MIN_STEP = 28;
-// Columns (from the right) that sit under the form on wide screens
-const COLUMNS_UNDER_FORM = 3;
+// Vertical step between towers, so the diagram reads like the stepped building
+const STEP = 28;
 
 export default function SaleExplorer({
   units,
@@ -51,34 +50,22 @@ export default function SaleExplorer({
   const [selected, setSelected] = useState<string[]>([]);
   const [status, setStatus] = useState<Status>("idle");
   const [validation, setValidation] = useState("");
-  const [step, setStep] = useState(MIN_STEP);
-  const formRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
-  // On wide screens the form floats in the empty top-right corner of the stepped building.
-  // Grow the step until the first tower under the form starts below it.
+  const openForm = () => {
+    document.body.style.overflow = "hidden";
+    dialogRef.current?.showModal();
+  };
+  const closeForm = () => dialogRef.current?.close();
+
+  // Lock page scroll while the dialog is open
   useEffect(() => {
-    const form = formRef.current;
-    const grid = gridRef.current;
-    if (!form || !grid) return;
-    const firstUnderForm = towers.length - COLUMNS_UNDER_FORM;
-    const measure = () => {
-      if (!window.matchMedia("(min-width: 1024px)").matches) {
-        setStep(MIN_STEP);
-        return;
-      }
-      const overlap = form.getBoundingClientRect().bottom - grid.getBoundingClientRect().top + 24;
-      setStep(Math.max(MIN_STEP, Math.ceil(overlap / firstUnderForm)));
-    };
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(form);
-    window.addEventListener("resize", measure);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", measure);
-    };
-  }, [towers.length, status, validation]);
+    const d = dialogRef.current;
+    if (!d) return;
+    const onClose = () => (document.body.style.overflow = "");
+    d.addEventListener("close", onClose);
+    return () => d.removeEventListener("close", onClose);
+  }, []);
 
   const toggle = (id: string) =>
     setSelected((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
@@ -126,9 +113,9 @@ export default function SaleExplorer({
 
         {/* Building diagram: one column per tower, A on top and B below, stepped like the real building */}
         <div className="mt-12 overflow-x-auto pb-2">
-          <div ref={gridRef} className="grid min-w-[640px] grid-cols-7 gap-3">
+          <div className="grid min-w-[640px] grid-cols-7 gap-3">
             {towers.map((tower, i) => (
-              <div key={tower} className="flex flex-col gap-2" style={{ paddingTop: i * step }}>
+              <div key={tower} className="flex flex-col gap-2" style={{ paddingTop: i * STEP }}>
                 {(["A", "B"] as const).map((letter) => {
                   const u = unit(tower, letter);
                   if (!u) return null;
@@ -179,67 +166,97 @@ export default function SaleExplorer({
           <span>A = {labels.upper.toLowerCase()} · B = {labels.lower.toLowerCase()}</span>
         </div>
 
-        {/* Inquiry form: below the map on small screens, top-right corner on wide screens */}
-        <div
-          ref={formRef}
-          id="inquiry"
-          className="mt-12 rounded-3xl bg-sand p-6 lg:absolute lg:right-0 lg:top-0 lg:mt-0 lg:w-[calc(3/7*100%-0.5rem)]"
-        >
-          <h3 className="text-2xl font-bold">{labels.formTitle}</h3>
-
-          {status === "sent" ? (
-            <p className="mt-4 font-display text-xl font-bold" role="status">
-              {labels.success}
+        {/* Subtle prompt in the empty top-right corner (below the map on small screens) */}
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-ink/10 pt-5 lg:absolute lg:right-0 lg:top-2 lg:mt-0 lg:w-[calc(3/7*100%-0.5rem)] lg:flex-col lg:items-start lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
+          <div>
+            <p className="text-sm font-semibold text-ink/60">{labels.units}</p>
+            <p className={`mt-1 font-display text-xl font-bold ${selected.length ? "text-adobe" : "text-ink/40"}`} aria-live="polite">
+              {selected.length ? selected.join(", ") : labels.pickHint}
             </p>
-          ) : (
-            <form onSubmit={onSubmit} noValidate className="mt-4 space-y-3">
-              <div>
-                <p className="text-sm font-semibold text-ink/70">{labels.units}</p>
-                <p className={`mt-1 font-display text-lg font-bold ${selected.length ? "text-adobe" : "text-ink/45"}`}>
-                  {selected.length ? selected.join(", ") : labels.pickHint}
-                </p>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-2">
-                <Field label={labels.name} name="name" autoComplete="name" required />
-                <Field label={labels.email} name="email" type="email" autoComplete="email" required />
-              </div>
-              <Field label={labels.phone} name="phone" type="tel" autoComplete="tel" />
-              <label className="block">
-                <span className="text-sm font-semibold text-ink/70">{labels.message}</span>
-                <textarea
-                  name="message"
-                  rows={2}
-                  className="mt-1 w-full rounded-xl border border-ink/15 bg-white px-3 py-2 outline-none focus:border-pacific"
-                />
-              </label>
-
-              {/* Honeypot: hidden from people, bots fill it in */}
-              <input type="text" name="company" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
-
-              {validation && (
-                <p className="text-sm font-semibold text-adobe" role="alert">
-                  {validation}
-                </p>
-              )}
-              {status === "error" && (
-                <p className="text-sm font-semibold text-adobe" role="alert">
-                  {labels.error}{" "}
-                  <a href={`mailto:${fallbackEmail}`} className="underline">
-                    {fallbackEmail}
-                  </a>
-                </p>
-              )}
-
-              <button
-                type="submit"
-                disabled={status === "sending"}
-                className="w-full rounded-full bg-adobe py-3 text-base font-semibold text-white transition-colors hover:bg-[#a83e23] disabled:opacity-60"
-              >
-                {status === "sending" ? labels.sending : labels.send}
-              </button>
-            </form>
-          )}
+          </div>
+          <button
+            type="button"
+            onClick={openForm}
+            className="rounded-full bg-adobe px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#a83e23]"
+          >
+            {labels.formTitle}
+          </button>
         </div>
+
+        <dialog
+          ref={dialogRef}
+          aria-labelledby="inquiry-title"
+          className="m-auto w-[calc(100%-2rem)] max-w-lg rounded-3xl bg-bone p-0 text-ink shadow-2xl backdrop:bg-night/60"
+          onClick={(e) => {
+            if (e.target === dialogRef.current) closeForm(); // click on the backdrop
+          }}
+        >
+          <div className="p-6 md:p-8">
+            <div className="flex items-start justify-between gap-4">
+              <h3 id="inquiry-title" className="text-2xl font-bold">
+                {labels.formTitle}
+              </h3>
+              <button type="button" onClick={closeForm} aria-label={labels.close} className="-mr-2 -mt-1 rounded-full p-2 hover:bg-ink/5">
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path d="M6 6l12 12M18 6L6 18" />
+                </svg>
+              </button>
+            </div>
+
+            {status === "sent" ? (
+              <p className="mt-6 font-display text-xl font-bold" role="status">
+                {labels.success}
+              </p>
+            ) : (
+              <form onSubmit={onSubmit} noValidate className="mt-5 space-y-4">
+                <div>
+                  <p className="text-sm font-semibold text-ink/60">{labels.units}</p>
+                  <p className={`mt-1 font-display text-lg font-bold ${selected.length ? "text-adobe" : "text-ink/40"}`}>
+                    {selected.length ? selected.join(", ") : labels.pickHint}
+                  </p>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Field label={labels.name} name="name" autoComplete="name" required />
+                  <Field label={labels.email} name="email" type="email" autoComplete="email" required />
+                </div>
+                <Field label={labels.phone} name="phone" type="tel" autoComplete="tel" />
+                <label className="block">
+                  <span className="text-sm font-semibold text-ink/60">{labels.message}</span>
+                  <textarea
+                    name="message"
+                    rows={3}
+                    className="mt-1 w-full rounded-xl border border-ink/15 bg-white px-3 py-2 outline-none focus:border-pacific"
+                  />
+                </label>
+
+                {/* Honeypot: hidden from people, bots fill it in */}
+                <input type="text" name="company" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+
+                {validation && (
+                  <p className="text-sm font-semibold text-adobe" role="alert">
+                    {validation}
+                  </p>
+                )}
+                {status === "error" && (
+                  <p className="text-sm font-semibold text-adobe" role="alert">
+                    {labels.error}{" "}
+                    <a href={`mailto:${fallbackEmail}`} className="underline">
+                      {fallbackEmail}
+                    </a>
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="w-full rounded-full bg-adobe py-3 text-base font-semibold text-white transition-colors hover:bg-[#a83e23] disabled:opacity-60"
+                >
+                  {status === "sending" ? labels.sending : labels.send}
+                </button>
+              </form>
+            )}
+          </div>
+        </dialog>
       </div>
     </section>
   );
