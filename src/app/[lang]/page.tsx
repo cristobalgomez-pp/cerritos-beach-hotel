@@ -139,8 +139,6 @@ export default async function Home({ params }: Props) {
         </div>
       </section>
 
-      <TonightSky lang={lang} t={t} />
-
       {/* Bar */}
       <section className="mx-auto grid max-w-7xl gap-12 px-4 py-20 md:px-8 md:py-28 lg:grid-cols-12 lg:items-center">
         <div className="grid grid-cols-2 gap-3 lg:col-span-7">
@@ -166,6 +164,8 @@ export default async function Home({ params }: Props) {
           </Link>
         </div>
       </section>
+
+      <TonightSky lang={lang} t={t} />
 
       <FeatureList title={t.features.title} items={t.features.items} />
 
