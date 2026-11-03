@@ -12,6 +12,7 @@ export interface SaleLabels {
   available: string;
   sold: string;
   selected: string;
+  askSelected: string;
   formTitle: string;
   formIntro: string;
   name: string;
@@ -50,10 +51,7 @@ export default function SaleExplorer({
   const toggle = (id: string) =>
     setSelected((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
 
-  const pickAndScroll = (id: string) => {
-    if (!selected.includes(id)) setSelected((s) => [...s, id]);
-    document.getElementById("inquiry")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  const goToForm = () => document.getElementById("inquiry")?.scrollIntoView({ behavior: "smooth", block: "start" });
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -112,7 +110,7 @@ export default function SaleExplorer({
                       key={u.id}
                       type="button"
                       disabled={sold}
-                      onClick={() => pickAndScroll(u.id)}
+                      onClick={() => toggle(u.id)}
                       aria-pressed={isSelected}
                       aria-label={`${u.id}, ${letter === "A" ? labels.upper : labels.lower}, ${
                         sold ? labels.sold : `${labels.available}, USD ${u.priceUsd.toLocaleString("en-US")}`
@@ -151,6 +149,15 @@ export default function SaleExplorer({
           </span>
           <span>A = {labels.upper.toLowerCase()} · B = {labels.lower.toLowerCase()}</span>
         </div>
+        {selected.length > 0 && (
+          <button
+            type="button"
+            onClick={goToForm}
+            className="mt-8 inline-flex rounded-full bg-adobe px-6 py-3 text-[15px] font-semibold text-white transition-colors hover:bg-[#a83e23]"
+          >
+            {labels.askSelected} {selected.join(", ")}
+          </button>
+        )}
       </section>
 
       {/* Inquiry form */}

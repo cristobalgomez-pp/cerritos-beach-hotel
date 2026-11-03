@@ -57,6 +57,7 @@ export default async function ForSalePage({ params }: Props) {
           available: f.available,
           sold: f.sold,
           selected: f.selected,
+          askSelected: f.askSelected,
           formTitle: f.formTitle,
           formIntro: f.formIntro,
           name: f.name,
