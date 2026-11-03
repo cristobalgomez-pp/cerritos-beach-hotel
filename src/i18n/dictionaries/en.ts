@@ -239,7 +239,7 @@ const en = {
       "{count} apartments for sale in the hotel, steps from the surf point in Cerritos Beach. Use it for your vacations, live here, or manage it your way.",
     pickTitle: "Pick your apartment",
     pickIntro:
-      "The hotel has seven towers with two apartments each: A is the upper apartment and B the lower one. Tap an available apartment to ask about it.",
+      "The hotel has seven stepped towers with two apartments each: A is the upper apartment and B the lower one. They are laid out as you see the building in person, from tower 7 to tower 1. Tap an available apartment to ask about it.",
     tower: "Tower",
     upper: "Upper apartment",
     lower: "Lower apartment",

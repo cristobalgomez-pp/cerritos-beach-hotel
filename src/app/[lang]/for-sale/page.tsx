@@ -45,7 +45,7 @@ export default async function ForSalePage({ params }: Props) {
 
       <SaleExplorer
         units={UNITS}
-        towers={TOWERS}
+        towers={[...TOWERS].reverse()}
         lang={lang}
         fallbackEmail={CONTACT.email}
         labels={{
