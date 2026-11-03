@@ -35,7 +35,7 @@ export default async function TonightSky({ lang, t }: { lang: Locale; t: Diction
 
   return (
     <section className="relative isolate overflow-hidden bg-night text-white" aria-labelledby="sky-title">
-      <svg className="absolute inset-0 -z-10 h-full w-full" preserveAspectRatio="none" viewBox="0 0 100 100" aria-hidden="true">
+      <svg className="absolute inset-0 -z-10 h-full w-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 100 100" aria-hidden="true">
         {STARS.map((st, i) => (
           <circle key={i} cx={st.x} cy={st.y} r={st.r * 0.12} fill="white" opacity={st.o} />
         ))}
