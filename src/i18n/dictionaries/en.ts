@@ -43,7 +43,7 @@ const en = {
     roomsBody: "Every room has a private bathroom, air conditioning and fast Wi‑Fi. Most have a kitchenette and an ocean view.",
     surfTitle: "World-class waves, for every level",
     surfBody:
-      "Beginners find soft whitewater on the inside, experts find the point. We can book surf lessons and a photographer to catch your best ride.",
+      "Beginners find soft whitewater on the inside, experts find the point. We can book you a surf lesson with a local instructor.",
     surfCta: "Things to do nearby",
     barTitle: "Rip Tide Bar & Grill",
     barBody:
@@ -159,53 +159,57 @@ const en = {
   activities: {
     title: "Things to do in Cerritos Beach",
     intro:
-      "Surf is the reason most people come. These are the other things our guests love, from a walk to a hidden beach to a day trip to La Paz.",
+      "Surf is the reason most people come. Here's what else our guests love, from a walk to a hidden beach to a day trip to La Paz.",
     surfTitle: "Surf lessons",
     surfBody:
-      "Cerritos has waves for every kind of surfer. It doesn't matter if you're a beginner or an expert. Ask us to book a lesson, and we can also arrange a photographer to capture your new skills.",
+      "Cerritos has waves for every kind of surfer. It doesn't matter if you're a beginner or an expert: the inside is soft and forgiving, the point is for when you're ready. Ask us and we'll book a lesson with a local instructor.",
     askFrontDesk: "Ask at the front desk",
-    items: [
+    nearbyTitle: "Right from the hotel",
+    nearbyIntro: "No car needed. Ask at the front desk and we'll set it up.",
+    nearby: [
       {
         title: "Hiking",
-        distance: "Walk from the hotel",
-        body: "Walk north from the hotel to find hidden beaches, cliffs where the waves crash, and the best spot to watch the sunset.",
-        destination: "",
-      },
-      {
-        title: "Las Palmas Beach",
-        distance: "20 min drive",
-        body: "A long beach lined with palm trees and great waves, reached by a dirt road. Be careful, the current can get rough.",
-        destination: "Playa Las Palmas, Baja California Sur",
-      },
-      {
-        title: "Todos Santos",
-        distance: "15 min drive",
-        body: "A Pueblo Mágico with a strong artistic vibe: the church, theater, cultural center, galleries, an annual art festival and the famous Hotel California.",
-        destination: "Todos Santos, Baja California Sur",
-      },
-      {
-        title: "Balandra",
-        distance: "Day trip to La Paz",
-        body: "Famous for its mushroom-shaped rock, mangroves and dunes, with Sea of Cortez water in every shade of blue.",
-        destination: "Playa Balandra, La Paz, Baja California Sur",
+        body: "Walk north along the coast to find hidden beaches, cliffs where the waves crash, and the best spot to watch the sunset.",
       },
       {
         title: "ATV rides",
-        distance: "Ask at the front desk",
         body: "Ride with family and friends through the orchards and along the beaches of El Pescadero. All gear is included.",
-        destination: "",
       },
       {
         title: "Fishing",
-        distance: "Nearby spots",
-        body: "Trolling trips around Gaspareño, the abandoned house, Cerritos and Punta Lobos for dorado, roosterfish, sierra, jack and more.",
-        destination: "",
+        body: "Trolling trips around Gaspareño, Cerritos and Punta Lobos for dorado, roosterfish, sierra, jack and more.",
+      },
+    ],
+    tripsTitle: "Day trips",
+    tripsIntro: "Approximate drive times from the hotel. Tap a place for directions.",
+    mapLabel: "Map of Baja California Sur showing the hotel and nearby day trips",
+    hotelLabel: "Desert Moon",
+    pacific: "Pacific Ocean",
+    cortez: "Sea of Cortez",
+    trips: [
+      {
+        id: "todos-santos",
+        title: "Todos Santos",
+        time: "15 min",
+        body: "A Pueblo Mágico with a strong artistic vibe: the church, theater, cultural center, galleries, an annual art festival and the famous Hotel California.",
       },
       {
+        id: "las-palmas",
+        title: "Las Palmas Beach",
+        time: "20 min",
+        body: "A long beach lined with palm trees and great waves, reached by a dirt road. Be careful, the current can get rough.",
+      },
+      {
+        id: "cabo",
         title: "Cabo San Lucas",
-        distance: "About 1 hour",
-        body: "One of Mexico's top destinations: El Arco, scuba diving, whale watching, fishing and nightlife.",
-        destination: "Cabo San Lucas, Baja California Sur",
+        time: "1 h",
+        body: "El Arco, scuba diving, whale watching, sport fishing and nightlife at the tip of the peninsula.",
+      },
+      {
+        id: "balandra",
+        title: "Balandra",
+        time: "1 h 45 min",
+        body: "Past La Paz, famous for its mushroom-shaped rock, mangroves and dunes, with Sea of Cortez water in every shade of blue.",
       },
     ],
   },
