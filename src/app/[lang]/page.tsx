@@ -10,6 +10,10 @@ import HeroSlideshow from "@/components/home/HeroSlideshow";
 import RoomTile from "@/components/rooms/RoomTile";
 import BookButton from "@/components/BookButton";
 import FeatureList from "@/components/FeatureList";
+import TonightSky from "@/components/sky/TonightSky";
+
+// The sky section uses live data (moon, clouds): rebuild this page at most once an hour
+export const revalidate = 3600;
 
 type Props = { params: Promise<{ lang: string }> };
 
@@ -134,6 +138,8 @@ export default async function Home({ params }: Props) {
           </Link>
         </div>
       </section>
+
+      <TonightSky lang={lang} t={t} />
 
       {/* Bar */}
       <section className="mx-auto grid max-w-7xl gap-12 px-4 py-20 md:px-8 md:py-28 lg:grid-cols-12 lg:items-center">
