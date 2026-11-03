@@ -1,0 +1,253 @@
+import type { Dictionary } from "./en";
+
+const es: Dictionary = {
+  meta: {
+    siteTitle: "Desert Moon Hotel · Playa Cerritos, Baja California Sur",
+    siteDescription:
+      "Hotel de surf con 14 cuartos en Playa Cerritos, el más cercano al punto de surf. Alberca infinita, desayuno incluido, bar en la azotea y cuartos con vista al mar, a 15 minutos de Todos Santos.",
+    ogLocale: "es_MX",
+  },
+  nav: {
+    home: "Inicio",
+    rooms: "Cuartos",
+    restaurant: "Bar y restaurante",
+    activities: "Qué hacer",
+    about: "Nosotros",
+    contact: "Contacto",
+    book: "Reservar",
+    menu: "Menú",
+    close: "Cerrar menú",
+    language: "English",
+    languageShort: "EN",
+    skip: "Ir al contenido",
+  },
+  common: {
+    bookRoom: "Reservar cuarto",
+    seeRooms: "Ver los cuartos",
+    upTo: (n: number) => `Hasta ${n} huéspedes`,
+    viewRoom: "Ver cuarto",
+    directions: "Cómo llegar",
+    oceanViewNote: "La vista al mar depende de la disponibilidad.",
+  },
+  home: {
+    heroLine: "El hotel más cerca del surf en Playa Cerritos.",
+    heroSub: "14 cuartos, alberca infinita y bar en la azotea, entre el desierto y el Pacífico.",
+    introTitle: "Un hotel pequeño hecho alrededor de la ola",
+    introBody:
+      "Desert Moon está en el corazón de Playa Cerritos, a unos pasos del punto de surf y a 15 minutos en coche de Todos Santos, Pueblo Mágico. Las mañanas empiezan con desayuno incluido; las tardes terminan en la alberca o en el bar, viendo cómo el sol se mete en el mar.",
+    facts: [
+      { value: "14", label: "cuartos" },
+      { value: "15 min", label: "a Todos Santos" },
+      { value: "Incluido", label: "desayuno todos los días" },
+      { value: "Infinita", label: "alberca frente al mar" },
+    ],
+    roomsTitle: "Cuatro formas de quedarte",
+    roomsBody:
+      "Todos los cuartos tienen baño privado, aire acondicionado y Wi‑Fi rápido. La mayoría tiene cocineta y vista al mar.",
+    surfTitle: "Olas de clase mundial, para todos los niveles",
+    surfBody:
+      "Los principiantes encuentran espuma suave en la orilla y los expertos encuentran el punto. Te reservamos clases de surf y un fotógrafo para tu mejor ola.",
+    surfCta: "Qué hacer cerca",
+    barTitle: "Rip Tide Bar & Grill",
+    barBody:
+      "Comida del mar a la mesa, la margarita perfecta y un muro con más de 2,000 piedras pintadas por nuestros huéspedes. Pinta la tuya y deja tu historia.",
+    barCta: "Ver el bar",
+    reviewsTitle: "Lo que dicen los huéspedes",
+    reviews: [
+      {
+        name: "Angela Sosna",
+        text: "Gran ubicación. Personal maravilloso. Margaritas increíbles.",
+      },
+      {
+        name: "Tracey Anne Mcewing",
+        text: "Reservamos de último minuto para Año Nuevo. El personal fue muy atento y servicial. Los cuartos eran amplios y muy limpios, y teníamos una linda vista al mar. Sin duda volveremos.",
+      },
+      {
+        name: "Stephanie Kunz",
+        text: "Muchas gracias a Bobby y su equipo. Hicieron nuestra estancia inolvidable. ¡Gran servicio y las mejores margaritas!",
+      },
+    ],
+    findUsTitle: "Dónde estamos",
+    findUsBody:
+      "Parcela 2740, El Pescadero, Baja California Sur. A una hora y media del aeropuerto de Los Cabos.",
+  },
+  features: {
+    title: "Incluido en tu estancia",
+    items: [
+      "El hotel más cerca del punto de surf",
+      "Alberca infinita",
+      "Desayuno incluido",
+      "Bar y restaurante",
+      "Wi‑Fi rápido",
+      "Estacionamiento",
+    ],
+  },
+  rooms: {
+    title: "Cuartos",
+    intro:
+      "Suites en los pisos de abajo con balcón y dos penthouses en la azotea con terraza propia. Elige las camas que mejor le queden a tu viaje.",
+    beds: {
+      king: "1 cama king",
+      twoQueens: "2 camas queen",
+      one: "1 cama",
+    },
+    bath: "1 baño",
+    amenitiesTitle: "En el cuarto",
+    galleryTitle: "Fotos",
+    videoTitle: "Recorre el cuarto",
+    otherRooms: "Otros cuartos",
+    backToRooms: "Todos los cuartos",
+    photoOf: "{room}, foto {n} de {total}",
+    closeGallery: "Cerrar",
+    prev: "Foto anterior",
+    next: "Foto siguiente",
+    amenities: {
+      privateBathroom: "Baño privado",
+      kitchenette: "Cocineta",
+      airConditioning: "Aire acondicionado",
+      oceanView: "Vista al mar*",
+      microwave: "Microondas",
+      balcony: "Balcón",
+      terrace: "Terraza privada",
+      fridge: "Refrigerador",
+      wifi: "Wi‑Fi rápido",
+      excellentBeds: "Camas excelentes",
+    },
+    details: {
+      "king-suite": {
+        tagline: "Cama king y cocineta, a pasos de la ola",
+        description:
+          "Nuestra suite favorita para parejas. Cama king, cocineta para el café antes de la sesión, balcón para secar el wetsuit y espacio para un tercer huésped.",
+      },
+      "twin-suite": {
+        tagline: "Dos camas queen para amigos y familias",
+        description:
+          "Espacio para hasta cuatro personas con dos camas queen, cocineta y balcón. La opción fácil para un viaje de surf con amigos o en familia.",
+      },
+      "pent-house-a": {
+        tagline: "Último piso, puertas corredizas a tu propia terraza",
+        description:
+          "En la azotea, con puertas de vidrio corredizas que abren a una terraza privada con vista al Pacífico. Tiene cocineta, arte original y mucha luz.",
+      },
+      "pent-house-b": {
+        tagline: "Cuarto en la azotea con vista al mar",
+        description:
+          "Un penthouse luminoso en el último piso, con ventana al mar, terraza privada y uno de nuestros retratos pop art cuidando la cama.",
+      },
+    },
+  },
+  restaurant: {
+    title: "Rip Tide Bar & Grill",
+    intro:
+      "Nuestro bar y restaurante es donde termina el día. Comida fresca del mar, bebidas frías y la gente con la que viniste.",
+    sections: [
+      {
+        title: "El bar",
+        body: "Surtido con lo mejor. Ven con tus amigos y deja que nuestro equipo te consienta.",
+      },
+      {
+        title: "El muro de piedras",
+        body: "Más de 2,000 piedras pintadas por huéspedes, cada una un pedacito de alguien que pasó por aquí. Pinta la tuya y cuenta tu historia.",
+      },
+      {
+        title: "Del mar a tu mesa",
+        body: "Comida fresca y rica para compartir. Pregunta por la pesca del día.",
+      },
+      {
+        title: "La margarita perfecta",
+        body: "Olvídate de todo con la bebida de la que nuestros huéspedes no dejan de hablar. O una piña colada bajo el sol. ¿Qué más se puede pedir?",
+      },
+    ],
+    breakfast: "El desayuno está incluido para los huéspedes del hotel todas las mañanas.",
+  },
+  activities: {
+    title: "Qué hacer en Playa Cerritos",
+    intro:
+      "El surf es la razón por la que casi todos vienen. Estas son otras cosas que les encantan a nuestros huéspedes, desde caminar a una playa escondida hasta un día en La Paz.",
+    surfTitle: "Clases de surf",
+    surfBody:
+      "Cerritos tiene olas para todo tipo de surfista, no importa si eres principiante o experto. Pídenos que te reservemos una clase; también podemos conseguir un fotógrafo para que se vea tu progreso.",
+    askFrontDesk: "Pregunta en recepción",
+    items: [
+      {
+        title: "Caminatas",
+        distance: "Saliendo del hotel",
+        body: "Camina hacia el norte desde el hotel y encontrarás playas escondidas, acantilados donde revientan las olas y el mejor lugar para ver el atardecer.",
+        destination: "",
+      },
+      {
+        title: "Playa Las Palmas",
+        distance: "20 min en coche",
+        body: "Una playa larga rodeada de palmeras y con buenas olas, por camino de terracería. Ten cuidado, la corriente puede ponerse fuerte.",
+        destination: "Playa Las Palmas, Baja California Sur",
+      },
+      {
+        title: "Todos Santos",
+        distance: "15 min en coche",
+        body: "Un Pueblo Mágico con mucho ambiente artístico: la iglesia, el teatro, el centro cultural, galerías, un festival de arte anual y el famoso Hotel California.",
+        destination: "Todos Santos, Baja California Sur",
+      },
+      {
+        title: "Balandra",
+        distance: "Día de paseo a La Paz",
+        body: "Famosa por su piedra en forma de hongo, manglares y dunas, con el agua del Mar de Cortés en todos los tonos de azul.",
+        destination: "Playa Balandra, La Paz, Baja California Sur",
+      },
+      {
+        title: "Paseos en cuatrimoto",
+        distance: "Pregunta en recepción",
+        body: "Recorre con familia y amigos las huertas y las playas de El Pescadero. Incluye todo el equipo.",
+        destination: "",
+      },
+      {
+        title: "Pesca",
+        distance: "Lugares cercanos",
+        body: "Salidas de curricán por Gaspareño, la casa abandonada, Cerritos y Punta Lobos para sacar dorado, pez gallo, sierra, jurel y más.",
+        destination: "",
+      },
+      {
+        title: "Cabo San Lucas",
+        distance: "Aprox. 1 hora",
+        body: "Uno de los destinos top de México: El Arco, buceo, avistamiento de ballenas, pesca y vida nocturna.",
+        destination: "Cabo San Lucas, Baja California Sur",
+      },
+    ],
+  },
+  about: {
+    title: "Sobre Desert Moon",
+    lead: "Un hotel pequeño y colorido en Playa Cerritos, hecho para surfistas, familias y cualquiera que quiera bajarle el ritmo.",
+    body: [
+      "Desert Moon está en el corazón de Playa Cerritos: es el hotel más cerca del punto de surf y está a 15 minutos de Todos Santos, Pueblo Mágico.",
+      "Tenemos 14 cuartos: suites con cama king para hasta tres personas, suites con dos camas queen para hasta cuatro y dos penthouses en la azotea. Toda estancia incluye desayuno, Wi‑Fi rápido y estacionamiento.",
+      "Entre sesión y sesión están la alberca infinita, las terrazas en la azotea y el bar Rip Tide, donde los huéspedes han pintado más de 2,000 piedras a lo largo de los años.",
+    ],
+  },
+  contact: {
+    title: "Contacto",
+    intro: "¿Dudas sobre los cuartos, las clases de surf o cómo llegar? Escríbenos o llámanos.",
+    booking: "Reservaciones",
+    primary: "Línea principal",
+    secondary: "Segunda línea",
+    email: "Correo",
+    address: "Dirección",
+    gettingHere: "Cómo llegar",
+    gettingHereBody:
+      "El aeropuerto más cercano es Los Cabos (SJD), a una hora y media en coche. La Paz (LAP) está a poco más de una hora. Pregúntanos por traslados desde el aeropuerto.",
+    rentACar: "Renta un coche en el aeropuerto",
+    mapTitle: "Desert Moon Hotel en el mapa",
+  },
+  footer: {
+    tagline: "Hotel de surf en Playa Cerritos, Baja California Sur.",
+    explore: "Explora",
+    contact: "Contacto",
+    follow: "Síguenos",
+    rights: "Todos los derechos reservados.",
+  },
+  notFound: {
+    title: "Esta página se la llevó la corriente",
+    body: "Puede que el link sea viejo o esté mal escrito.",
+    cta: "Volver al inicio",
+  },
+};
+
+export default es;

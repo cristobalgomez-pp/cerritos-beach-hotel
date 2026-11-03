@@ -1,139 +1,86 @@
-import { CONTACT, HOTEL, BOOKING_URL } from "./constants";
+import type { Metadata } from "next";
+import type { Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/get-dictionary";
+import { BOOKING_URL, CONTACT, HOTEL, SITE_URL, SOCIAL } from "./constants";
+import { ROOMS } from "./rooms";
 
-export function getHotelSchema() {
+const ADDRESS = {
+  "@type": "PostalAddress",
+  streetAddress: "Parcela 2740",
+  addressLocality: "El Pescadero",
+  addressRegion: "Baja California Sur",
+  postalCode: "23310",
+  addressCountry: "MX",
+};
+
+const GEO = {
+  "@type": "GeoCoordinates",
+  latitude: HOTEL.coordinates.lat,
+  longitude: HOTEL.coordinates.lng,
+};
+
+export function getHotelSchema(lang: Locale) {
+  const t = getDictionary(lang);
   return {
     "@context": "https://schema.org",
     "@type": "Hotel",
     name: HOTEL.name,
-    description:
-      "The closest hotel to the surf point in Cerritos Beach, Baja California Sur. Boutique hotel with 14 ocean view rooms, infinity pool, free breakfast, and restaurant.",
-    url: "https://cerritosbeachhotel.com",
+    description: t.meta.siteDescription,
+    url: `${SITE_URL}/${lang}`,
     telephone: CONTACT.phonePrimary,
     email: CONTACT.email,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Parcela 2740",
-      addressLocality: "El Pescadero",
-      addressRegion: "Baja California Sur",
-      postalCode: "23310",
-      addressCountry: "MX",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: HOTEL.coordinates.lat,
-      longitude: HOTEL.coordinates.lng,
-    },
+    address: ADDRESS,
+    geo: GEO,
     numberOfRooms: HOTEL.totalRooms,
-    starRating: {
-      "@type": "Rating",
-      ratingValue: "3",
-    },
     priceRange: "$$",
-    amenityFeature: [
-      { "@type": "LocationFeatureSpecification", name: "Infinity Pool" },
-      { "@type": "LocationFeatureSpecification", name: "Free Breakfast" },
-      { "@type": "LocationFeatureSpecification", name: "Restaurant & Bar" },
-      { "@type": "LocationFeatureSpecification", name: "Free Wi-Fi" },
-      { "@type": "LocationFeatureSpecification", name: "Air Conditioning" },
-      { "@type": "LocationFeatureSpecification", name: "Car Parking" },
-      { "@type": "LocationFeatureSpecification", name: "Ocean View Rooms" },
-    ],
-    image: "https://cerritosbeachhotel.com/images/og-default.jpg",
-    potentialAction: {
-      "@type": "ReserveAction",
-      target: BOOKING_URL,
-      name: "Book a Room",
-    },
+    image: [`${SITE_URL}/images/hotel/facade.jpg`, `${SITE_URL}/images/hotel/infinity-pool.jpg`],
+    sameAs: [SOCIAL.instagram, SOCIAL.facebook],
+    amenityFeature: t.features.items.map((name) => ({
+      "@type": "LocationFeatureSpecification",
+      name,
+      value: true,
+    })),
+    containsPlace: ROOMS.map((room) => ({
+      "@type": "HotelRoom",
+      name: room.name,
+      description: t.rooms.details[room.slug].description,
+      occupancy: { "@type": "QuantitativeValue", maxValue: room.maxGuests },
+      url: `${SITE_URL}/${lang}/rooms/${room.slug}`,
+    })),
+    potentialAction: { "@type": "ReserveAction", target: BOOKING_URL },
   };
 }
 
-export function getLodgingBusinessSchema() {
+export function getRestaurantSchema(lang: Locale) {
+  const t = getDictionary(lang);
   return {
     "@context": "https://schema.org",
-    "@type": "LodgingBusiness",
-    name: HOTEL.name,
-    url: "https://cerritosbeachhotel.com",
+    "@type": "BarOrPub",
+    name: "Rip Tide Bar & Grill — Desert Moon Hotel",
+    description: t.restaurant.intro,
+    url: `${SITE_URL}/${lang}/restaurant`,
     telephone: CONTACT.phonePrimary,
-    email: CONTACT.email,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Parcela 2740",
-      addressLocality: "El Pescadero",
-      addressRegion: "Baja California Sur",
-      postalCode: "23310",
-      addressCountry: "MX",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: HOTEL.coordinates.lat,
-      longitude: HOTEL.coordinates.lng,
-    },
-    makesOffer: [
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "HotelRoom",
-          name: "King Suite",
-          description: "King suite with ocean view, kitchenette, and balcony",
-          occupancy: { "@type": "QuantitativeValue", maxValue: 3 },
-          bed: { "@type": "BedDetails", typeOfBed: "King" },
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "HotelRoom",
-          name: "Twin Suite",
-          description: "Twin suite with two queen beds, ocean view, and balcony",
-          occupancy: { "@type": "QuantitativeValue", maxValue: 3 },
-          bed: { "@type": "BedDetails", typeOfBed: "Queen", numberOfBeds: 2 },
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "HotelRoom",
-          name: "Pent House A",
-          description: "Premium penthouse with ocean view and balcony",
-          occupancy: { "@type": "QuantitativeValue", maxValue: 3 },
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "HotelRoom",
-          name: "Pent House B",
-          description: "Intimate penthouse for couples with ocean view",
-          occupancy: { "@type": "QuantitativeValue", maxValue: 2 },
-        },
-      },
-    ],
+    servesCuisine: ["Mexican", "Seafood"],
+    address: ADDRESS,
+    geo: GEO,
+    image: `${SITE_URL}/images/restaurant/bar-wide.jpg`,
   };
 }
 
-export function getRestaurantSchema() {
+/** Per-page metadata with canonical + hreflang alternates */
+export function pageMetadata(lang: Locale, path: string, title: string, description: string, image?: string): Metadata {
   return {
-    "@context": "https://schema.org",
-    "@type": "Restaurant",
-    name: "Desert Moon Restaurant & Bar",
-    description:
-      "Sea-to-table restaurant and bar at Desert Moon Hotel, Cerritos Beach. Fresh Mexican and international cuisine with ocean views.",
-    url: "https://cerritosbeachhotel.com/restaurant",
-    telephone: CONTACT.phonePrimary,
-    servesCuisine: ["Mexican", "Seafood", "International"],
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Parcela 2740",
-      addressLocality: "El Pescadero",
-      addressRegion: "Baja California Sur",
-      postalCode: "23310",
-      addressCountry: "MX",
+    title,
+    description,
+    alternates: {
+      canonical: `/${lang}${path}`,
+      languages: { en: `/en${path}`, es: `/es${path}`, "x-default": `/en${path}` },
     },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: HOTEL.coordinates.lat,
-      longitude: HOTEL.coordinates.lng,
+    openGraph: {
+      title,
+      description,
+      url: `/${lang}${path}`,
+      images: image ? [{ url: image }] : [{ url: "/images/og-default.jpg", width: 1200, height: 630 }],
     },
-    image: "https://cerritosbeachhotel.com/images/og-default.jpg",
   };
 }
