@@ -11,6 +11,7 @@ export default function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
     { href: "/restaurant", label: t.nav.restaurant },
     { href: "/activities", label: t.nav.activities },
     { href: "/about", label: t.nav.about },
+    { href: "/for-sale", label: t.forSale.nav },
     { href: "/contact", label: t.nav.contact },
   ];
 

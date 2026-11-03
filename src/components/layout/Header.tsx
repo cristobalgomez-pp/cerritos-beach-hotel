@@ -14,6 +14,7 @@ export interface HeaderLabels {
   activities: string;
   about: string;
   contact: string;
+  forSale: string;
   book: string;
   menu: string;
   close: string;
@@ -48,6 +49,7 @@ export default function Header({ lang, labels }: { lang: Locale; labels: HeaderL
     { href: "/restaurant", label: labels.restaurant },
     { href: "/activities", label: labels.activities },
     { href: "/about", label: labels.about },
+    { href: "/for-sale", label: labels.forSale },
     { href: "/contact", label: labels.contact },
   ];
 

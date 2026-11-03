@@ -93,6 +93,7 @@ export default async function LangLayout({
             activities: t.nav.activities,
             about: t.nav.about,
             contact: t.nav.contact,
+            forSale: t.forSale.nav,
             book: t.nav.book,
             menu: t.nav.menu,
             close: t.nav.close,
