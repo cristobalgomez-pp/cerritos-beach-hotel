@@ -2,7 +2,7 @@ export const BOOKING_URL =
   "https://14910.staygrid.com/webreservation/index/index/hidHotelIdWebOut/QV5TX0ZSczM0XzE0OTEwX0Y1dGVyOTA4N3NfKWRoZl9kcnRlcjdfMTQ5MTBfaGdmaF9nXmQ4NTQ";
 
 export const CONTACT = {
-  phonePrimary: "+52 81 3560 2962",
+  phonePrimary: "+52 81 3556 1653",
   phoneSecondary: "+52 81 1496 0967",
   email: "info@desertmoonhotel.com",
   address: "Parcela 2740, El Pescadero, La Paz, Baja California Sur, México",
