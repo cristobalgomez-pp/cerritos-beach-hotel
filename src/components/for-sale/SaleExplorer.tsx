@@ -98,9 +98,10 @@ export default function SaleExplorer({
         </div>
 
         <div className="mt-12 overflow-x-auto pb-2">
+          {/* Stepped like the real building: the first column is the highest tower */}
           <div className="grid min-w-[640px] grid-cols-7 gap-3">
-            {towers.map((tower) => (
-              <div key={tower} className="flex flex-col gap-2">
+            {towers.map((tower, i) => (
+              <div key={tower} className="flex flex-col gap-2" style={{ paddingTop: `${i * 1.75}rem` }}>
                 {(["A", "B"] as const).map((letter) => {
                   const u = unit(tower, letter);
                   if (!u) return null;
@@ -131,9 +132,12 @@ export default function SaleExplorer({
                     </button>
                   );
                 })}
-                <p className="text-center text-sm font-medium text-ink/60">
-                  {labels.tower} {tower}
-                </p>
+                {/* The hill under each tower, so the steps read as terrain */}
+                <div className="flex min-h-12 flex-1 items-end justify-center rounded-b-2xl rounded-t-md bg-sand pb-3">
+                  <p className="text-sm font-semibold text-ink/70">
+                    {labels.tower} {tower}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
