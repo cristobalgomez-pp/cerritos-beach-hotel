@@ -85,7 +85,7 @@ const es: Dictionary = {
   rooms: {
     title: "Cuartos",
     intro:
-      "Suites en los pisos de abajo con balcón y dos penthouses en la azotea con terraza propia. Elige las camas que mejor le queden a tu viaje.",
+      "Suites en los pisos de abajo con balcón y dos penthouses para dos personas en la azotea con terraza propia. Elige las camas que mejor le queden a tu viaje.",
     beds: {
       king: "1 cama king",
       twoQueens: "2 camas queen",
@@ -218,7 +218,7 @@ const es: Dictionary = {
     lead: "Un hotel pequeño y colorido en Playa Cerritos, hecho para surfistas, familias y cualquiera que quiera bajarle el ritmo.",
     body: [
       "Desert Moon está en el corazón de Playa Cerritos: es el hotel más cerca del punto de surf y está a 15 minutos de Todos Santos, Pueblo Mágico.",
-      "Tenemos 14 cuartos: suites con cama king para hasta tres personas, suites con dos camas queen para hasta cuatro y dos penthouses en la azotea. Toda estancia incluye desayuno, Wi‑Fi rápido y estacionamiento.",
+      "Tenemos 14 cuartos: suites con cama king para hasta tres personas, suites con dos camas queen para hasta cuatro y dos penthouses en la azotea para dos personas. Toda estancia incluye desayuno, Wi‑Fi rápido y estacionamiento.",
       "Entre sesión y sesión están la alberca infinita, las terrazas en la azotea y el bar Rip Tide, donde los huéspedes han pintado más de 2,000 piedras a lo largo de los años.",
     ],
   },

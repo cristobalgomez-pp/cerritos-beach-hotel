@@ -70,7 +70,7 @@ export const ROOMS: Room[] = [
   {
     slug: "pent-house-a",
     name: "Pent House A",
-    maxGuests: 3,
+    maxGuests: 2,
     beds: "one",
     cover: "/images/rooms/pent-house-a/cover.jpg",
     photos: gallery("pent-house-a"),
@@ -94,7 +94,7 @@ export const ROOMS: Room[] = [
   {
     slug: "pent-house-b",
     name: "Pent House B",
-    maxGuests: 3,
+    maxGuests: 2,
     beds: "one",
     cover: "/images/rooms/pent-house-b/cover.jpg",
     photos: gallery("pent-house-b"),

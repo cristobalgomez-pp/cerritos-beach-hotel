@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 import { Bricolage_Grotesque, Figtree } from "next/font/google";
 import { isLocale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
@@ -9,6 +10,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MobileBookBar from "@/components/layout/MobileBookBar";
 import "../globals.css";
+
+const GA_ID = "G-4T4P346CJL";
 
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
@@ -100,6 +103,11 @@ export default async function LangLayout({
         <main id="main">{children}</main>
         <Footer lang={lang} t={t} />
         <MobileBookBar label={t.nav.book} />
+        {/* Same Google Analytics property as the old site, so traffic history continues */}
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+        <Script id="ga4" strategy="afterInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
+        </Script>
       </body>
     </html>
   );
