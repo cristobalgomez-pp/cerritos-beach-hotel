@@ -81,7 +81,7 @@ const en = {
   rooms: {
     title: "Rooms",
     intro:
-      "Suites on the lower floors with balconies, and two penthouses on the roof with their own terrace. Pick the bed setup that fits your trip.",
+      "Suites on the lower floors with balconies, and two penthouses for two people on the roof with their own terrace. Pick the bed setup that fits your trip.",
     beds: {
       king: "1 king bed",
       twoQueens: "2 queen beds",
@@ -214,7 +214,7 @@ const en = {
     lead: "A small, colorful hotel in Cerritos Beach, made for surfers, families and anyone who wants to slow down.",
     body: [
       "Desert Moon is in the heart of Cerritos Beach, the closest hotel to the surf point and 15 minutes from Todos Santos, Pueblo Mágico.",
-      "We have 14 rooms: suites with a king bed for up to three people, suites with two queen beds for up to four, and two penthouses on the roof. Every stay includes breakfast, fast Wi‑Fi and parking.",
+      "We have 14 rooms: suites with a king bed for up to three people, suites with two queen beds for up to four, and two penthouses on the roof for two people. Every stay includes breakfast, fast Wi‑Fi and parking.",
       "Between sessions there's the infinity pool, the rooftop terraces and the Rip Tide bar, where guests have painted more than 2,000 rocks over the years.",
     ],
   },
