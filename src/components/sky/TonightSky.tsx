@@ -1,6 +1,8 @@
+import Image from "next/image";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/en";
 import { formatTime, formatWeekday, getSkyOutlook, type Rating } from "@/lib/sky";
+import { nextMeteorShower, seasonalHighlights, visiblePlanets } from "@/lib/sky-sights";
 import MoonPhase from "./MoonPhase";
 
 const RATING_DOTS: Record<Rating, number> = { excellent: 4, good: 3, fair: 2, poor: 1 };
@@ -18,6 +20,18 @@ export default async function TonightSky({ lang, t }: { lang: Locale; t: Diction
   const tonight = nights[0];
   const s = t.sky;
   const best = nights.reduce((a, n) => (n.score > a.score ? n : a), nights[0]);
+  const planets = visiblePlanets(tonight);
+  const shower = nextMeteorShower();
+  const highlights = seasonalHighlights();
+  const brightness = (mag: number) =>
+    mag < -1 ? s.brightness.veryBright : mag < 1 ? s.brightness.bright : s.brightness.visible;
+  const showerMoon =
+    shower.moonIllumination < 0.3 ? s.showerMoon.dark : shower.moonIllumination < 0.7 ? s.showerMoon.some : s.showerMoon.bright;
+  const showerDate = new Intl.DateTimeFormat(lang === "es" ? "es-MX" : "en-US", {
+    timeZone: "America/Mazatlan",
+    day: "numeric",
+    month: "long",
+  }).format(shower.peak);
 
   const rows: [string, string][] = [
     [s.sunset, formatTime(tonight.sunset, lang)],
@@ -35,6 +49,10 @@ export default async function TonightSky({ lang, t }: { lang: Locale; t: Diction
 
   return (
     <section className="relative isolate overflow-hidden bg-night text-white" aria-labelledby="sky-title">
+      <div className="absolute inset-x-0 top-0 -z-20 h-[520px]" aria-hidden="true">
+        <Image src="/images/hd/pergola-dusk.jpg" alt="" fill sizes="100vw" className="object-cover opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-night/30 via-night/70 to-night" />
+      </div>
       <svg className="absolute inset-0 -z-10 h-full w-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 100 100" aria-hidden="true">
         {STARS.map((st, i) => (
           <circle key={i} cx={st.x} cy={st.y} r={st.r * 0.12} fill="white" opacity={st.o} />
@@ -77,6 +95,53 @@ export default async function TonightSky({ lang, t }: { lang: Locale; t: Diction
                 </div>
               ))}
             </dl>
+          </div>
+        </div>
+
+        <div className="mt-20 border-t border-white/15 pt-14">
+          <h3 className="text-3xl font-bold">{s.seeTitle}</h3>
+          <div className="mt-10 grid gap-12 md:grid-cols-3">
+            <div>
+              <h4 className="font-display text-lg font-bold text-moon">{s.planetsTitle}</h4>
+              {planets.length ? (
+                <ul className="mt-4 space-y-4">
+                  {planets.map((p) => (
+                    <li key={p.key}>
+                      <p className="font-semibold">
+                        {s.planets[p.key]} <span className="font-normal text-white/60">· {brightness(p.magnitude)}</span>
+                      </p>
+                      <p className="text-sm text-white/70">
+                        {formatTime(p.start, lang)} – {formatTime(p.end, lang)}
+                      </p>
+                      <p className="text-sm text-white/70">{s.planetLine(s.directions[p.direction], formatTime(p.best, lang))}</p>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-4 text-white/70">{s.noPlanets}</p>
+              )}
+            </div>
+
+            <div>
+              <h4 className="font-display text-lg font-bold text-moon">{s.showerTitle}</h4>
+              <p className="mt-4 font-display text-2xl font-bold">{s.showers[shower.key]}</p>
+              <p className="mt-1 font-semibold">
+                {s.showerWhen(shower.daysAway)} <span className="font-normal text-white/60">· {showerDate}</span>
+              </p>
+              <p className="mt-3 text-sm text-white/70">{s.showerRate(shower.perHour)}</p>
+              <p className="mt-1 text-sm text-white/70">{showerMoon}</p>
+            </div>
+
+            <div>
+              <h4 className="font-display text-lg font-bold text-moon">{s.seasonTitle}</h4>
+              <ul className="mt-4 space-y-4">
+                {highlights.map((h) => (
+                  <li key={h} className="leading-relaxed text-white/85">
+                    {s.highlights[h]}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 

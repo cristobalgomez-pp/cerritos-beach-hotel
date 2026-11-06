@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/suncalc": "^1.9.2",
+    "astronomy-engine": "^2.1.19",
     "framer-motion": "^12.35.2",
     "next": "16.1.6",
     "react": "19.2.3",

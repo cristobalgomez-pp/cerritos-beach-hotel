@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) return {};
   const f = getDictionary(lang).forSale;
-  return pageMetadata(lang, "/for-sale", f.title, f.intro.replace("{count}", String(AVAILABLE_UNITS.length)), "/images/hotel/facade.jpg");
+  return pageMetadata(lang, "/for-sale", f.title, f.intro.replace("{count}", String(AVAILABLE_UNITS.length)), "/images/hd/towers-stairs.jpg");
 }
 
 export default async function ForSalePage({ params }: Props) {
@@ -25,7 +25,7 @@ export default async function ForSalePage({ params }: Props) {
       <PageHero
         title={f.title}
         intro={f.intro.replace("{count}", String(AVAILABLE_UNITS.length))}
-        image="/images/hotel/facade.jpg"
+        image="/images/hd/towers-stairs.jpg"
         imageAlt="Desert Moon towers in Cerritos Beach"
       />
 

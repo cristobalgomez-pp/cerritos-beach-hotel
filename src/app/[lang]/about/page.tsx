@@ -13,15 +13,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) return {};
   const t = getDictionary(lang);
-  return pageMetadata(lang, "/about", t.about.title, t.about.lead, "/images/hotel/facade.jpg");
+  return pageMetadata(lang, "/about", t.about.title, t.about.lead, "/images/hd/facade.jpg");
 }
 
 const PHOTOS = [
-  { src: "/images/hotel/infinity-pool.jpg", alt: "Infinity pool overlooking the ocean", span: "col-span-2 row-span-2" },
-  { src: "/images/hotel/balconies.jpg", alt: "Terracotta balconies of the hotel", span: "" },
-  { src: "/images/hotel/garden-entrance.jpg", alt: "Cactus garden at a room entrance", span: "" },
-  { src: "/images/hotel/terrace-table.jpg", alt: "Table on the terrace with a view of the hills", span: "" },
-  { src: "/images/hotel/pool-edge.jpg", alt: "Edge of the infinity pool", span: "" },
+  { src: "/images/hd/pool-loungers.jpg", alt: "Infinity pool and loungers facing the ocean", span: "col-span-2 row-span-2" },
+  { src: "/images/hd/rooftop-pergola.jpg", alt: "Rooftop pergola with rocking chairs", span: "" },
+  { src: "/images/hd/rock-wall.jpg", alt: "Wall of rocks painted by guests", span: "" },
+  { src: "/images/hd/terrace-dusk.jpg", alt: "Terrace at dusk", span: "" },
+  { src: "/images/hd/rooftop-grill.jpg", alt: "Rooftop terrace with grill and mountain views", span: "" },
 ];
 
 export default async function AboutPage({ params }: Props) {
@@ -30,7 +30,7 @@ export default async function AboutPage({ params }: Props) {
 
   return (
     <>
-      <PageHero title={t.about.title} intro={t.about.lead} image="/images/hotel/facade.jpg" imageAlt="Desert Moon Hotel building" />
+      <PageHero title={t.about.title} intro={t.about.lead} image="/images/hd/towers-cactus.jpg" imageAlt="Desert Moon towers among cactus" />
 
       <section className="mx-auto grid max-w-7xl gap-14 px-4 py-20 md:px-8 md:py-28 lg:grid-cols-12">
         <div className="space-y-6 text-lg leading-relaxed text-ink/85 lg:col-span-5">

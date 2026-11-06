@@ -53,7 +53,7 @@ export default async function ContactPage({ params }: Props) {
 
   return (
     <>
-      <PageHero title={t.contact.title} intro={t.contact.intro} image="/images/rooms/king-suite/1.jpg" imageAlt="Cerritos Beach from a room window" />
+      <PageHero title={t.contact.title} intro={t.contact.intro} image="/images/hd/rooftop-ocean.jpg" imageAlt="Rooftop terrace facing the ocean" />
 
       <section className="mx-auto grid max-w-7xl gap-16 px-4 py-20 md:px-8 md:py-28 lg:grid-cols-12">
         <dl className="divide-y divide-ink/10 border-y border-ink/10 lg:col-span-6">
