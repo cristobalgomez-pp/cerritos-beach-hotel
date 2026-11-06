@@ -41,7 +41,7 @@ export default async function RoomPage({ params }: Props) {
       <PageHero title={room.name} intro={detail.tagline} image={room.cover} imageAlt={room.name}>
         <Link
           href={localePath(lang, "/rooms")}
-          className="mb-4 inline-flex items-center gap-1 text-sm font-semibold text-white/80 hover:text-white"
+          className="mb-2 inline-flex items-center gap-1 py-2 text-sm font-semibold text-white/80 hover:text-white"
         >
           <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
             <path d="M10 3L5 8l5 5" />
