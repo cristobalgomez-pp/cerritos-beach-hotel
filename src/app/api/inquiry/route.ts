@@ -3,8 +3,8 @@ import { AVAILABLE_UNITS, INQUIRY_RECIPIENTS, formatUsd } from "@/lib/units";
 
 /**
  * Buyer inquiries from the "Homes for sale" page, emailed through Resend.
- * Needs RESEND_API_KEY in Vercel. RESEND_FROM can override the sender once the
- * domain is verified in Resend (e.g. "Desert Moon <ventas@desertmoonhotel.com>").
+ * Needs RESEND_API_KEY in Vercel. Sends from cerritosbeachhotel.com (verified in Resend);
+ * RESEND_FROM can override the sender.
  */
 
 const escape = (s: string) =>
@@ -64,7 +64,7 @@ export async function POST(request: Request) {
     method: "POST",
     headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      from: process.env.RESEND_FROM ?? "Desert Moon <onboarding@resend.dev>",
+      from: process.env.RESEND_FROM ?? "Desert Moon Hotel <web@cerritosbeachhotel.com>",
       to: INQUIRY_RECIPIENTS,
       reply_to: email,
       subject: `Interesado en depto ${units.map((u) => u.id).join(", ") || "Desert Moon"}: ${name}`,
