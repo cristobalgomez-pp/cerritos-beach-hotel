@@ -59,7 +59,7 @@ export default async function ContactPage({ params }: Props) {
         <dl className="divide-y divide-ink/10 border-y border-ink/10 lg:col-span-6">
           {rows.map((row) => (
             <div key={row.label} className="grid gap-2 py-6 sm:grid-cols-3 sm:items-center">
-              <dt className="font-semibold text-ink/60">{row.label}</dt>
+              <dt className="font-semibold text-ink/75">{row.label}</dt>
               <dd className="font-display text-xl font-semibold sm:col-span-2">{row.content}</dd>
             </div>
           ))}

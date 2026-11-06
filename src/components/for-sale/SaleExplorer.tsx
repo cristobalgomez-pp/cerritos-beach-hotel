@@ -116,9 +116,6 @@ export default function SaleExplorer({
                       disabled={sold}
                       onClick={() => toggle(u.id)}
                       aria-pressed={isSelected}
-                      aria-label={`${u.id}, ${letter === "A" ? labels.upper : labels.lower}, ${
-                        sold ? labels.sold : `${labels.available}, USD ${u.priceUsd.toLocaleString("en-US")}`
-                      }`}
                       className={`flex aspect-[4/3] flex-col justify-between rounded-2xl border-2 p-3 text-left transition-colors ${
                         sold
                           ? "cursor-not-allowed border-transparent bg-ink/5 text-ink/35"
@@ -131,10 +128,15 @@ export default function SaleExplorer({
                       <span className="text-sm font-semibold">
                         {sold ? labels.sold : isSelected ? labels.selected : usd(u.priceUsd)}
                       </span>
+                      <span className="sr-only">
+                        {", "}
+                        {letter === "A" ? labels.upper : labels.lower}
+                        {sold ? "" : `, USD ${u.priceUsd.toLocaleString("en-US")}`}
+                      </span>
                     </button>
                   );
                 })}
-                <p className="pt-1 text-center text-sm font-semibold text-ink/60">
+                <p className="pt-1 text-center text-sm font-semibold text-ink/75">
                   {labels.tower} {tower}
                 </p>
               </div>
@@ -169,8 +171,8 @@ export default function SaleExplorer({
         {/* Subtle prompt in the empty top-right corner (below the map on small screens) */}
         <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-ink/10 pt-5 lg:absolute lg:right-0 lg:top-2 lg:mt-0 lg:w-[calc(3/7*100%-0.5rem)] lg:flex-col lg:items-start lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
           <div>
-            <p className="text-sm font-semibold text-ink/60">{labels.units}</p>
-            <p className={`mt-1 font-display text-xl font-bold ${selected.length ? "text-adobe" : "text-ink/40"}`} aria-live="polite">
+            <p className="text-sm font-semibold text-ink/75">{labels.units}</p>
+            <p className={`mt-1 font-display text-xl font-bold ${selected.length ? "text-adobe" : "text-ink/60"}`} aria-live="polite">
               {selected.length ? selected.join(", ") : labels.pickHint}
             </p>
           </div>
@@ -210,8 +212,8 @@ export default function SaleExplorer({
             ) : (
               <form onSubmit={onSubmit} noValidate className="mt-5 space-y-4">
                 <div>
-                  <p className="text-sm font-semibold text-ink/60">{labels.units}</p>
-                  <p className={`mt-1 font-display text-lg font-bold ${selected.length ? "text-adobe" : "text-ink/40"}`}>
+                  <p className="text-sm font-semibold text-ink/75">{labels.units}</p>
+                  <p className={`mt-1 font-display text-lg font-bold ${selected.length ? "text-adobe" : "text-ink/60"}`}>
                     {selected.length ? selected.join(", ") : labels.pickHint}
                   </p>
                 </div>
@@ -221,7 +223,7 @@ export default function SaleExplorer({
                 </div>
                 <Field label={labels.phone} name="phone" type="tel" autoComplete="tel" />
                 <label className="block">
-                  <span className="text-sm font-semibold text-ink/60">{labels.message}</span>
+                  <span className="text-sm font-semibold text-ink/75">{labels.message}</span>
                   <textarea
                     name="message"
                     rows={3}

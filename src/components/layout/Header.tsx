@@ -92,9 +92,10 @@ export default function Header({ lang, labels }: { lang: Locale; labels: HeaderL
             hrefLang={otherLang}
             lang={otherLang}
             className="rounded-full px-2 py-1 text-sm font-semibold transition-opacity hover:opacity-70"
-            aria-label={labels.language}
+            title={labels.language}
           >
             {labels.languageShort}
+            <span className="sr-only"> · {labels.language}</span>
           </Link>
           <a
             href={BOOKING_URL}

@@ -95,7 +95,7 @@ export default async function RoomPage({ params }: Props) {
               <li>{t.rooms.beds[room.beds]}</li>
               <li>{t.rooms.bath}</li>
             </ul>
-            <h2 className="mt-8 font-sans text-sm font-semibold tracking-normal text-ink/60">{t.rooms.amenitiesTitle}</h2>
+            <h2 className="mt-8 font-sans text-sm font-semibold tracking-normal text-ink/75">{t.rooms.amenitiesTitle}</h2>
             <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-[15px] lg:grid-cols-1 xl:grid-cols-2">
               {room.amenities.map((a) => (
                 <li key={a} className="flex items-start gap-2">
@@ -107,7 +107,7 @@ export default async function RoomPage({ params }: Props) {
               ))}
             </ul>
             <BookButton label={t.nav.book} className="mt-8 w-full py-4 text-base" />
-            <p className="mt-4 text-xs text-ink/60">* {t.common.oceanViewNote}</p>
+            <p className="mt-4 text-xs text-ink/75">* {t.common.oceanViewNote}</p>
           </div>
         </aside>
       </div>

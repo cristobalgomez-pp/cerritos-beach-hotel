@@ -69,7 +69,7 @@ export default async function RoomsPage({ params }: Props) {
             </article>
           );
         })}
-        <p className="text-sm text-ink/60">* {t.common.oceanViewNote}</p>
+        <p className="text-sm text-ink/75">* {t.common.oceanViewNote}</p>
       </div>
 
       <FeatureList title={t.features.title} items={t.features.items} />
