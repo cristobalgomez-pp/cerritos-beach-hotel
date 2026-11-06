@@ -4,7 +4,7 @@ const es: Dictionary = {
   meta: {
     siteTitle: "Desert Moon Hotel · Playa Cerritos, Baja California Sur",
     siteDescription:
-      "Hotel de surf con 14 cuartos en Playa Cerritos, el más cercano al punto de surf. Alberca infinita, desayuno incluido, bar en la azotea y cuartos con vista al mar, a 15 minutos de Todos Santos.",
+      "Hotel de surf con 13 cuartos en Playa Cerritos, el más cercano al punto de surf. Alberca infinita, desayuno incluido, bar en la azotea y cuartos con vista al mar, a 15 minutos de Todos Santos.",
     ogLocale: "es_MX",
   },
   nav: {
@@ -31,12 +31,12 @@ const es: Dictionary = {
   },
   home: {
     heroLine: "El hotel más cerca del surf en Playa Cerritos.",
-    heroSub: "14 cuartos, alberca infinita y bar en la azotea, entre el desierto y el Pacífico.",
+    heroSub: "13 cuartos, alberca infinita y bar en la azotea, entre el desierto y el Pacífico.",
     introTitle: "Un hotel pequeño hecho alrededor de la ola",
     introBody:
       "Desert Moon está en el corazón de Playa Cerritos, a unos pasos del punto de surf y a 15 minutos en coche de Todos Santos, Pueblo Mágico. Las mañanas empiezan con desayuno incluido; las tardes terminan en la alberca o en el bar, viendo cómo el sol se mete en el mar.",
     facts: [
-      { value: "14", label: "cuartos" },
+      { value: "13", label: "cuartos" },
       { value: "15 min", label: "a Todos Santos" },
       { value: "Incluido", label: "desayuno todos los días" },
       { value: "Infinita", label: "alberca frente al mar" },
@@ -222,7 +222,7 @@ const es: Dictionary = {
     lead: "Un hotel pequeño y colorido en Playa Cerritos, hecho para surfistas, familias y cualquiera que quiera bajarle el ritmo.",
     body: [
       "Desert Moon está en el corazón de Playa Cerritos: es el hotel más cerca del punto de surf y está a 15 minutos de Todos Santos, Pueblo Mágico.",
-      "Tenemos 14 cuartos: suites con cama king para hasta tres personas, suites con dos camas queen para hasta cuatro y dos penthouses en la azotea para dos personas. Toda estancia incluye desayuno, Wi‑Fi rápido y estacionamiento.",
+      "Tenemos 13 cuartos: suites con cama king para hasta tres personas, suites con dos camas queen para hasta cuatro y dos penthouses en la azotea para dos personas. Toda estancia incluye desayuno, Wi‑Fi rápido y estacionamiento.",
       "Entre sesión y sesión están la alberca infinita, las terrazas en la azotea y el bar Rip Tide, donde los huéspedes han pintado más de 2,000 piedras a lo largo de los años.",
     ],
   },

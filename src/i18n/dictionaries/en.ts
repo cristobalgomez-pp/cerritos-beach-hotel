@@ -2,7 +2,7 @@ const en = {
   meta: {
     siteTitle: "Desert Moon Hotel · Cerritos Beach, Baja California Sur",
     siteDescription:
-      "A 14-room surf hotel in Cerritos Beach, the closest to the surf point. Infinity pool, free breakfast, rooftop bar and ocean-view rooms, 15 minutes from Todos Santos.",
+      "A 13-room surf hotel in Cerritos Beach, the closest to the surf point. Infinity pool, free breakfast, rooftop bar and ocean-view rooms, 15 minutes from Todos Santos.",
     ogLocale: "en_US",
   },
   nav: {
@@ -29,12 +29,12 @@ const en = {
   },
   home: {
     heroLine: "The closest hotel to the surf in Cerritos Beach.",
-    heroSub: "14 rooms, an infinity pool and a rooftop bar, between the desert and the Pacific.",
+    heroSub: "13 rooms, an infinity pool and a rooftop bar, between the desert and the Pacific.",
     introTitle: "A small hotel built around the wave",
     introBody:
       "Desert Moon sits in the heart of Cerritos Beach, a short walk from the point break and a 15-minute drive from Todos Santos, Pueblo Mágico. Mornings start with a free breakfast; afternoons end at the pool or the bar, watching the sun drop into the ocean.",
     facts: [
-      { value: "14", label: "rooms" },
+      { value: "13", label: "rooms" },
       { value: "15 min", label: "to Todos Santos" },
       { value: "Free", label: "breakfast every day" },
       { value: "Infinity", label: "pool facing the sea" },
@@ -218,7 +218,7 @@ const en = {
     lead: "A small, colorful hotel in Cerritos Beach, made for surfers, families and anyone who wants to slow down.",
     body: [
       "Desert Moon is in the heart of Cerritos Beach, the closest hotel to the surf point and 15 minutes from Todos Santos, Pueblo Mágico.",
-      "We have 14 rooms: suites with a king bed for up to three people, suites with two queen beds for up to four, and two penthouses on the roof for two people. Every stay includes breakfast, fast Wi‑Fi and parking.",
+      "We have 13 rooms: suites with a king bed for up to three people, suites with two queen beds for up to four, and two penthouses on the roof for two people. Every stay includes breakfast, fast Wi‑Fi and parking.",
       "Between sessions there's the infinity pool, the rooftop terraces and the Rip Tide bar, where guests have painted more than 2,000 rocks over the years.",
     ],
   },

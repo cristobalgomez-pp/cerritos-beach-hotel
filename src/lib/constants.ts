@@ -15,7 +15,7 @@ export const telHref = (phone: string) => `tel:${phone.replace(/\s/g, "")}`;
 export const HOTEL = {
   name: "Cerritos Beach Hotel Desert Moon",
   shortName: "Desert Moon",
-  totalRooms: 14,
+  totalRooms: 13,
   coordinates: {
     lat: 23.3317986,
     lng: -110.1783617,
