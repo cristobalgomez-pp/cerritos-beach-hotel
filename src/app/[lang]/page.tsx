@@ -36,9 +36,9 @@ export default async function Home({ params }: Props) {
       <section className="relative isolate flex h-[72svh] min-h-[520px] items-end text-white md:h-[100svh] md:min-h-[600px]">
         <HeroSlideshow
           slides={[
-            { src: "/images/hd/beach-panorama.jpg", alt: "Cerritos Beach seen from the hotel" },
-            { src: "/images/hd/pool-building.jpg", alt: "Infinity pool in front of Desert Moon" },
             { src: "/images/hd/facade.jpg", alt: "Cerritos Beach Hotel Desert Moon" },
+            { src: "/images/hd/pool-building.jpg", alt: "Infinity pool in front of Desert Moon" },
+            { src: "/images/hd/beach-panorama.jpg", alt: "Cerritos Beach seen from the hotel" },
             { src: "/images/hd/sunset-ocean.jpg", alt: "Sunset over the Pacific from the hotel" },
           ]}
         />
