@@ -25,6 +25,8 @@ export interface SaleLabels {
   success: string;
   error: string;
   required: string;
+  consent: string;
+  privacy: string;
 }
 
 type Status = "idle" | "sending" | "sent" | "error";
@@ -37,12 +39,14 @@ export default function SaleExplorer({
   labels,
   lang,
   fallbackEmail,
+  privacyHref,
 }: {
   units: Unit[];
   towers: number[];
   labels: SaleLabels;
   lang: string;
   fallbackEmail: string;
+  privacyHref: string;
 }) {
   const [selected, setSelected] = useState<string[]>([]);
   const [status, setStatus] = useState<Status>("idle");
@@ -255,6 +259,13 @@ export default function SaleExplorer({
                 >
                   {status === "sending" ? labels.sending : labels.send}
                 </button>
+                <p className="text-center text-xs text-ink/70">
+                  {labels.consent}{" "}
+                  <a href={privacyHref} target="_blank" rel="noopener" className="underline underline-offset-2 hover:text-ink">
+                    {labels.privacy.toLowerCase()}
+                  </a>
+                  .
+                </p>
               </form>
             )}
           </div>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { isLocale, type Locale } from "@/i18n/config";
+import { isLocale, localePath, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { CONTACT } from "@/lib/constants";
 import { pageMetadata } from "@/lib/structured-data";
@@ -48,6 +48,7 @@ export default async function ForSalePage({ params }: Props) {
         towers={[...TOWERS].reverse()}
         lang={lang}
         fallbackEmail={CONTACT.email}
+        privacyHref={localePath(lang, "/privacy")}
         labels={{
           pickTitle: f.pickTitle,
           pickIntro: f.pickIntro,
@@ -70,6 +71,8 @@ export default async function ForSalePage({ params }: Props) {
           success: f.success,
           error: f.error,
           required: f.required,
+          consent: f.consent,
+          privacy: getDictionary(lang).footer.privacy,
         }}
       />
     </>

@@ -300,7 +300,7 @@ const en = {
       "{count} apartments for sale in the hotel, steps from the surf point in Cerritos Beach. Use it for your vacations, live here, or manage it your way.",
     pickTitle: "Pick your apartment",
     pickIntro:
-      "The hotel has seven stepped towers with two apartments each: A is the upper apartment and B the lower one. They are laid out as you see the building in person, from tower 7 to tower 1. Tap the available apartments you like; tap again to unselect.",
+      "The hotel has seven stepped towers with two apartments each: A is the upper apartment and B the lower one. They are laid out as you see the building in person, from tower 7 (the highest, right below the restaurant, the pool and the penthouses) to tower 1. Tap the available apartments you like; tap again to unselect.",
     tower: "Tower",
     upper: "Upper apartment",
     lower: "Lower apartment",
@@ -325,6 +325,7 @@ const en = {
     success: "Thanks! We got your inquiry and will reply soon.",
     error: "We couldn't send your inquiry. Please try again or write to",
     required: "Please fill in your name and a valid email.",
+    consent: "By sending, you accept our",
   },
   footer: {
     tagline: "Surf hotel in Cerritos Beach, Baja California Sur.",
@@ -332,6 +333,7 @@ const en = {
     contact: "Contact",
     follow: "Follow us",
     rights: "All rights reserved.",
+    privacy: "Privacy notice",
   },
   notFound: {
     title: "This page drifted out to sea",
