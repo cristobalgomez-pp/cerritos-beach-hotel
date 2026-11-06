@@ -161,7 +161,7 @@ export default async function TonightSky({ lang, t }: { lang: Locale; t: Diction
                     {i === 0 ? s.tonight : formatWeekday(n.date, lang)}
                   </span>
                   <MoonPhase illumination={n.moonIllumination} waxing={n.moonWaxing} size={36} />
-                  <span className="flex gap-1" aria-label={s.ratings[n.rating]} title={s.ratings[n.rating]}>
+                  <span className="flex gap-1" role="img" aria-label={s.ratings[n.rating]} title={s.ratings[n.rating]}>
                     {[1, 2, 3, 4].map((d) => (
                       <span
                         key={d}

@@ -41,7 +41,7 @@ export default async function RoomPage({ params }: Props) {
       <PageHero title={room.name} intro={detail.tagline} image={room.cover} imageAlt={room.name}>
         <Link
           href={localePath(lang, "/rooms")}
-          className="mb-4 inline-flex items-center gap-1 text-sm font-semibold text-white/80 hover:text-white"
+          className="mb-2 inline-flex items-center gap-1 py-2 text-sm font-semibold text-white/80 hover:text-white"
         >
           <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
             <path d="M10 3L5 8l5 5" />
@@ -95,7 +95,7 @@ export default async function RoomPage({ params }: Props) {
               <li>{t.rooms.beds[room.beds]}</li>
               <li>{t.rooms.bath}</li>
             </ul>
-            <h2 className="mt-8 font-sans text-sm font-semibold tracking-normal text-ink/60">{t.rooms.amenitiesTitle}</h2>
+            <h2 className="mt-8 font-sans text-sm font-semibold tracking-normal text-ink/75">{t.rooms.amenitiesTitle}</h2>
             <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-[15px] lg:grid-cols-1 xl:grid-cols-2">
               {room.amenities.map((a) => (
                 <li key={a} className="flex items-start gap-2">
@@ -107,7 +107,7 @@ export default async function RoomPage({ params }: Props) {
               ))}
             </ul>
             <BookButton label={t.nav.book} className="mt-8 w-full py-4 text-base" />
-            <p className="mt-4 text-xs text-ink/60">* {t.common.oceanViewNote}</p>
+            <p className="mt-4 text-xs text-ink/75">* {t.common.oceanViewNote}</p>
           </div>
         </aside>
       </div>

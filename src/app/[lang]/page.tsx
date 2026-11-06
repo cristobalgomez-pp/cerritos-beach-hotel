@@ -106,7 +106,7 @@ export default async function Home({ params }: Props) {
             <h2 className="text-4xl font-bold md:text-5xl">{t.home.roomsTitle}</h2>
             <p className="mt-4 max-w-xl text-lg text-ink/75">{t.home.roomsBody}</p>
           </div>
-          <Link href={localePath(lang, "/rooms")} className="font-semibold text-pacific underline underline-offset-4 hover:no-underline">
+          <Link href={localePath(lang, "/rooms")} className="inline-block py-2 font-semibold text-pacific underline underline-offset-4 hover:no-underline">
             {t.common.seeRooms}
           </Link>
         </div>
@@ -158,7 +158,7 @@ export default async function Home({ params }: Props) {
           <p className="mt-6 text-lg leading-relaxed text-ink/80">{t.home.barBody}</p>
           <Link
             href={localePath(lang, "/restaurant")}
-            className="mt-8 inline-flex font-semibold text-pacific underline underline-offset-4 hover:no-underline"
+            className="mt-6 inline-flex py-2 font-semibold text-pacific underline underline-offset-4 hover:no-underline"
           >
             {t.home.barCta}
           </Link>

@@ -62,7 +62,7 @@ export default function Header({ lang, labels }: { lang: Locale; labels: HeaderL
   return (
     <header
       className={`fixed inset-x-0 top-0 z-40 transition-colors duration-300 ${
-        solid ? "bg-bone/95 text-ink shadow-[0_1px_0_rgba(29,35,43,0.08)] backdrop-blur" : "text-white"
+        solid ? "bg-bone/95 text-ink shadow-[0_1px_0_rgba(29,35,43,0.08)] backdrop-blur" : "bg-gradient-to-b from-night/60 to-transparent text-white"
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-4 md:h-20 md:px-8">
@@ -91,10 +91,11 @@ export default function Header({ lang, labels }: { lang: Locale; labels: HeaderL
             href={switchHref}
             hrefLang={otherLang}
             lang={otherLang}
-            className="rounded-full px-2 py-1 text-sm font-semibold transition-opacity hover:opacity-70"
-            aria-label={labels.language}
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-2 text-sm font-semibold transition-opacity hover:opacity-70"
+            title={labels.language}
           >
             {labels.languageShort}
+            <span className="sr-only"> · {labels.language}</span>
           </Link>
           <a
             href={BOOKING_URL}

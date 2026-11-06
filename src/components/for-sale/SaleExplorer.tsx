@@ -31,9 +31,6 @@ type Status = "idle" | "sending" | "sent" | "error";
 
 const usd = (n: number) => `$${Math.round(n / 1000)}k`;
 
-// Vertical step between towers, so the diagram reads like the stepped building
-const STEP = 28;
-
 export default function SaleExplorer({
   units,
   towers,
@@ -100,10 +97,11 @@ export default function SaleExplorer({
         </div>
 
         {/* Building diagram: one column per tower, A on top and B below, stepped like the real building */}
-        <div className="mt-12 overflow-x-auto pb-2">
-          <div className="grid min-w-[640px] grid-cols-7 gap-3">
+        {/* All 7 towers fit on a phone: smaller boxes and a smaller step below the sm breakpoint */}
+        <div className="mt-12 [--step:14px] sm:[--step:28px]">
+          <div className="grid grid-cols-7 gap-1.5 sm:gap-3">
             {towers.map((tower, i) => (
-              <div key={tower} className="flex flex-col gap-2" style={{ paddingTop: i * STEP }}>
+              <div key={tower} className="flex flex-col gap-1.5 sm:gap-2" style={{ paddingTop: `calc(var(--step) * ${i})` }}>
                 {(["A", "B"] as const).map((letter) => {
                   const u = unit(tower, letter);
                   if (!u) return null;
@@ -116,10 +114,7 @@ export default function SaleExplorer({
                       disabled={sold}
                       onClick={() => toggle(u.id)}
                       aria-pressed={isSelected}
-                      aria-label={`${u.id}, ${letter === "A" ? labels.upper : labels.lower}, ${
-                        sold ? labels.sold : `${labels.available}, USD ${u.priceUsd.toLocaleString("en-US")}`
-                      }`}
-                      className={`flex aspect-[4/3] flex-col justify-between rounded-2xl border-2 p-3 text-left transition-colors ${
+                      className={`relative flex aspect-square flex-col justify-between rounded-xl border-2 p-1.5 text-left transition-colors sm:aspect-[4/3] sm:rounded-2xl sm:p-3 ${
                         sold
                           ? "cursor-not-allowed border-transparent bg-ink/5 text-ink/35"
                           : isSelected
@@ -127,15 +122,22 @@ export default function SaleExplorer({
                             : "border-adobe/30 bg-white text-ink hover:border-adobe"
                       }`}
                     >
-                      <span className="font-display text-2xl font-extrabold tracking-tight">{u.id}</span>
-                      <span className="text-sm font-semibold">
+                      <span className="font-display text-base font-extrabold tracking-tight sm:text-2xl">{u.id}</span>
+                      {/* On phones the colour already says sold/selected; only the price is shown */}
+                      <span className={`text-[11px] font-semibold leading-none sm:text-sm ${sold || isSelected ? "hidden sm:inline" : ""}`}>
                         {sold ? labels.sold : isSelected ? labels.selected : usd(u.priceUsd)}
+                      </span>
+                      <span className="sr-only">
+                        {", "}
+                        {letter === "A" ? labels.upper : labels.lower}
+                        {sold ? "" : `, USD ${u.priceUsd.toLocaleString("en-US")}`}
                       </span>
                     </button>
                   );
                 })}
-                <p className="pt-1 text-center text-sm font-semibold text-ink/60">
-                  {labels.tower} {tower}
+                <p className="pt-1 text-center text-xs font-semibold text-ink/75 sm:text-sm">
+                  <span className="hidden sm:inline">{labels.tower} </span>
+                  {tower}
                 </p>
               </div>
             ))}
@@ -169,8 +171,8 @@ export default function SaleExplorer({
         {/* Subtle prompt in the empty top-right corner (below the map on small screens) */}
         <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-ink/10 pt-5 lg:absolute lg:right-0 lg:top-2 lg:mt-0 lg:w-[calc(3/7*100%-0.5rem)] lg:flex-col lg:items-start lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
           <div>
-            <p className="text-sm font-semibold text-ink/60">{labels.units}</p>
-            <p className={`mt-1 font-display text-xl font-bold ${selected.length ? "text-adobe" : "text-ink/40"}`} aria-live="polite">
+            <p className="text-sm font-semibold text-ink/75">{labels.units}</p>
+            <p className={`mt-1 font-display text-xl font-bold ${selected.length ? "text-adobe" : "text-ink/60"}`} aria-live="polite">
               {selected.length ? selected.join(", ") : labels.pickHint}
             </p>
           </div>
@@ -210,8 +212,8 @@ export default function SaleExplorer({
             ) : (
               <form onSubmit={onSubmit} noValidate className="mt-5 space-y-4">
                 <div>
-                  <p className="text-sm font-semibold text-ink/60">{labels.units}</p>
-                  <p className={`mt-1 font-display text-lg font-bold ${selected.length ? "text-adobe" : "text-ink/40"}`}>
+                  <p className="text-sm font-semibold text-ink/75">{labels.units}</p>
+                  <p className={`mt-1 font-display text-lg font-bold ${selected.length ? "text-adobe" : "text-ink/60"}`}>
                     {selected.length ? selected.join(", ") : labels.pickHint}
                   </p>
                 </div>
@@ -221,7 +223,7 @@ export default function SaleExplorer({
                 </div>
                 <Field label={labels.phone} name="phone" type="tel" autoComplete="tel" />
                 <label className="block">
-                  <span className="text-sm font-semibold text-ink/60">{labels.message}</span>
+                  <span className="text-sm font-semibold text-ink/75">{labels.message}</span>
                   <textarea
                     name="message"
                     rows={3}
