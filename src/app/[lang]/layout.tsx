@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const t = getDictionary(lang);
   return {
     metadataBase: new URL(SITE_URL),
-    title: { default: t.meta.siteTitle, template: "%s · Desert Moon Hotel" },
+    title: { default: t.meta.siteTitle, template: "%s · Cerritos Beach Hotel Desert Moon" },
     description: t.meta.siteDescription,
     alternates: {
       canonical: `/${lang}`,
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       title: t.meta.siteTitle,
       description: t.meta.siteDescription,
       url: `/${lang}`,
-      siteName: "Desert Moon Hotel",
+      siteName: "Cerritos Beach Hotel Desert Moon",
       images: [{ url: "/images/og-default.jpg", width: 1200, height: 630 }],
       locale: t.meta.ogLocale,
       type: "website",

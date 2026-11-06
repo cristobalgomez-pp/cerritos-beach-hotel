@@ -84,7 +84,7 @@ export default function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
 
         <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-white/10 pt-6 text-sm text-white/60 md:col-span-12">
           <p>
-            © {new Date().getFullYear()} Desert Moon Hotel. {t.footer.rights}
+            © {new Date().getFullYear()} Cerritos Beach Hotel Desert Moon. {t.footer.rights}
           </p>
           <Link href={localePath(lang, "/privacy")} className="inline-block py-1.5 hover:text-white">
             {t.footer.privacy}

@@ -1,6 +1,6 @@
 const en = {
   meta: {
-    siteTitle: "Desert Moon Hotel · Cerritos Beach, Baja California Sur",
+    siteTitle: "Cerritos Beach Hotel Desert Moon · Surf hotel in Cerritos Beach, Baja California Sur",
     siteDescription:
       "A 13-room surf hotel in Cerritos Beach, the closest to the surf point. Infinity pool, free breakfast, rooftop bar and ocean-view rooms, 15 minutes from Todos Santos.",
     ogLocale: "en_US",

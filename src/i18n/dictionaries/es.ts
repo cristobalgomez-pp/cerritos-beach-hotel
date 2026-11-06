@@ -2,7 +2,7 @@ import type { Dictionary } from "./en";
 
 const es: Dictionary = {
   meta: {
-    siteTitle: "Desert Moon Hotel · Playa Cerritos, Baja California Sur",
+    siteTitle: "Cerritos Beach Hotel Desert Moon · Hotel de surf en Playa Cerritos, Baja California Sur",
     siteDescription:
       "Hotel de surf con 13 cuartos en Playa Cerritos, el más cercano al punto de surf. Alberca infinita, desayuno incluido, bar en la azotea y cuartos con vista al mar, a 15 minutos de Todos Santos.",
     ogLocale: "es_MX",
