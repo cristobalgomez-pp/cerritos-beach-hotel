@@ -265,7 +265,7 @@ const en = {
     noPlanets: "No bright planets tonight. Look for the stars instead.",
     planets: { mercury: "Mercury", venus: "Venus", mars: "Mars", jupiter: "Jupiter", saturn: "Saturn" },
     directions: { N: "north", NE: "northeast", E: "east", SE: "southeast", S: "south", SW: "southwest", W: "west", NW: "northwest" },
-    planetLine: (dir: string, time: string) => `Highest around ${time}, toward the ${dir}`,
+    planetLine: (dir: string, time: string) => `Best around ${time}, toward the ${dir}`,
     brightness: { veryBright: "Very bright", bright: "Bright", visible: "Visible" },
     showerTitle: "Next meteor shower",
     showers: {

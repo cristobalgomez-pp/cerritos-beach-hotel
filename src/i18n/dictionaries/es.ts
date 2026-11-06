@@ -269,7 +269,7 @@ const es: Dictionary = {
     noPlanets: "Hoy no hay planetas brillantes. Toca ver estrellas.",
     planets: { mercury: "Mercurio", venus: "Venus", mars: "Marte", jupiter: "Júpiter", saturn: "Saturno" },
     directions: { N: "el norte", NE: "el noreste", E: "el oriente", SE: "el sureste", S: "el sur", SW: "el suroeste", W: "el poniente", NW: "el noroeste" },
-    planetLine: (dir: string, time: string) => `Más alto hacia las ${time}, hacia ${dir}`,
+    planetLine: (dir: string, time: string) => `Mejor hacia las ${time}, mirando hacia ${dir}`,
     brightness: { veryBright: "Muy brillante", bright: "Brillante", visible: "Visible" },
     showerTitle: "Próxima lluvia de estrellas",
     showers: {
