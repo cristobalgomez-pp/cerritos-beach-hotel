@@ -5,7 +5,7 @@ import { CONTACT } from "@/lib/constants";
  * Aviso de privacidad (LFPDPPP, DOF 20-mar-2025).
  * Draft: have it reviewed by a lawyer before launch, and fill in the legal owner name below.
  */
-export const PRIVACY_OWNER = "Desert Moon Hotel"; // TODO: razón social o nombre de la persona física titular
+export const PRIVACY_OWNER = "Wave Sema, S. de R.L. de C.V.";
 export const PRIVACY_UPDATED = { en: "November 6, 2026", es: "6 de noviembre de 2026" } as const;
 
 export interface PrivacySection {
