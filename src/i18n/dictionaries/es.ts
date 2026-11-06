@@ -304,7 +304,7 @@ const es: Dictionary = {
       "{count} departamentos a la venta dentro del hotel, a unos pasos del punto de surf de Playa Cerritos. Úsalo en tus vacaciones, vive aquí o adminístralo a tu manera.",
     pickTitle: "Elige tu departamento",
     pickIntro:
-      "El hotel tiene siete torres escalonadas con dos departamentos cada una: el A es el de arriba y el B el de abajo. Están acomodadas como se ve el edificio en persona, de la torre 7 a la 1. Toca los departamentos disponibles que te interesen; tócalos otra vez para quitarlos.",
+      "El hotel tiene siete torres escalonadas con dos departamentos cada una: el A es el de arriba y el B el de abajo. Están acomodadas como se ve el edificio en persona, de la torre 7 (la más alta, justo debajo del restaurante, la alberca y los penthouses) a la 1. Toca los departamentos disponibles que te interesen; tócalos otra vez para quitarlos.",
     tower: "Torre",
     upper: "Departamento de arriba",
     lower: "Departamento de abajo",
