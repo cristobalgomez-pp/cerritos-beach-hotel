@@ -34,17 +34,18 @@ export const SOCIAL = {
   facebook: "https://www.facebook.com/desertmoonhotel",
 } as const;
 
+// Rental desks at Los Cabos airport (SJD). Hertz has no stable page for its SJD desk, so it links to its San José del Cabo search.
 export const RENT_A_CAR = [
   {
     name: "Alamo",
-    url: "https://www.alamo.com/es/oficinas-de-alquiler-de-autos/mx/apto-int-de-los-cabos-kk54.html",
+    url: "https://www.alamo.com/en/car-rental-locations/mx/los-cabos-international-airport-kk54.html",
   },
   {
     name: "Hertz",
-    url: "https://www.hertz.com/rentacar/location/m%C3%A9xico/sanjosedelcabo/SJDT50",
+    url: "https://www.hertz.com/us/en/location/mexico/sanjosedelcabo",
   },
   {
     name: "Avis",
-    url: "https://avis.mx/",
+    url: "https://www.avis.com/en/locations/lat/mx/san-jose-del-cabo/sjd",
   },
 ] as const;
