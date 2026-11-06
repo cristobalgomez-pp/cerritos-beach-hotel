@@ -64,7 +64,7 @@ export async function POST(request: Request) {
     method: "POST",
     headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      from: process.env.RESEND_FROM ?? "Desert Moon Hotel <web@cerritosbeachhotel.com>",
+      from: process.env.RESEND_FROM ?? "Cerritos Beach Hotel Desert Moon <web@cerritosbeachhotel.com>",
       to: INQUIRY_RECIPIENTS,
       reply_to: email,
       subject: `Interesado en depto ${units.map((u) => u.id).join(", ") || "Desert Moon"}: ${name}`,

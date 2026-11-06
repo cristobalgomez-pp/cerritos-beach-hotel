@@ -25,6 +25,7 @@ export function getHotelSchema(lang: Locale) {
     "@context": "https://schema.org",
     "@type": "Hotel",
     name: HOTEL.name,
+    alternateName: ["Cerritos Beach Hotel", "Desert Moon Hotel", "Desert Moon"],
     description: t.meta.siteDescription,
     url: `${SITE_URL}/${lang}`,
     telephone: CONTACT.phonePrimary,
@@ -56,7 +57,7 @@ export function getRestaurantSchema(lang: Locale) {
   return {
     "@context": "https://schema.org",
     "@type": "BarOrPub",
-    name: "Rip Tide Bar & Grill — Desert Moon Hotel",
+    name: "Rip Tide Bar & Grill — Cerritos Beach Hotel Desert Moon",
     description: t.restaurant.intro,
     url: `${SITE_URL}/${lang}/restaurant`,
     telephone: CONTACT.phonePrimary,

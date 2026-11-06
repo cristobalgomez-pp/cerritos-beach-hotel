@@ -37,7 +37,7 @@ export default async function Home({ params }: Props) {
           slides={[
             { src: "/images/hd/beach-panorama.jpg", alt: "Cerritos Beach seen from the hotel" },
             { src: "/images/hd/pool-building.jpg", alt: "Infinity pool in front of Desert Moon" },
-            { src: "/images/hd/facade.jpg", alt: "Desert Moon Hotel, Cerritos Beach" },
+            { src: "/images/hd/facade.jpg", alt: "Cerritos Beach Hotel Desert Moon" },
             { src: "/images/hd/sunset-ocean.jpg", alt: "Sunset over the Pacific from the hotel" },
           ]}
         />
