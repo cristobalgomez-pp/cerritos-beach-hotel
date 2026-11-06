@@ -329,6 +329,7 @@ const es: Dictionary = {
     success: "¡Gracias! Recibimos tu mensaje y te contestamos pronto.",
     error: "No pudimos enviar tu mensaje. Intenta de nuevo o escríbenos a",
     required: "Escribe tu nombre y un correo válido.",
+    consent: "Al enviar, aceptas nuestro",
   },
   footer: {
     tagline: "Hotel de surf en Playa Cerritos, Baja California Sur.",
@@ -336,6 +337,7 @@ const es: Dictionary = {
     contact: "Contacto",
     follow: "Síguenos",
     rights: "Todos los derechos reservados.",
+    privacy: "Aviso de privacidad",
   },
   notFound: {
     title: "Esta página se la llevó la corriente",

@@ -3,7 +3,7 @@ import { locales } from "@/i18n/config";
 import { SITE_URL } from "@/lib/constants";
 import { ROOMS } from "@/lib/rooms";
 
-const PATHS = ["", "/rooms", ...ROOMS.map((r) => `/rooms/${r.slug}`), "/restaurant", "/activities", "/about", "/for-sale", "/contact"];
+const PATHS = ["", "/rooms", ...ROOMS.map((r) => `/rooms/${r.slug}`), "/restaurant", "/activities", "/about", "/for-sale", "/contact", "/privacy"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return PATHS.flatMap((path) =>

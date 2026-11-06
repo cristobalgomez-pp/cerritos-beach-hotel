@@ -325,6 +325,7 @@ const en = {
     success: "Thanks! We got your inquiry and will reply soon.",
     error: "We couldn't send your inquiry. Please try again or write to",
     required: "Please fill in your name and a valid email.",
+    consent: "By sending, you accept our",
   },
   footer: {
     tagline: "Surf hotel in Cerritos Beach, Baja California Sur.",
@@ -332,6 +333,7 @@ const en = {
     contact: "Contact",
     follow: "Follow us",
     rights: "All rights reserved.",
+    privacy: "Privacy notice",
   },
   notFound: {
     title: "This page drifted out to sea",

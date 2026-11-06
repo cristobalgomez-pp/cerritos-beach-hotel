@@ -82,9 +82,14 @@ export default function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
           </div>
         </div>
 
-        <p className="border-t border-white/10 pt-6 text-sm text-white/50 md:col-span-12">
-          © {new Date().getFullYear()} Desert Moon Hotel. {t.footer.rights}
-        </p>
+        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-white/10 pt-6 text-sm text-white/60 md:col-span-12">
+          <p>
+            © {new Date().getFullYear()} Desert Moon Hotel. {t.footer.rights}
+          </p>
+          <Link href={localePath(lang, "/privacy")} className="inline-block py-1.5 hover:text-white">
+            {t.footer.privacy}
+          </Link>
+        </div>
       </div>
     </footer>
   );
