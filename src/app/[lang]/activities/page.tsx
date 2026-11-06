@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) return {};
   const t = getDictionary(lang);
-  return pageMetadata(lang, "/activities", t.activities.title, t.activities.intro, "/images/surf/surfer.jpg");
+  return pageMetadata(lang, "/activities", t.activities.title, t.activities.intro, "/images/hd/coast-vertical.jpg");
 }
 
 const directionsTo = ([lon, lat]: [number, number]) =>
@@ -27,7 +27,7 @@ export default async function ActivitiesPage({ params }: Props) {
 
   return (
     <>
-      <PageHero title={a.title} intro={a.intro} image="/images/surf/surfer.jpg" imageAlt="Surfer carving a wave" />
+      <PageHero title={a.title} intro={a.intro} image="/images/hd/coast-vertical.jpg" imageAlt="Cerritos coastline and mountains" />
 
       {/* Surf comes first: it's why most guests are here */}
       <section className="mx-auto grid max-w-7xl gap-10 px-4 py-20 md:px-8 md:py-28 lg:grid-cols-12 lg:items-center">

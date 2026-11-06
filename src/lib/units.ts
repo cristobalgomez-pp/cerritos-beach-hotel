@@ -17,7 +17,7 @@ export interface Unit {
 
 const PRICE_USD: Record<UnitLevel, number> = { upper: 195_000, lower: 220_000 };
 
-const SOLD = new Set(["1A", "1B", "2B", "3B"]);
+const SOLD = new Set(["1A", "1B", "3B"]);
 
 export const TOWERS = [1, 2, 3, 4, 5, 6, 7];
 

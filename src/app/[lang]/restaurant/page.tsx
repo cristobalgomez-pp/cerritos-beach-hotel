@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   if (!isLocale(lang)) return {};
   const t = getDictionary(lang);
-  return pageMetadata(lang, "/restaurant", t.restaurant.title, t.restaurant.intro, "/images/hotel/rooftop-terrace.jpg");
+  return pageMetadata(lang, "/restaurant", t.restaurant.title, t.restaurant.intro, "/images/hd/terrace-umbrellas.jpg");
 }
 
 // Photos for each section of the dictionary, in the same order
@@ -22,7 +22,7 @@ const SECTION_PHOTOS = [
     { src: "/images/restaurant/rip-tide-sign.jpg", alt: "Desert Moon Rip Tide Bar & Grill sign" },
   ],
   [
-    { src: "/images/restaurant/rock-wall.jpg", alt: "Wall of rocks painted by guests" },
+    { src: "/images/hd/rock-wall.jpg", alt: "Wall of rocks painted by guests" },
     { src: "/images/restaurant/rock-window.jpg", alt: "Painted rock wall framing the desert" },
   ],
   [
@@ -45,8 +45,8 @@ export default async function RestaurantPage({ params }: Props) {
       <PageHero
         title={t.restaurant.title}
         intro={t.restaurant.intro}
-        image="/images/hotel/rooftop-terrace.jpg"
-        imageAlt="Rooftop terrace with red umbrellas"
+        image="/images/hd/terrace-umbrellas.jpg"
+        imageAlt="Terrace with umbrellas overlooking the ocean"
       />
 
       <div className="mx-auto max-w-6xl space-y-20 px-4 py-20 md:space-y-28 md:px-8 md:py-28">

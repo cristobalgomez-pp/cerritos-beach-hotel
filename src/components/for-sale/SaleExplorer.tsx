@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { Unit } from "@/lib/units";
 
 export interface SaleLabels {
@@ -13,7 +13,8 @@ export interface SaleLabels {
   sold: string;
   selected: string;
   formTitle: string;
-  formIntro: string;
+  pickHint: string;
+  close: string;
   name: string;
   email: string;
   phone: string;
@@ -29,6 +30,9 @@ export interface SaleLabels {
 type Status = "idle" | "sending" | "sent" | "error";
 
 const usd = (n: number) => `$${Math.round(n / 1000)}k`;
+
+// Vertical step between towers, so the diagram reads like the stepped building
+const STEP = 28;
 
 export default function SaleExplorer({
   units,
@@ -46,14 +50,13 @@ export default function SaleExplorer({
   const [selected, setSelected] = useState<string[]>([]);
   const [status, setStatus] = useState<Status>("idle");
   const [validation, setValidation] = useState("");
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  const openForm = () => dialogRef.current?.showModal();
+  const closeForm = () => dialogRef.current?.close();
 
   const toggle = (id: string) =>
     setSelected((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
-
-  const pickAndScroll = (id: string) => {
-    if (!selected.includes(id)) setSelected((s) => [...s, id]);
-    document.getElementById("inquiry")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -89,19 +92,18 @@ export default function SaleExplorer({
   const unit = (tower: number, letter: "A" | "B") => units.find((u) => u.id === `${tower}${letter}`);
 
   return (
-    <>
-      {/* Building diagram: one column per tower, A on top and B below */}
-      <section className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
-        <div className="max-w-2xl">
+    <section className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
+      <div className="relative">
+        <div className="max-w-xl lg:max-w-[calc(4/7*100%-1.5rem)]">
           <h2 className="text-4xl font-bold md:text-5xl">{labels.pickTitle}</h2>
           <p className="mt-4 text-lg text-ink/75">{labels.pickIntro}</p>
         </div>
 
+        {/* Building diagram: one column per tower, A on top and B below, stepped like the real building */}
         <div className="mt-12 overflow-x-auto pb-2">
-          {/* Stepped like the real building: the first column is the highest tower */}
           <div className="grid min-w-[640px] grid-cols-7 gap-3">
             {towers.map((tower, i) => (
-              <div key={tower} className="flex flex-col gap-2" style={{ paddingTop: `${i * 1.75}rem` }}>
+              <div key={tower} className="flex flex-col gap-2" style={{ paddingTop: i * STEP }}>
                 {(["A", "B"] as const).map((letter) => {
                   const u = unit(tower, letter);
                   if (!u) return null;
@@ -112,7 +114,7 @@ export default function SaleExplorer({
                       key={u.id}
                       type="button"
                       disabled={sold}
-                      onClick={() => pickAndScroll(u.id)}
+                      onClick={() => toggle(u.id)}
                       aria-pressed={isSelected}
                       aria-label={`${u.id}, ${letter === "A" ? labels.upper : labels.lower}, ${
                         sold ? labels.sold : `${labels.available}, USD ${u.priceUsd.toLocaleString("en-US")}`
@@ -151,89 +153,112 @@ export default function SaleExplorer({
           </span>
           <span>A = {labels.upper.toLowerCase()} · B = {labels.lower.toLowerCase()}</span>
         </div>
-      </section>
 
-      {/* Inquiry form */}
-      <section id="inquiry" className="scroll-mt-24 bg-sand">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-20 md:px-8 md:py-28 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <h2 className="text-4xl font-bold md:text-5xl">{labels.formTitle}</h2>
-            <p className="mt-4 text-lg leading-relaxed text-ink/75">{labels.formIntro}</p>
-          </div>
-
-          {status === "sent" ? (
-            <p className="rounded-3xl bg-white p-8 font-display text-2xl font-bold lg:col-span-7" role="status">
-              {labels.success}
-            </p>
-          ) : (
-            <form onSubmit={onSubmit} noValidate className="space-y-5 rounded-3xl bg-white p-6 md:p-8 lg:col-span-7">
-              <fieldset>
-                <legend className="text-sm font-semibold text-ink/70">{labels.units}</legend>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {units
-                    .filter((u) => u.status === "available")
-                    .map((u) => {
-                      const on = selected.includes(u.id);
-                      return (
-                        <button
-                          key={u.id}
-                          type="button"
-                          onClick={() => toggle(u.id)}
-                          aria-pressed={on}
-                          className={`rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${
-                            on ? "border-adobe bg-adobe text-white" : "border-ink/20 hover:border-ink"
-                          }`}
-                        >
-                          {u.id}
-                        </button>
-                      );
-                    })}
-                </div>
-              </fieldset>
-
-              <div className="grid gap-5 sm:grid-cols-2">
-                <Field label={labels.name} name="name" autoComplete="name" required />
-                <Field label={labels.email} name="email" type="email" autoComplete="email" required />
-              </div>
-              <Field label={labels.phone} name="phone" type="tel" autoComplete="tel" />
-              <label className="block">
-                <span className="text-sm font-semibold text-ink/70">{labels.message}</span>
-                <textarea
-                  name="message"
-                  rows={4}
-                  className="mt-2 w-full rounded-xl border border-ink/20 bg-bone px-4 py-3 outline-none focus:border-pacific"
-                />
-              </label>
-
-              {/* Honeypot: hidden from people, bots fill it in */}
-              <input type="text" name="company" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
-
-              {validation && (
-                <p className="text-sm font-semibold text-adobe" role="alert">
-                  {validation}
-                </p>
-              )}
-              {status === "error" && (
-                <p className="text-sm font-semibold text-adobe" role="alert">
-                  {labels.error}{" "}
-                  <a href={`mailto:${fallbackEmail}`} className="underline">
-                    {fallbackEmail}
-                  </a>
-                </p>
-              )}
-
-              <button
-                type="submit"
-                disabled={status === "sending"}
-                className="w-full rounded-full bg-adobe py-4 text-base font-semibold text-white transition-colors hover:bg-[#a83e23] disabled:opacity-60"
-              >
-                {status === "sending" ? labels.sending : labels.send}
-              </button>
-            </form>
-          )}
+        {/* Same pop-up from the bottom, for people who scrolled past the corner (the corner prompt already sits here on small screens) */}
+        <div className="mt-10 hidden flex-col items-center gap-3 lg:flex">
+          <button
+            type="button"
+            onClick={openForm}
+            className="rounded-full bg-adobe px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#a83e23]"
+          >
+            {labels.formTitle}
+          </button>
+          {selected.length > 0 && <span className="font-display text-lg font-bold text-adobe">{selected.join(", ")}</span>}
         </div>
-      </section>
-    </>
+
+        {/* Subtle prompt in the empty top-right corner (below the map on small screens) */}
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-ink/10 pt-5 lg:absolute lg:right-0 lg:top-2 lg:mt-0 lg:w-[calc(3/7*100%-0.5rem)] lg:flex-col lg:items-start lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
+          <div>
+            <p className="text-sm font-semibold text-ink/60">{labels.units}</p>
+            <p className={`mt-1 font-display text-xl font-bold ${selected.length ? "text-adobe" : "text-ink/40"}`} aria-live="polite">
+              {selected.length ? selected.join(", ") : labels.pickHint}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={openForm}
+            className="rounded-full bg-adobe px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#a83e23]"
+          >
+            {labels.formTitle}
+          </button>
+        </div>
+
+        <dialog
+          ref={dialogRef}
+          aria-labelledby="inquiry-title"
+          className="m-auto w-[calc(100%-2rem)] max-w-lg rounded-3xl bg-bone p-0 text-ink shadow-2xl backdrop:bg-night/60"
+          onClick={(e) => {
+            if (e.target === dialogRef.current) closeForm(); // click on the backdrop
+          }}
+        >
+          <div className="p-6 md:p-8">
+            <div className="flex items-start justify-between gap-4">
+              <h3 id="inquiry-title" className="text-2xl font-bold">
+                {labels.formTitle}
+              </h3>
+              <button type="button" onClick={closeForm} aria-label={labels.close} className="-mr-2 -mt-1 rounded-full p-2 hover:bg-ink/5">
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path d="M6 6l12 12M18 6L6 18" />
+                </svg>
+              </button>
+            </div>
+
+            {status === "sent" ? (
+              <p className="mt-6 font-display text-xl font-bold" role="status">
+                {labels.success}
+              </p>
+            ) : (
+              <form onSubmit={onSubmit} noValidate className="mt-5 space-y-4">
+                <div>
+                  <p className="text-sm font-semibold text-ink/60">{labels.units}</p>
+                  <p className={`mt-1 font-display text-lg font-bold ${selected.length ? "text-adobe" : "text-ink/40"}`}>
+                    {selected.length ? selected.join(", ") : labels.pickHint}
+                  </p>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Field label={labels.name} name="name" autoComplete="name" required />
+                  <Field label={labels.email} name="email" type="email" autoComplete="email" required />
+                </div>
+                <Field label={labels.phone} name="phone" type="tel" autoComplete="tel" />
+                <label className="block">
+                  <span className="text-sm font-semibold text-ink/60">{labels.message}</span>
+                  <textarea
+                    name="message"
+                    rows={3}
+                    className="mt-1 w-full rounded-xl border border-ink/15 bg-white px-3 py-2 outline-none focus:border-pacific"
+                  />
+                </label>
+
+                {/* Honeypot: hidden from people, bots fill it in */}
+                <input type="text" name="company" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+
+                {validation && (
+                  <p className="text-sm font-semibold text-adobe" role="alert">
+                    {validation}
+                  </p>
+                )}
+                {status === "error" && (
+                  <p className="text-sm font-semibold text-adobe" role="alert">
+                    {labels.error}{" "}
+                    <a href={`mailto:${fallbackEmail}`} className="underline">
+                      {fallbackEmail}
+                    </a>
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="w-full rounded-full bg-adobe py-3 text-base font-semibold text-white transition-colors hover:bg-[#a83e23] disabled:opacity-60"
+                >
+                  {status === "sending" ? labels.sending : labels.send}
+                </button>
+              </form>
+            )}
+          </div>
+        </dialog>
+      </div>
+    </section>
   );
 }
 
@@ -258,7 +283,7 @@ function Field({
         type={type}
         autoComplete={autoComplete}
         required={required}
-        className="mt-2 w-full rounded-xl border border-ink/20 bg-bone px-4 py-3 outline-none focus:border-pacific"
+        className="mt-1 w-full rounded-xl border border-ink/15 bg-white px-3 py-2 outline-none focus:border-pacific"
       />
     </label>
   );

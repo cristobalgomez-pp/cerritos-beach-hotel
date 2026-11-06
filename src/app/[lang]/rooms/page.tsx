@@ -24,7 +24,7 @@ export default async function RoomsPage({ params }: Props) {
 
   return (
     <>
-      <PageHero title={t.rooms.title} intro={t.rooms.intro} image="/images/rooms/pent-house-a/cover.jpg" imageAlt="Pent House A opening onto its terrace" />
+      <PageHero title={t.rooms.title} intro={t.rooms.intro} image="/images/hd/balcony-ocean.jpg" imageAlt="Balcony looking out to Cerritos Beach" />
 
       <div className="mx-auto max-w-7xl space-y-20 px-4 py-20 md:space-y-28 md:px-8 md:py-28">
         {ROOMS.map((room, i) => {

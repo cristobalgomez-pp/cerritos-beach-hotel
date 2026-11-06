@@ -10,6 +10,10 @@ import HeroSlideshow from "@/components/home/HeroSlideshow";
 import RoomTile from "@/components/rooms/RoomTile";
 import BookButton from "@/components/BookButton";
 import FeatureList from "@/components/FeatureList";
+import TonightSky from "@/components/sky/TonightSky";
+
+// The sky section uses live data (moon, clouds): rebuild this page at most once an hour
+export const revalidate = 3600;
 
 type Props = { params: Promise<{ lang: string }> };
 
@@ -31,10 +35,10 @@ export default async function Home({ params }: Props) {
       <section className="relative isolate flex min-h-[600px] h-[100svh] items-end text-white">
         <HeroSlideshow
           slides={[
-            { src: "/images/hotel/facade.jpg", alt: "Desert Moon Hotel, Cerritos Beach" },
-            { src: "/images/hotel/rooftop-terrace.jpg", alt: "Rooftop terrace with red umbrellas" },
-            { src: "/images/surf/big-wave.jpg", alt: "Surfer on a big wave" },
-            { src: "/images/surf/surfer.jpg", alt: "Surfer carving a wave" },
+            { src: "/images/hd/beach-panorama.jpg", alt: "Cerritos Beach seen from the hotel" },
+            { src: "/images/hd/pool-building.jpg", alt: "Infinity pool in front of Desert Moon" },
+            { src: "/images/hd/facade.jpg", alt: "Desert Moon Hotel, Cerritos Beach" },
+            { src: "/images/hd/sunset-ocean.jpg", alt: "Sunset over the Pacific from the hotel" },
           ]}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-night/85 via-night/25 to-night/30" aria-hidden="true" />
@@ -80,8 +84,8 @@ export default async function Home({ params }: Props) {
         <div className="relative lg:col-span-6">
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl">
             <Image
-              src="/images/rooms/king-suite/1.jpg"
-              alt="Cerritos Beach seen from one of the rooms"
+              src="/images/hd/balcony-ocean.jpg"
+              alt="Balcony looking out to Cerritos Beach"
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover"
@@ -89,7 +93,7 @@ export default async function Home({ params }: Props) {
           </div>
           <div className="absolute -bottom-10 -left-4 hidden w-[42%] overflow-hidden rounded-2xl border-[6px] border-bone sm:block md:-left-10">
             <div className="relative aspect-square">
-              <Image src="/images/hotel/pool-edge.jpg" alt="Infinity pool edge" fill sizes="260px" className="object-cover" />
+              <Image src="/images/hd/pool-fountain.jpg" alt="Infinity pool" fill sizes="260px" className="object-cover" />
             </div>
           </div>
         </div>
@@ -139,7 +143,7 @@ export default async function Home({ params }: Props) {
       <section className="mx-auto grid max-w-7xl gap-12 px-4 py-20 md:px-8 md:py-28 lg:grid-cols-12 lg:items-center">
         <div className="grid grid-cols-2 gap-3 lg:col-span-7">
           {[
-            { src: "/images/restaurant/rock-wall.jpg", alt: "Wall of painted rocks" },
+            { src: "/images/hd/rock-wall.jpg", alt: "Wall of painted rocks" },
             { src: "/images/restaurant/food.jpg", alt: "Nachos at the bar" },
             { src: "/images/restaurant/friends.jpg", alt: "Friends with drinks on the terrace" },
             { src: "/images/restaurant/pina-colada.jpg", alt: "Piña colada served in a pineapple" },
@@ -160,6 +164,8 @@ export default async function Home({ params }: Props) {
           </Link>
         </div>
       </section>
+
+      <TonightSky lang={lang} t={t} />
 
       <FeatureList title={t.features.title} items={t.features.items} />
 
