@@ -91,7 +91,7 @@ export default function Header({ lang, labels }: { lang: Locale; labels: HeaderL
             href={switchHref}
             hrefLang={otherLang}
             lang={otherLang}
-            className="rounded-full px-2 py-1 text-sm font-semibold transition-opacity hover:opacity-70"
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full px-2 text-sm font-semibold transition-opacity hover:opacity-70"
             title={labels.language}
           >
             {labels.languageShort}

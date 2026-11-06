@@ -31,9 +31,6 @@ type Status = "idle" | "sending" | "sent" | "error";
 
 const usd = (n: number) => `$${Math.round(n / 1000)}k`;
 
-// Vertical step between towers, so the diagram reads like the stepped building
-const STEP = 28;
-
 export default function SaleExplorer({
   units,
   towers,
@@ -100,10 +97,11 @@ export default function SaleExplorer({
         </div>
 
         {/* Building diagram: one column per tower, A on top and B below, stepped like the real building */}
-        <div className="mt-12 overflow-x-auto pb-2">
-          <div className="grid min-w-[640px] grid-cols-7 gap-3">
+        {/* All 7 towers fit on a phone: smaller boxes and a smaller step below the sm breakpoint */}
+        <div className="mt-12 [--step:14px] sm:[--step:28px]">
+          <div className="grid grid-cols-7 gap-1.5 sm:gap-3">
             {towers.map((tower, i) => (
-              <div key={tower} className="flex flex-col gap-2" style={{ paddingTop: i * STEP }}>
+              <div key={tower} className="flex flex-col gap-1.5 sm:gap-2" style={{ paddingTop: `calc(var(--step) * ${i})` }}>
                 {(["A", "B"] as const).map((letter) => {
                   const u = unit(tower, letter);
                   if (!u) return null;
@@ -116,7 +114,7 @@ export default function SaleExplorer({
                       disabled={sold}
                       onClick={() => toggle(u.id)}
                       aria-pressed={isSelected}
-                      className={`flex aspect-[4/3] flex-col justify-between rounded-2xl border-2 p-3 text-left transition-colors ${
+                      className={`relative flex aspect-square flex-col justify-between rounded-xl border-2 p-1.5 text-left transition-colors sm:aspect-[4/3] sm:rounded-2xl sm:p-3 ${
                         sold
                           ? "cursor-not-allowed border-transparent bg-ink/5 text-ink/35"
                           : isSelected
@@ -124,8 +122,9 @@ export default function SaleExplorer({
                             : "border-adobe/30 bg-white text-ink hover:border-adobe"
                       }`}
                     >
-                      <span className="font-display text-2xl font-extrabold tracking-tight">{u.id}</span>
-                      <span className="text-sm font-semibold">
+                      <span className="font-display text-base font-extrabold tracking-tight sm:text-2xl">{u.id}</span>
+                      {/* On phones the colour already says sold/selected; only the price is shown */}
+                      <span className={`text-[11px] font-semibold leading-none sm:text-sm ${sold || isSelected ? "hidden sm:inline" : ""}`}>
                         {sold ? labels.sold : isSelected ? labels.selected : usd(u.priceUsd)}
                       </span>
                       <span className="sr-only">
@@ -136,8 +135,9 @@ export default function SaleExplorer({
                     </button>
                   );
                 })}
-                <p className="pt-1 text-center text-sm font-semibold text-ink/75">
-                  {labels.tower} {tower}
+                <p className="pt-1 text-center text-xs font-semibold text-ink/75 sm:text-sm">
+                  <span className="hidden sm:inline">{labels.tower} </span>
+                  {tower}
                 </p>
               </div>
             ))}

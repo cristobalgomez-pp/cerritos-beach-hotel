@@ -28,10 +28,10 @@ export default function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
 
         <div className="md:col-span-2">
           <h2 className="font-sans text-sm font-semibold tracking-normal text-white">{t.footer.explore}</h2>
-          <ul className="mt-4 space-y-2">
+          <ul className="mt-3 space-y-0.5">
             {explore.map((l) => (
               <li key={l.href}>
-                <Link href={localePath(lang, l.href)} className="hover:text-white">
+                <Link href={localePath(lang, l.href)} className="inline-block py-1.5 hover:text-white">
                   {l.label}
                 </Link>
               </li>
@@ -41,10 +41,10 @@ export default function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
 
         <div className="md:col-span-2">
           <h2 className="font-sans text-sm font-semibold tracking-normal text-white">{t.nav.rooms}</h2>
-          <ul className="mt-4 space-y-2">
+          <ul className="mt-3 space-y-0.5">
             {ROOMS.map((r) => (
               <li key={r.slug}>
-                <Link href={localePath(lang, `/rooms/${r.slug}`)} className="hover:text-white">
+                <Link href={localePath(lang, `/rooms/${r.slug}`)} className="inline-block py-1.5 hover:text-white">
                   {r.name}
                 </Link>
               </li>
@@ -54,29 +54,29 @@ export default function Footer({ lang, t }: { lang: Locale; t: Dictionary }) {
 
         <div className="md:col-span-4">
           <h2 className="font-sans text-sm font-semibold tracking-normal text-white">{t.footer.contact}</h2>
-          <address className="mt-4 space-y-2 not-italic">
+          <address className="mt-3 space-y-0.5 not-italic">
             <p>
-              <a href={telHref(CONTACT.phonePrimary)} className="hover:text-white">
+              <a href={telHref(CONTACT.phonePrimary)} className="inline-block py-1.5 hover:text-white">
                 {CONTACT.phonePrimary}
               </a>
             </p>
             <p>
-              <a href={telHref(CONTACT.phoneSecondary)} className="hover:text-white">
+              <a href={telHref(CONTACT.phoneSecondary)} className="inline-block py-1.5 hover:text-white">
                 {CONTACT.phoneSecondary}
               </a>
             </p>
             <p>
-              <a href={`mailto:${CONTACT.email}`} className="hover:text-white">
+              <a href={`mailto:${CONTACT.email}`} className="inline-block py-1.5 hover:text-white">
                 {CONTACT.email}
               </a>
             </p>
             <p className="max-w-xs leading-relaxed">{CONTACT.address}</p>
           </address>
           <div className="mt-6 flex gap-5">
-            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="inline-block py-1.5 hover:text-white">
               Instagram
             </a>
-            <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+            <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer" className="inline-block py-1.5 hover:text-white">
               Facebook
             </a>
           </div>
