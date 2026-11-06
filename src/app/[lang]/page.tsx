@@ -32,7 +32,8 @@ export default async function Home({ params }: Props) {
   return (
     <>
       {/* Hero */}
-      <section className="relative isolate flex min-h-[600px] h-[100svh] items-end text-white">
+      {/* Phones: shorter hero so the copy and buttons sit higher and the next section peeks in */}
+      <section className="relative isolate flex h-[72svh] min-h-[520px] items-end text-white md:h-[100svh] md:min-h-[600px]">
         <HeroSlideshow
           slides={[
             { src: "/images/hd/beach-panorama.jpg", alt: "Cerritos Beach seen from the hotel" },
@@ -42,7 +43,7 @@ export default async function Home({ params }: Props) {
           ]}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-night/85 via-night/25 to-night/30" aria-hidden="true" />
-        <div className="relative mx-auto w-full max-w-7xl px-4 pb-14 md:px-8 md:pb-20">
+        <div className="relative mx-auto w-full max-w-7xl px-4 pb-10 md:px-8 md:pb-20">
           <h1>
             <span className="block font-display text-[clamp(3.5rem,13vw,10.5rem)] font-extrabold leading-[0.85] tracking-[-0.045em]">
               Desert Moon
