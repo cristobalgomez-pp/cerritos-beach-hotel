@@ -133,9 +133,9 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
                     </span>
                     <span className="font-display text-base font-bold sm:text-lg">{m.windKmh}</span>
                     <span className="-mt-1 text-[11px] text-white/60">km/h{m.rain ? ` · ${w.rain}` : ""}</span>
-                    <span className="flex gap-1" role="img" aria-label={w.ratings[m.rating]} title={w.ratings[m.rating]}>
+                    <span className="flex gap-0.5 sm:gap-1" role="img" aria-label={w.ratings[m.rating]} title={w.ratings[m.rating]}>
                       {[1, 2, 3, 4].map((d) => (
-                        <span key={d} className={`h-1.5 w-1.5 rounded-full ${d <= RATING_DOTS[m.rating] ? "bg-moon" : "bg-white/20"}`} />
+                        <span key={d} className={`h-1 w-1 rounded-full sm:h-1.5 sm:w-1.5 ${d <= RATING_DOTS[m.rating] ? "bg-moon" : "bg-white/20"}`} />
                       ))}
                     </span>
                   </li>

@@ -141,11 +141,11 @@ export default async function SkyPanel({ lang, t }: { lang: Locale; t: Dictionar
                   {i === 0 ? s.tonight : formatWeekday(n.date, lang)}
                 </span>
                 <MoonPhase illumination={n.moonIllumination} waxing={n.moonWaxing} size={36} className="h-7 w-7 sm:h-9 sm:w-9" />
-                <span className="flex gap-1" role="img" aria-label={s.ratings[n.rating]} title={s.ratings[n.rating]}>
+                <span className="flex gap-0.5 sm:gap-1" role="img" aria-label={s.ratings[n.rating]} title={s.ratings[n.rating]}>
                   {[1, 2, 3, 4].map((d) => (
                     <span
                       key={d}
-                      className={`h-1.5 w-1.5 rounded-full ${d <= RATING_DOTS[n.rating] ? "bg-moon" : "bg-white/20"}`}
+                      className={`h-1 w-1 rounded-full sm:h-1.5 sm:w-1.5 ${d <= RATING_DOTS[n.rating] ? "bg-moon" : "bg-white/20"}`}
                     />
                   ))}
                 </span>
