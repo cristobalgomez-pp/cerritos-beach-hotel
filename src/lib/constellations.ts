@@ -80,7 +80,7 @@ export const CONSTELLATIONS: ConstellationDef[] = [
   },
   {
     key: "canisMajor",
-    weight: 1.1,
+    weight: 1.25,
     stars: [
       [6.752, -16.72, -1.46], // 0 Sirius
       [6.378, -17.96, 2.0], // 1 Mirzam
