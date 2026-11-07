@@ -1,8 +1,9 @@
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/en";
+import DetailRow from "@/components/outlook/DetailRow";
 import MobileMore from "@/components/outlook/MobileMore";
 import { formatWeekday } from "@/lib/sky";
-import { getWhaleMornings, MONTH_ACTIVITY, seasonStatus, type WhaleRating } from "@/lib/whales";
+import { getWhaleMornings, MONTH_ACTIVITY, seasonStatus, SPECIES, type SpeciesKey, type WhaleRating } from "@/lib/whales";
 
 const RATING_DOTS: Record<WhaleRating, number> = { excellent: 4, good: 3, fair: 2, poor: 1 };
 
@@ -34,6 +35,31 @@ function Fluke({ label, className = "" }: { label: string; className?: string })
         <path d="M14 96 C28 92 42 92 56 96 C68 99 80 99 92 96 C106 92 120 92 134 96 C138 97 142 97 146 96" opacity="0.45" />
         <path d="M26 105 C40 102 54 102 68 105 M92 105 C106 102 120 102 134 105" opacity="0.25" />
       </g>
+    </svg>
+  );
+}
+
+function SpeciesIcon({ k }: { k: SpeciesKey }) {
+  if (k === "dolphins" || k === "orca") {
+    // Dorsal fin over the water
+    return (
+      <svg viewBox="0 0 24 24" className="h-7 w-7" aria-hidden="true">
+        <path d={k === "orca" ? "M8 17 C10 13 11 7 13 3 C13.5 8 15 13 18 17 Z" : "M7 17 C10 14 12 10 13 6 C14 10 16 14 19 17 Z"} fill="currentColor" />
+        <path d="M3 18.5 C6 17.5 9 17.5 12 18.5 C15 19.5 18 19.5 21 18.5" fill="none" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity="0.6" />
+      </svg>
+    );
+  }
+  // Tail fluke, bigger for the bigger whales
+  const scale = k === "blue" ? 1 : k === "humpback" ? 0.9 : 0.8;
+  return (
+    <svg viewBox="0 0 24 24" className="h-7 w-7" aria-hidden="true">
+      <g transform={`translate(12 18) scale(${scale}) translate(-12 -18)`}>
+        <path
+          fill="currentColor"
+          d="M10.4 18 C10.9 15.6 11.2 13.6 11.3 11.6 C9.2 11.2 6.5 10.3 4.6 8.6 C3.4 7.5 2.6 6.2 2.2 4.4 C3.5 5.2 5 5.5 6.4 5.6 C8.4 6.3 10.4 7.4 12 8.9 C13.6 7.4 15.6 6.3 17.6 5.6 C19 5.5 20.5 5.2 21.8 4.4 C21.4 6.2 20.6 7.5 19.4 8.6 C17.5 10.3 14.8 11.2 12.7 11.6 C12.8 13.6 13.1 15.6 13.6 18 Z"
+        />
+      </g>
+      <path d="M3 19.5 C6 18.5 9 18.5 12 19.5 C15 20.5 18 20.5 21 19.5" fill="none" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity="0.6" />
     </svg>
   );
 }
@@ -109,6 +135,42 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
             </span>
           </div>
         </div>
+      </div>
+
+      {/* Which species: one row each, details on tap */}
+      <div className="mt-8 md:mt-14">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+          <h4 className="text-lg font-bold md:text-xl">{w.species.title}</h4>
+          <p className="text-sm text-white/60">{w.species.hint}</p>
+        </div>
+        <ul className="mt-3 grid border-t border-white/10 lg:grid-cols-2 lg:items-start lg:gap-x-10 lg:border-t-0">
+          {SPECIES.map((sp) => {
+            const text = w.species.items[sp.key];
+            const inSeasonNow = sp.months.includes(season.month) && sp.months.length < 12;
+            return (
+              <DetailRow
+                key={sp.key}
+                icon={<SpeciesIcon k={sp.key} />}
+                title={text.name}
+                meta={`${text.when} · ${w.species.levels[sp.level]}`}
+                badge={inSeasonNow ? w.species.now : undefined}
+              >
+                <p>
+                  <span className="font-semibold text-white">{w.species.size}: </span>
+                  {text.size}
+                </p>
+                <p className="mt-2">
+                  <span className="font-semibold text-white">{w.species.howTo}: </span>
+                  {text.spot}
+                </p>
+                <p className="mt-2 text-white/70">
+                  <span className="font-semibold text-moon/90">{w.species.fact}: </span>
+                  {text.fact}
+                </p>
+              </DetailRow>
+            );
+          })}
+        </ul>
       </div>
 
       {season.inSeason && (

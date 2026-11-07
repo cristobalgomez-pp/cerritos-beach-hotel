@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
 import type { Locale } from "@/i18n/config";
+import DetailRow from "@/components/outlook/DetailRow";
 import type { Dictionary } from "@/i18n/dictionaries/en";
 import { CONSTELLATIONS, constellationsTonight, shapeOf, type ConstellationKey } from "@/lib/constellations";
 import { formatTime, type Night } from "@/lib/sky";
@@ -41,36 +41,6 @@ function ConstellationDrawing({ k, label, className = "" }: { k: ConstellationKe
   );
 }
 
-function Row({ icon, title, meta, badge, children }: { icon: ReactNode; title: string; meta: string; badge?: string; children: ReactNode }) {
-  return (
-    <li>
-      <details className="group border-b border-white/10 lg:border-t">
-        <summary className="flex min-h-14 cursor-pointer list-none items-center gap-3 py-3 [&::-webkit-details-marker]:hidden">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center text-moon">{icon}</span>
-          <span className="min-w-0 flex-1">
-            <span className="block font-semibold leading-tight">
-              {title}
-              {badge && <span className="ml-2 rounded-full bg-moon px-2 py-0.5 align-middle text-[10px] font-bold text-night">{badge}</span>}
-            </span>
-            <span className="block text-sm text-white/65">{meta}</span>
-          </span>
-          <svg
-            viewBox="0 0 24 24"
-            className="h-5 w-5 shrink-0 text-white/60 transition-transform group-open:rotate-180"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            aria-hidden="true"
-          >
-            <path d="M6 9l6 6 6-6" />
-          </svg>
-        </summary>
-        <div className="pb-5 pl-12 pr-2 text-sm leading-relaxed text-white/80">{children}</div>
-      </details>
-    </li>
-  );
-}
-
 /** "What to look for tonight": constellations, planets, the Milky Way core and the next meteor shower, one row each */
 export default function TonightList({ night, lang, t }: { night: Night; lang: Locale; t: Dictionary }) {
   const s = t.sky;
@@ -96,7 +66,7 @@ export default function TonightList({ night, lang, t }: { night: Night; lang: Lo
         const when = item.fromDusk ? c.fromDusk : c.from(formatTime(item.from, lang));
         const where = item.height === "overhead" ? c.heights.overhead : dir(item.direction);
         return (
-          <Row
+          <DetailRow
             key={item.key}
             icon={<ConstellationDrawing k={item.key} className="h-9 w-9" />}
             title={text.name}
@@ -116,12 +86,12 @@ export default function TonightList({ night, lang, t }: { night: Night; lang: Lo
                 </p>
               </div>
             </div>
-          </Row>
+          </DetailRow>
         );
       })}
 
       {planets.map((p) => (
-        <Row
+        <DetailRow
           key={p.key}
           icon={<span className="h-3.5 w-3.5 rounded-full bg-moon shadow-[0_0_12px_rgba(243,227,179,0.8)]" />}
           title={s.planets[p.key]}
@@ -131,11 +101,11 @@ export default function TonightList({ night, lang, t }: { night: Night; lang: Lo
             <span className="font-semibold text-white">{brightness(p.magnitude)}. </span>
             {s.planetWindow(formatTime(p.start, lang), formatTime(p.end, lang))} {s.planetLine(s.directions[p.direction], formatTime(p.best, lang))}.
           </p>
-        </Row>
+        </DetailRow>
       ))}
 
       {night.milkyWay && (
-        <Row
+        <DetailRow
           icon={
             <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
               <path d="M3 18 C8 14 14 10 21 5" stroke="currentColor" strokeWidth="5" strokeLinecap="round" opacity="0.35" />
@@ -146,10 +116,10 @@ export default function TonightList({ night, lang, t }: { night: Night; lang: Lo
           meta={`${formatTime(night.milkyWay.start, lang)} – ${formatTime(night.milkyWay.end, lang)}`}
         >
           <p>{s.milkyWayTip}</p>
-        </Row>
+        </DetailRow>
       )}
 
-      <Row
+      <DetailRow
         icon={
           <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" aria-hidden="true">
             <path d="M4 4l9 9M8 3l7 7M3 9l6 6" opacity="0.5" />
@@ -162,7 +132,7 @@ export default function TonightList({ night, lang, t }: { night: Night; lang: Lo
         <p>
           {s.showerRate(shower.perHour)}. {showerMoon}.
         </p>
-      </Row>
+      </DetailRow>
     </ul>
   );
 }
