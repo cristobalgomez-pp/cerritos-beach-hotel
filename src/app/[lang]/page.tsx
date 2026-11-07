@@ -11,6 +11,7 @@ import RoomTile from "@/components/rooms/RoomTile";
 import BookButton from "@/components/BookButton";
 import FeatureList from "@/components/FeatureList";
 import TonightSky from "@/components/sky/TonightSky";
+import WhaleWatch from "@/components/whales/WhaleWatch";
 
 // The sky section uses live data (moon, clouds): rebuild this page at most once an hour
 export const revalidate = 3600;
@@ -167,6 +168,8 @@ export default async function Home({ params }: Props) {
       </section>
 
       <TonightSky lang={lang} t={t} />
+
+      <WhaleWatch lang={lang} t={t} />
 
       <FeatureList title={t.features.title} items={t.features.items} />
 

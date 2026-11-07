@@ -282,7 +282,6 @@ const en = {
     showerMoon: { dark: "Little moonlight: great conditions", some: "Some moonlight that night", bright: "A bright moon will hide the fainter ones" },
     seasonTitle: "This season at Desert Moon",
     highlights: {
-      whales: "Humpback whale season: watch them breach off the beach from the rooftop, December to April.",
       orion: "Orion and Sirius rule the night. Orion rises in the east in the evening and climbs high by midnight.",
       canopus: "Canopus, the second brightest star, shows up low in the south. You can't see it from most of the US.",
       southernCross: "The Southern Cross peeks over the southern horizon late at night, a sight you won't get much farther north.",
@@ -292,6 +291,36 @@ const en = {
     weekTitle: "Best nights this week",
     tonight: "Tonight",
     source: "Cloud forecast: MET Norway. Times for Cerritos Beach.",
+  },
+  whales: {
+    title: "Whales from the rooftop",
+    intro:
+      "Every winter humpback whales come down to Baja California Sur to have their calves. From the hotel rooftop you can watch them blow and breach right off Cerritos Beach.",
+    illustration: "Humpback whale tail rising out of the water",
+    peak: "Peak whale season",
+    inSeason: "Whale season is on",
+    startsIn: (d: number) => (d === 1 ? "Whale season starts tomorrow" : `${d} days until whale season`),
+    endsIn: (d: number) => (d <= 1 ? "Last days of the season" : `${d} days of season left`),
+    seasonRange: "Humpback season runs from mid-December to mid-April, best from January to March.",
+    calendarTitle: "How often they're seen, month by month",
+    today: "Now",
+    levels: { high: "Very likely", some: "Some days", none: "Rare" },
+    morningsTitle: "The next mornings",
+    morningsIntro:
+      "A calm sea makes the blows and breaches easy to spot. Here is the wind between 7 and 11 am, when it's usually lightest.",
+    thisMorning: "Today",
+    rain: "rain",
+    ratings: { excellent: "Glassy sea: ideal", good: "Good", fair: "Some wind", poor: "Windy: hard to spot" },
+    bestMorning: (day: string) => `Best morning this week: ${day}`,
+    noForecast: "No sea forecast right now.",
+    tipsTitle: "How to spot them",
+    tips: [
+      { title: "Look for the blow", body: "Before you see the whale you see its spout: a white puff about 3 meters high over the water." },
+      { title: "Watch the open sea", body: "Look past where the waves break. When one surfaces, keep watching that spot: it almost always comes up again." },
+      { title: "Go early", body: "Mornings are usually calmer. Bring binoculars if you have them, and a coffee." },
+    ],
+    source:
+      "Season: humpback whales on the Pacific coast of Baja California Sur. Wind: MET Norway, updated hourly. They're wild animals, so no date is a guarantee.",
   },
   forSale: {
     nav: "Homes for sale",
