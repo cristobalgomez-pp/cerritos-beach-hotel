@@ -117,11 +117,10 @@ export function nextMeteorShower(now = new Date()): ShowerOutlook {
 
 // --- Seasonal highlights ---------------------------------------------------
 
-export type HighlightKey = "whales" | "canopus" | "southernCross" | "milkyWaySeason" | "andromeda" | "orion";
+export type HighlightKey = "canopus" | "southernCross" | "milkyWaySeason" | "andromeda" | "orion";
 
 // Months (1–12) when each highlight applies
 const HIGHLIGHTS: { key: HighlightKey; months: number[] }[] = [
-  { key: "whales", months: [12, 1, 2, 3, 4] },
   { key: "orion", months: [11, 12, 1, 2, 3] },
   { key: "canopus", months: [12, 1, 2, 3] },
   { key: "southernCross", months: [3, 4, 5, 6] },
