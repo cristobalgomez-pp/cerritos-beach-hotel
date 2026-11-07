@@ -54,7 +54,7 @@ export default function GuestReviews({ lang, t }: { lang: Locale; t: Dictionary 
             </div>
           </div>
 
-          <ul className="mt-6 space-y-1.5" aria-label={r.breakdown}>
+          <ul className="mt-6 hidden space-y-1.5 sm:block" aria-label={r.breakdown}>
             {byStars.map((count, i) => (
               <li key={i} className="flex items-center gap-3 text-sm">
                 <span className="w-3 text-right font-semibold text-ink/70">{5 - i}</span>
@@ -66,13 +66,13 @@ export default function GuestReviews({ lang, t }: { lang: Locale; t: Dictionary 
             ))}
           </ul>
 
-          <p className="mt-6 font-display text-xl font-bold leading-snug">{r.share(topShare)}</p>
+          <p className="mt-4 font-display text-lg font-bold leading-snug sm:mt-6 sm:text-xl">{r.share(topShare)}</p>
 
           <a
             href={GOOGLE_REVIEWS_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-ink/25 px-5 text-sm font-semibold transition-colors hover:bg-white"
+            className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-full border border-ink/25 sm:mt-6 px-5 text-sm font-semibold transition-colors hover:bg-white"
           >
             {r.readAll}
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
