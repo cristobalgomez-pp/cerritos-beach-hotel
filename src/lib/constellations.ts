@@ -294,7 +294,7 @@ export function constellationsTonight(night: Night, count = 3): ConstellationTon
       score,
       result: {
         key: def.key,
-        from: when.t,
+        from: new Date(Math.round(when.t.getTime() / 1_800_000) * 1_800_000), // nearest half hour
         fromDusk: when.t.getTime() === steps[0].getTime(),
         direction: toCompass(when.az),
         height: heightOf(when.alt),
