@@ -1,5 +1,7 @@
+import * as SunCalc from "suncalc";
+import { HOTEL } from "./constants";
 import type { Compass } from "./sky-sights";
-import { average, fetchMetForecast, nextMornings } from "./met";
+import { average, DAY_MS, fetchMetForecast, localDay, TZ_OFFSET_H, type MetPoint } from "./met";
 
 /**
  * Best-effort surf outlook for Playa Cerritos, from free public data:
@@ -19,16 +21,29 @@ export type SurfSize = "flat" | "small" | "medium" | "big" | "huge";
 export type WindQuality = "clean" | "fair" | "choppy";
 export type SurfRating = "excellent" | "good" | "fair" | "poor";
 
-export interface SurfMorning {
-  date: string; // YYYY-MM-DD, local
-  swellM: number; // offshore swell height
-  periodS: number;
-  direction: Compass; // where the swell comes from
+export interface SurfHour {
+  hour: number; // local hour, 0–23
   faceM: [number, number]; // estimated wave size at the beach (range)
   size: SurfSize;
   windKmh?: number;
   wind?: WindQuality;
+  score: number;
   rating: SurfRating;
+  recommended: boolean;
+}
+
+export interface SurfDay {
+  date: string; // YYYY-MM-DD, local
+  isToday: boolean;
+  hours: SurfHour[]; // daylight hours (today: from now until sunset)
+  best?: { from: number; to: number }; // recommended window, local hours [from, to)
+  faceM: [number, number]; // smallest–largest estimate during daylight
+  size: SurfSize; // typical size during daylight
+  rating: SurfRating; // best moment of the day
+  swellM: number; // offshore swell, at the best moment
+  periodS: number;
+  direction: Compass; // where the swell comes from
+  windKmh?: number; // average during the recommended window
 }
 
 type WavePoint = { t: number; hs: number; per: number; dir: number; swell: number; swellPer: number; swellDir: number };
@@ -92,44 +107,113 @@ function windOf(kmh: number): WindQuality {
   return kmh < 12 ? "clean" : kmh < 22 ? "fair" : "choppy";
 }
 
-function rate(size: SurfSize, wind?: WindQuality): SurfRating {
-  const sizeScore = { flat: 10, small: 60, medium: 90, big: 80, huge: 55 }[size];
-  const windScore = wind === undefined ? 0 : { clean: 0, fair: -15, choppy: -40 }[wind];
-  const score = sizeScore + windScore;
+// Wind penalty: light wind keeps the waves clean, afternoon sea breeze chops them up
+function windPenalty(kmh?: number) {
+  if (kmh === undefined) return 0;
+  return kmh < 10 ? 0 : kmh < 15 ? 8 : kmh < 20 ? 15 : kmh < 28 ? 30 : 45;
+}
+
+const SIZE_SCORE: Record<SurfSize, number> = { flat: 10, small: 60, medium: 90, big: 80, huge: 55 };
+
+function ratingOf(score: number): SurfRating {
   if (score >= 80) return "excellent";
   if (score >= 60) return "good";
   if (score >= 35) return "fair";
   return "poor";
 }
 
-/** Surf outlook for the next mornings (7–11 am, before the afternoon wind). */
-export async function getSurfMornings(days = 7, now = new Date()): Promise<SurfMorning[]> {
-  const [waves, weather] = await Promise.all([fetchSwell(now), fetchMetForecast()]);
-  if (!waves.length) return [];
+const localHourOf = (t: number) => new Date(t + TZ_OFFSET_H * 3600_000).getUTCHours();
 
-  const out: SurfMorning[] = [];
-  for (const m of nextMornings(days, now)) {
-    const w = waves.filter((p) => p.t >= m.from && p.t <= m.to);
-    if (!w.length) break;
-    const hs = average(w.map((p) => p.hs));
-    const per = average(w.map((p) => p.per));
-    const dir = w[Math.floor(w.length / 2)].dir;
-    const faceM = faceRange(hs, per, dir);
+/** Nearest wind reading within 3 h (MET is hourly for ~2.5 days, then every 6 h). */
+function windAt(points: MetPoint[], t: number): number | undefined {
+  let best: MetPoint | undefined;
+  for (const p of points) if (!best || Math.abs(p.t - t) < Math.abs(best.t - t)) best = p;
+  return best && Math.abs(best.t - t) <= 3 * 3600_000 ? Math.round(best.wind * 3.6) : undefined;
+}
+
+/** Daylight hours at the hotel for a local date (first full hour after sunrise … last before sunset). */
+function daylight(day: number) {
+  const { lat, lng } = HOTEL.coordinates;
+  const noon = new Date(day + (12 - TZ_OFFSET_H) * 3600_000);
+  const times = SunCalc.getTimes(noon, lat, lng);
+  return { first: localHourOf(times.sunrise.getTime()) + 1, last: localHourOf(times.sunset.getTime()) - 1 };
+}
+
+function buildDay(day: number, isToday: boolean, fromHour: number, waves: WavePoint[], weather: MetPoint[]): SurfDay | undefined {
+  const { first, last } = daylight(day);
+  const hours: (SurfHour & { wave?: WavePoint })[] = [];
+  for (let h = Math.max(first, fromHour); h <= last; h++) {
+    const t = day + (h - TZ_OFFSET_H) * 3600_000;
+    const wave = waves.find((p) => p.t === t);
+    if (!wave) continue;
+    const faceM = faceRange(wave.hs, wave.per, wave.dir);
     const size = sizeOf((faceM[0] + faceM[1]) / 2);
-    const met = weather.filter((p) => p.t >= m.from && p.t <= m.to);
-    const windKmh = met.length ? Math.round(average(met.map((p) => p.wind)) * 3.6) : undefined;
-    const wind = windKmh === undefined ? undefined : windOf(windKmh);
-    out.push({
-      date: m.date,
-      swellM: Math.round(average(w.map((p) => p.swell)) * 10) / 10,
-      periodS: Math.round(per),
-      direction: compass(dir),
+    const windKmh = windAt(weather, t);
+    const score = SIZE_SCORE[size] - windPenalty(windKmh);
+    hours.push({
+      hour: h,
       faceM,
       size,
       windKmh,
-      wind,
-      rating: rate(size, wind),
+      wind: windKmh === undefined ? undefined : windOf(windKmh),
+      score,
+      rating: ratingOf(score),
+      recommended: false,
+      wave,
     });
   }
-  return out;
+  if (!hours.length) return undefined;
+
+  // Recommended hours: close to the best of the day (and not poor); the window is the longest run of them
+  const top = Math.max(...hours.map((h) => h.score));
+  for (const h of hours) h.recommended = h.score >= top - 8 && h.rating !== "poor";
+  let best: SurfDay["best"];
+  for (let i = 0; i < hours.length; i++) {
+    if (!hours[i].recommended) continue;
+    let j = i;
+    while (j + 1 < hours.length && hours[j + 1].recommended && hours[j + 1].hour === hours[j].hour + 1) j++;
+    if (!best || hours[j].hour + 1 - hours[i].hour > best.to - best.from) best = { from: hours[i].hour, to: hours[j].hour + 1 };
+    i = j;
+  }
+
+  const peak = hours.find((h) => h.score === top)!;
+  const inBest = best ? hours.filter((h) => h.hour >= best.from && h.hour < best.to) : [];
+  const winds = inBest.map((h) => h.windKmh).filter((w): w is number => w !== undefined);
+  const mids = hours.map((h) => (h.faceM[0] + h.faceM[1]) / 2);
+
+  return {
+    date: new Date(day).toISOString().slice(0, 10),
+    isToday,
+    hours: hours.map((h) => ({ ...h, wave: undefined })),
+    best,
+    faceM: [Math.min(...hours.map((h) => h.faceM[0])), Math.max(...hours.map((h) => h.faceM[1]))],
+    size: sizeOf(average(mids)),
+    rating: peak.rating,
+    swellM: Math.round(peak.wave!.swell * 10) / 10,
+    periodS: Math.round(peak.wave!.per),
+    direction: compass(peak.wave!.dir),
+    windKmh: winds.length ? Math.round(average(winds)) : undefined,
+  };
+}
+
+/**
+ * Today in detail (from now until sunset, hour by hour, with the recommended hours),
+ * then one summary per day. Once the sun is down, "today" becomes tomorrow.
+ */
+export async function getSurfOutlook(days = 7, now = new Date()): Promise<{ focus?: SurfDay; next: SurfDay[] }> {
+  const [waves, weather] = await Promise.all([fetchSwell(now), fetchMetForecast()]);
+  if (!waves.length) return { next: [] };
+
+  const today = localDay(now).getTime();
+  const nowHour = localHourOf(now.getTime());
+  const out: SurfDay[] = [];
+  const todayDay = buildDay(today, true, nowHour, waves, weather);
+  if (todayDay) out.push(todayDay);
+  for (let i = 1; out.length < days + 1 && i <= days + 1; i++) {
+    const d = buildDay(today + i * DAY_MS, false, 0, waves, weather);
+    if (!d) break;
+    out.push(d);
+  }
+  const [focus, ...next] = out;
+  return { focus, next: next.slice(0, days - 1) };
 }
