@@ -55,116 +55,116 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
 
   return (
     <div>
-        <div className="max-w-2xl">
-          <h3 className="text-3xl font-bold md:text-4xl">{w.title}</h3>
-          <p className="mt-3 text-lg text-white/75">{w.intro}</p>
+      <div className="max-w-2xl">
+        <h3 className="text-3xl font-bold md:text-4xl">{w.title}</h3>
+        <p className="mt-3 text-lg text-white/75">{w.intro}</p>
+      </div>
+
+      <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:items-center">
+        <div className="flex items-center gap-6 lg:col-span-5">
+          <Fluke label={w.illustration} className="w-36 shrink-0 text-moon md:w-44" />
+          <div>
+            <p className="font-display text-3xl font-bold text-moon">{headline}</p>
+            <p className="mt-1 text-white/75">{subline}</p>
+          </div>
         </div>
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:items-center">
-          <div className="flex items-center gap-6 lg:col-span-5">
-            <Fluke label={w.illustration} className="w-36 shrink-0 text-moon md:w-44" />
-            <div>
-              <p className="font-display text-3xl font-bold text-moon">{headline}</p>
-              <p className="mt-1 text-white/75">{subline}</p>
-            </div>
+        {/* Month-by-month chance of seeing them, with today marked */}
+        <div className="lg:col-span-7">
+          <h5 className="font-semibold text-white/85">{w.calendarTitle}</h5>
+          <ol className="mt-5 grid grid-cols-12 items-end gap-1.5 sm:gap-2" aria-label={w.calendarTitle}>
+            {MONTH_ACTIVITY.map((a, i) => {
+              const current = i + 1 === season.month;
+              return (
+                <li key={i} className="flex flex-col items-center gap-2">
+                  <span className={`text-[10px] font-semibold uppercase tracking-wide ${current ? "text-moon" : "text-transparent"}`}>
+                    {w.today}
+                  </span>
+                  <div className="flex h-24 w-full items-end">
+                    <div
+                      className={`w-full rounded-t-md ${a >= 0.8 ? "bg-moon" : a >= 0.3 ? "bg-moon/50" : "bg-white/15"} ${
+                        current ? "ring-2 ring-white ring-offset-2 ring-offset-night" : ""
+                      }`}
+                      style={{ height: `${Math.max(6, a * 100)}%` }}
+                    />
+                  </div>
+                  <span className={`text-xs ${current ? "font-bold text-white" : "text-white/60"}`}>
+                    {monthNames[i].replace(".", "").slice(0, 3)}
+                  </span>
+                  <span className="sr-only">{a >= 0.8 ? w.levels.high : a >= 0.3 ? w.levels.some : w.levels.none}</span>
+                </li>
+              );
+            })}
+          </ol>
+          <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-xs text-white/65">
+            <span className="flex items-center gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-sm bg-moon" aria-hidden="true" /> {w.levels.high}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-sm bg-moon/50" aria-hidden="true" /> {w.levels.some}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-sm bg-white/15" aria-hidden="true" /> {w.levels.none}
+            </span>
           </div>
+        </div>
+      </div>
 
-          {/* Month-by-month chance of seeing them, with today marked */}
-          <div className="lg:col-span-7">
-            <h5 className="font-semibold text-white/85">{w.calendarTitle}</h5>
-            <ol className="mt-5 grid grid-cols-12 items-end gap-1.5 sm:gap-2" aria-label={w.calendarTitle}>
-              {MONTH_ACTIVITY.map((a, i) => {
-                const current = i + 1 === season.month;
+      {season.inSeason && (
+        <div className="mt-16 border-t border-white/15 pt-12">
+          <h4 className="text-2xl font-bold">{w.morningsTitle}</h4>
+          <p className="mt-2 max-w-2xl text-white/75">{w.morningsIntro}</p>
+          {mornings.length ? (
+            <ol className="mt-6 grid grid-cols-4 gap-3 sm:grid-cols-7">
+              {mornings.map((m, i) => {
+                const isBest = m.date === best?.date;
                 return (
-                  <li key={i} className="flex flex-col items-center gap-2">
-                    <span className={`text-[10px] font-semibold uppercase tracking-wide ${current ? "text-moon" : "text-transparent"}`}>
-                      {w.today}
+                  <li
+                    key={m.date}
+                    className={`flex flex-col items-center gap-1.5 rounded-2xl px-2 py-4 text-center ${
+                      isBest ? "bg-white/10 ring-1 ring-moon/60" : ""
+                    }`}
+                  >
+                    <span className="text-sm font-semibold text-white/80">
+                      {i === 0 && m.date === new Date(now.getTime() - 7 * 3600_000).toISOString().slice(0, 10)
+                        ? w.thisMorning
+                        : formatWeekday(m.date, lang)}
                     </span>
-                    <div className="flex h-24 w-full items-end">
-                      <div
-                        className={`w-full rounded-t-md ${a >= 0.8 ? "bg-moon" : a >= 0.3 ? "bg-moon/50" : "bg-white/15"} ${
-                          current ? "ring-2 ring-white ring-offset-2 ring-offset-night" : ""
-                        }`}
-                        style={{ height: `${Math.max(6, a * 100)}%` }}
-                      />
-                    </div>
-                    <span className={`text-xs ${current ? "font-bold text-white" : "text-white/60"}`}>
-                      {monthNames[i].replace(".", "").slice(0, 3)}
+                    <span className="font-display text-lg font-bold">{m.windKmh}</span>
+                    <span className="-mt-1 text-[11px] text-white/60">km/h{m.rain ? ` · ${w.rain}` : ""}</span>
+                    <span className="flex gap-1" role="img" aria-label={w.ratings[m.rating]} title={w.ratings[m.rating]}>
+                      {[1, 2, 3, 4].map((d) => (
+                        <span key={d} className={`h-1.5 w-1.5 rounded-full ${d <= RATING_DOTS[m.rating] ? "bg-moon" : "bg-white/20"}`} />
+                      ))}
                     </span>
-                    <span className="sr-only">{a >= 0.8 ? w.levels.high : a >= 0.3 ? w.levels.some : w.levels.none}</span>
                   </li>
                 );
               })}
             </ol>
-            <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-xs text-white/65">
-              <span className="flex items-center gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-sm bg-moon" aria-hidden="true" /> {w.levels.high}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-sm bg-moon/50" aria-hidden="true" /> {w.levels.some}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-sm bg-white/15" aria-hidden="true" /> {w.levels.none}
-              </span>
-            </div>
-          </div>
+          ) : (
+            <p className="mt-6 text-white/70">{w.noForecast}</p>
+          )}
+          {best && (
+            <p className="mt-5 font-semibold">
+              {w.bestMorning(formatWeekday(best.date, lang))}{" "}
+              <span className="font-normal text-white/70">· {w.ratings[best.rating]}</span>
+            </p>
+          )}
         </div>
+      )}
 
-        {season.inSeason && (
-          <div className="mt-16 border-t border-white/15 pt-12">
-            <h4 className="text-2xl font-bold">{w.morningsTitle}</h4>
-            <p className="mt-2 max-w-2xl text-white/75">{w.morningsIntro}</p>
-            {mornings.length ? (
-              <ol className="mt-6 grid grid-cols-4 gap-3 sm:grid-cols-7">
-                {mornings.map((m, i) => {
-                  const isBest = m.date === best?.date;
-                  return (
-                    <li
-                      key={m.date}
-                      className={`flex flex-col items-center gap-1.5 rounded-2xl px-2 py-4 text-center ${
-                        isBest ? "bg-white/10 ring-1 ring-moon/60" : ""
-                      }`}
-                    >
-                      <span className="text-sm font-semibold text-white/80">
-                        {i === 0 && m.date === new Date(now.getTime() - 7 * 3600_000).toISOString().slice(0, 10)
-                          ? w.thisMorning
-                          : formatWeekday(m.date, lang)}
-                      </span>
-                      <span className="font-display text-lg font-bold">{m.windKmh}</span>
-                      <span className="-mt-1 text-[11px] text-white/60">km/h{m.rain ? ` · ${w.rain}` : ""}</span>
-                      <span className="flex gap-1" role="img" aria-label={w.ratings[m.rating]} title={w.ratings[m.rating]}>
-                        {[1, 2, 3, 4].map((d) => (
-                          <span key={d} className={`h-1.5 w-1.5 rounded-full ${d <= RATING_DOTS[m.rating] ? "bg-moon" : "bg-white/20"}`} />
-                        ))}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ol>
-            ) : (
-              <p className="mt-6 text-white/70">{w.noForecast}</p>
-            )}
-            {best && (
-              <p className="mt-5 font-semibold">
-                {w.bestMorning(formatWeekday(best.date, lang))}{" "}
-                <span className="font-normal text-white/70">· {w.ratings[best.rating]}</span>
-              </p>
-            )}
-          </div>
-        )}
-
-        <div className="mt-16 border-t border-white/15 pt-12">
-          <h4 className="text-2xl font-bold">{w.tipsTitle}</h4>
-          <ul className="mt-6 grid gap-8 md:grid-cols-3">
-            {w.tips.map((tip) => (
-              <li key={tip.title}>
-                <p className="font-display text-lg font-bold text-moon">{tip.title}</p>
-                <p className="mt-2 leading-relaxed text-white/80">{tip.body}</p>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-10 text-xs text-white/45">{w.source}</p>
-        </div>
+      <div className="mt-16 border-t border-white/15 pt-12">
+        <h4 className="text-2xl font-bold">{w.tipsTitle}</h4>
+        <ul className="mt-6 grid gap-8 md:grid-cols-3">
+          {w.tips.map((tip) => (
+            <li key={tip.title}>
+              <p className="font-display text-lg font-bold text-moon">{tip.title}</p>
+              <p className="mt-2 leading-relaxed text-white/80">{tip.body}</p>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-10 text-xs text-white/45">{w.source}</p>
+      </div>
     </div>
   );
 }

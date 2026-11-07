@@ -6,7 +6,6 @@ import MoonPhase from "./MoonPhase";
 
 const RATING_DOTS: Record<Rating, number> = { excellent: 4, good: 3, fair: 2, poor: 1 };
 
-
 export default async function SkyPanel({ lang, t }: { lang: Locale; t: Dictionary }) {
   const nights = await getSkyOutlook(7);
   const tonight = nights[0];
@@ -46,114 +45,114 @@ export default async function SkyPanel({ lang, t }: { lang: Locale; t: Dictionar
         <p className="mt-3 text-lg text-white/75">{s.intro}</p>
       </div>
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:items-center">
-          <div className="flex items-center gap-8 lg:col-span-5">
-            <MoonPhase
-              illumination={tonight.moonIllumination}
-              waxing={tonight.moonWaxing}
-              size={168}
-              className="shrink-0 drop-shadow-[0_0_40px_rgba(243,227,179,0.25)]"
-              label={s.phases[tonight.moonPhase]}
-            />
-            <div>
-              <p className="font-display text-3xl font-bold text-moon">{s.phases[tonight.moonPhase]}</p>
-              <p className="mt-1 text-white/70">
-                {Math.round(tonight.moonIllumination * 100)}% {s.lit}
-              </p>
-            </div>
-          </div>
-
-          <div className="lg:col-span-7">
-            <p className="font-display text-2xl font-bold">{s.ratings[tonight.rating]}</p>
-            <p className="mt-1 text-white/70">{s.moonlessHours(tonight.moonlessDarkHours.toFixed(1).replace(".0", ""))}</p>
-            <dl className="mt-6 grid grid-cols-2 gap-x-8 gap-y-4 border-t border-white/15 pt-6 sm:grid-cols-3">
-              {rows.map(([k, v]) => (
-                <div key={k}>
-                  <dt className="text-sm text-white/60">{k}</dt>
-                  <dd className="mt-0.5 font-semibold">{v}</dd>
-                </div>
-              ))}
-            </dl>
+      <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:items-center">
+        <div className="flex items-center gap-8 lg:col-span-5">
+          <MoonPhase
+            illumination={tonight.moonIllumination}
+            waxing={tonight.moonWaxing}
+            size={168}
+            className="shrink-0 drop-shadow-[0_0_40px_rgba(243,227,179,0.25)]"
+            label={s.phases[tonight.moonPhase]}
+          />
+          <div>
+            <p className="font-display text-3xl font-bold text-moon">{s.phases[tonight.moonPhase]}</p>
+            <p className="mt-1 text-white/70">
+              {Math.round(tonight.moonIllumination * 100)}% {s.lit}
+            </p>
           </div>
         </div>
 
-        <div className="mt-20 border-t border-white/15 pt-14">
-          <h4 className="text-2xl font-bold">{s.seeTitle}</h4>
-          <div className="mt-10 grid gap-12 md:grid-cols-3">
-            <div>
-              <h5 className="font-display text-lg font-bold text-moon">{s.planetsTitle}</h5>
-              {planets.length ? (
-                <ul className="mt-4 space-y-4">
-                  {planets.map((p) => (
-                    <li key={p.key}>
-                      <p className="font-semibold">
-                        {s.planets[p.key]} <span className="font-normal text-white/60">· {brightness(p.magnitude)}</span>
-                      </p>
-                      <p className="text-sm text-white/70">
-                        {formatTime(p.start, lang)} – {formatTime(p.end, lang)}
-                      </p>
-                      <p className="text-sm text-white/70">{s.planetLine(s.directions[p.direction], formatTime(p.best, lang))}</p>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="mt-4 text-white/70">{s.noPlanets}</p>
-              )}
-            </div>
+        <div className="lg:col-span-7">
+          <p className="font-display text-2xl font-bold">{s.ratings[tonight.rating]}</p>
+          <p className="mt-1 text-white/70">{s.moonlessHours(tonight.moonlessDarkHours.toFixed(1).replace(".0", ""))}</p>
+          <dl className="mt-6 grid grid-cols-2 gap-x-8 gap-y-4 border-t border-white/15 pt-6 sm:grid-cols-3">
+            {rows.map(([k, v]) => (
+              <div key={k}>
+                <dt className="text-sm text-white/60">{k}</dt>
+                <dd className="mt-0.5 font-semibold">{v}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
 
-            <div>
-              <h5 className="font-display text-lg font-bold text-moon">{s.showerTitle}</h5>
-              <p className="mt-4 font-display text-2xl font-bold">{s.showers[shower.key]}</p>
-              <p className="mt-1 font-semibold">
-                {s.showerWhen(shower.daysAway)} <span className="font-normal text-white/60">· {showerDate}</span>
-              </p>
-              <p className="mt-3 text-sm text-white/70">{s.showerRate(shower.perHour)}</p>
-              <p className="mt-1 text-sm text-white/70">{showerMoon}</p>
-            </div>
-
-            <div>
-              <h5 className="font-display text-lg font-bold text-moon">{s.seasonTitle}</h5>
+      <div className="mt-20 border-t border-white/15 pt-14">
+        <h4 className="text-2xl font-bold">{s.seeTitle}</h4>
+        <div className="mt-10 grid gap-12 md:grid-cols-3">
+          <div>
+            <h5 className="font-display text-lg font-bold text-moon">{s.planetsTitle}</h5>
+            {planets.length ? (
               <ul className="mt-4 space-y-4">
-                {highlights.map((h) => (
-                  <li key={h} className="leading-relaxed text-white/85">
-                    {s.highlights[h]}
+                {planets.map((p) => (
+                  <li key={p.key}>
+                    <p className="font-semibold">
+                      {s.planets[p.key]} <span className="font-normal text-white/60">· {brightness(p.magnitude)}</span>
+                    </p>
+                    <p className="text-sm text-white/70">
+                      {formatTime(p.start, lang)} – {formatTime(p.end, lang)}
+                    </p>
+                    <p className="text-sm text-white/70">{s.planetLine(s.directions[p.direction], formatTime(p.best, lang))}</p>
                   </li>
                 ))}
               </ul>
-            </div>
+            ) : (
+              <p className="mt-4 text-white/70">{s.noPlanets}</p>
+            )}
+          </div>
+
+          <div>
+            <h5 className="font-display text-lg font-bold text-moon">{s.showerTitle}</h5>
+            <p className="mt-4 font-display text-2xl font-bold">{s.showers[shower.key]}</p>
+            <p className="mt-1 font-semibold">
+              {s.showerWhen(shower.daysAway)} <span className="font-normal text-white/60">· {showerDate}</span>
+            </p>
+            <p className="mt-3 text-sm text-white/70">{s.showerRate(shower.perHour)}</p>
+            <p className="mt-1 text-sm text-white/70">{showerMoon}</p>
+          </div>
+
+          <div>
+            <h5 className="font-display text-lg font-bold text-moon">{s.seasonTitle}</h5>
+            <ul className="mt-4 space-y-4">
+              {highlights.map((h) => (
+                <li key={h} className="leading-relaxed text-white/85">
+                  {s.highlights[h]}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
+      </div>
 
-        <div className="mt-16">
-          <h4 className="text-xl font-bold">{s.weekTitle}</h4>
-          <ol className="mt-6 grid grid-cols-4 gap-3 sm:grid-cols-7">
-            {nights.map((n, i) => {
-              const isBest = n.date === best.date;
-              return (
-                <li
-                  key={n.date}
-                  className={`flex flex-col items-center gap-2 rounded-2xl px-2 py-4 text-center ${
-                    isBest ? "bg-white/10 ring-1 ring-moon/60" : ""
-                  }`}
-                >
-                  <span className="text-sm font-semibold text-white/80">
-                    {i === 0 ? s.tonight : formatWeekday(n.date, lang)}
-                  </span>
-                  <MoonPhase illumination={n.moonIllumination} waxing={n.moonWaxing} size={36} />
-                  <span className="flex gap-1" role="img" aria-label={s.ratings[n.rating]} title={s.ratings[n.rating]}>
-                    {[1, 2, 3, 4].map((d) => (
-                      <span
-                        key={d}
-                        className={`h-1.5 w-1.5 rounded-full ${d <= RATING_DOTS[n.rating] ? "bg-moon" : "bg-white/20"}`}
-                      />
-                    ))}
-                  </span>
-                </li>
-              );
-            })}
-          </ol>
-          <p className="mt-6 text-xs text-white/45">{s.source}</p>
-        </div>
+      <div className="mt-16">
+        <h4 className="text-xl font-bold">{s.weekTitle}</h4>
+        <ol className="mt-6 grid grid-cols-4 gap-3 sm:grid-cols-7">
+          {nights.map((n, i) => {
+            const isBest = n.date === best.date;
+            return (
+              <li
+                key={n.date}
+                className={`flex flex-col items-center gap-2 rounded-2xl px-2 py-4 text-center ${
+                  isBest ? "bg-white/10 ring-1 ring-moon/60" : ""
+                }`}
+              >
+                <span className="text-sm font-semibold text-white/80">
+                  {i === 0 ? s.tonight : formatWeekday(n.date, lang)}
+                </span>
+                <MoonPhase illumination={n.moonIllumination} waxing={n.moonWaxing} size={36} />
+                <span className="flex gap-1" role="img" aria-label={s.ratings[n.rating]} title={s.ratings[n.rating]}>
+                  {[1, 2, 3, 4].map((d) => (
+                    <span
+                      key={d}
+                      className={`h-1.5 w-1.5 rounded-full ${d <= RATING_DOTS[n.rating] ? "bg-moon" : "bg-white/20"}`}
+                    />
+                  ))}
+                </span>
+              </li>
+            );
+          })}
+        </ol>
+        <p className="mt-6 text-xs text-white/45">{s.source}</p>
+      </div>
     </div>
   );
 }
