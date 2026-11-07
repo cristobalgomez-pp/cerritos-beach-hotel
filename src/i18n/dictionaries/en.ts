@@ -237,7 +237,13 @@ const en = {
     lit: "lit",
     ratings: { excellent: "Excellent for stars", good: "Good for stars", fair: "Fair for stars", poor: "Too bright or cloudy" },
     sunset: "Sunset",
-    dark: "Full darkness",
+    dark: "Dark at",
+    moonlessShort: "No moon",
+    lookTitle: "What to look for tonight",
+    lookHint: "Tap each one to see how to find it and its story.",
+    planetWindow: (start: string, end: string) => `Visible from ${start} to ${end}.`,
+    milkyWayTip: "The center of our galaxy, a bright band with dark clouds, toward the south. Best with no moon and after letting your eyes adjust to the dark for about 20 minutes.",
+    showerKind: "meteor shower",
     moonrise: "Moonrise",
     moonset: "Moonset",
     clouds: "Clouds",
@@ -289,6 +295,98 @@ const en = {
     note: "Short excerpts in the guests' own words. Full reviews on Google.",
     topics: { staff: "The team", food: "Wood-fired pizza", views: "Ocean view", beach: "The beach", vibe: "The vibe", again: "Coming back" },
   },
+  constellations: {
+    title: "Tonight's constellations",
+    intro: "The ones best placed tonight from the rooftop, how to find them and their stories.",
+    where: (dir: string, height: string) => `Toward the ${dir}, ${height}`,
+    heights: { low: "low in the sky", mid: "halfway up", high: "high up", overhead: "almost overhead" },
+    fromDusk: "from dusk",
+    from: (time: string) => `from ${time}`,
+    howTo: "How to find it",
+    story: "The story",
+    more: "More constellations tonight",
+    rare: "Southern rarity",
+    drawing: (name: string) => `Drawing of the constellation ${name}`,
+    galaxy: "Andromeda galaxy",
+    items: {
+      orion: {
+        name: "Orion",
+        tip: "Look for three bright stars in a straight line: his belt. On one side shines reddish Betelgeuse; on the other, bluish Rigel.",
+        story:
+          "In Mexico those three stars are called the Three Wise Men. For the Mexica (Aztecs) they were the Mamalhuaztli, the fire drill used to light the New Fire. For the Greeks, Orion was a hunter killed by a scorpion: that's why, when Scorpius rises, Orion sets.",
+      },
+      taurus: {
+        name: "Taurus and the Pleiades",
+        tip: "Follow Orion's belt away from Sirius: you reach orange Aldebaran, and a bit further a little cluster of stars: the Pleiades.",
+        story:
+          "The Mexica called the Pleiades Tianquiztli, \"the marketplace\". According to the chroniclers, every 52 years they waited to see them at the top of the sky at midnight to light the New Fire and know the world would go on. For the Greeks they were the daughters of Atlas.",
+      },
+      canisMajor: {
+        name: "Canis Major",
+        tip: "Follow Orion's belt the other way: you reach Sirius, the brightest star of the night. When it's low, it twinkles in colors.",
+        story:
+          "It's Orion's hunting dog. In ancient Egypt, Sirius reappearing before dawn announced the flooding of the Nile and the start of the year.",
+      },
+      gemini: {
+        name: "Gemini",
+        tip: "Two bright stars close together and almost equal: Castor and Pollux, the twins' heads.",
+        story:
+          "Castor and Pollux were twin brothers, protectors of sailors. Some scholars believe the Mexica saw the Citlaltlachtli here, \"the ball game of the stars\".",
+      },
+      leo: {
+        name: "Leo",
+        tip: "Look for a backwards question mark: the lion's mane. The star at the dot is Regulus, \"the little king\".",
+        story: "It's the Nemean lion, whose hide no weapon could pierce. Hercules beat it with his bare hands: the first of his twelve labors.",
+      },
+      bigDipper: {
+        name: "Big Dipper",
+        tip: "Seven stars shaped like a ladle. The two at the edge point to Polaris, which always marks north.",
+        story:
+          "For the Greeks it was Callisto, turned into a bear and lifted to the sky by Zeus. In some readings of the Maya Popol Vuh it's Vucub Caquix, the bird who thought he was the sun. Sailors used it to find north.",
+      },
+      bootes: {
+        name: "Boötes and Arcturus",
+        tip: "Follow the curve of the Big Dipper's handle and \"arc to Arcturus\": a very bright orange star.",
+        story:
+          "Arcturus means \"guardian of the bear\", since it seems to chase the Big Dipper around the pole. It's a giant star, about 25 times wider than the Sun.",
+      },
+      crux: {
+        name: "Southern Cross",
+        tip: "Look low, just above the southern horizon over the sea: four stars in a cross.",
+        story:
+          "It guided sailors south and appears on the flags of Australia, New Zealand and Brazil. It can't be seen from most of the United States; from Cerritos it can, in spring, because we're so far south.",
+      },
+      scorpius: {
+        name: "Scorpius",
+        tip: "Look for a very bright reddish star, Antares, and a long tail that curls down like a hook.",
+        story:
+          "It's the scorpion that killed Orion, so they're never in the sky together. Mesoamericans saw a scorpion too: Sahagún recorded the \"scorpion star\", Citlalcolotl. Antares means \"rival of Mars\", for its color.",
+      },
+      sagittarius: {
+        name: "Sagittarius",
+        tip: "Look for a teapot: eight stars make the body, handle and spout. The \"steam\" rising from the spout is the Milky Way.",
+        story:
+          "That's where the center of our galaxy lies, about 26,000 light-years away. For the Maya the Milky Way was a great tree or road; the dark rift splitting it, near here, has been read as the road to Xibalba, the underworld.",
+      },
+      summerTriangle: {
+        name: "Summer Triangle",
+        tip: "Three very bright stars make a big triangle: Vega, Deneb and Altair.",
+        story:
+          "In Japan and China, Vega is a weaver and Altair a cowherd, lovers separated by the river of the sky, the Milky Way. They meet only once a year, at the Tanabata festival, on the seventh day of the seventh month.",
+      },
+      pegasus: {
+        name: "Pegasus and Andromeda",
+        tip: "Four stars make a great square. A line of stars runs from one corner: Andromeda. Next to it, a faint smudge: the Andromeda galaxy.",
+        story:
+          "Pegasus is the winged horse; Andromeda, the princess rescued by Perseus. The smudge is another galaxy, 2.5 million light-years away: the farthest thing you can see with the naked eye. From the rooftop, on a moonless night, you can spot it.",
+      },
+      cassiopeia: {
+        name: "Cassiopeia",
+        tip: "Five stars shaped like a W (or an M), over the north.",
+        story: "She was a queen so vain she boasted of being lovelier than the sea nymphs. As punishment she circles the pole, sometimes upside down.",
+      },
+    },
+  },
   rooftop: {
     title: "From the rooftop",
     intro: "Tonight's sky, the whales and the waves off Cerritos, updated every day. Swipe or tap to switch.",
@@ -297,7 +395,7 @@ const en = {
     next: "Next",
   },
   whales: {
-    title: "Humpback whales",
+    title: "Whales off Cerritos",
     intro:
       "Every winter humpback whales come down to Baja California Sur to have their calves. From the hotel rooftop you can watch them blow and breach right off Cerritos Beach.",
     illustration: "Humpback whale tail rising out of the water",
@@ -316,6 +414,91 @@ const en = {
     ratings: { excellent: "Glassy sea: ideal", good: "Good", fair: "Some wind", poor: "Windy: hard to spot" },
     bestMorning: (day: string) => `Best morning this week: ${day}`,
     noForecast: "No sea forecast right now.",
+    species: {
+      title: "Which whales you can see",
+      hint: "Tap each one to see how to recognize it.",
+      now: "In season now",
+      levels: { common: "Very common", sometimes: "Sometimes", rare: "Rare" },
+      size: "Size",
+      howTo: "How to recognize it",
+      fact: "Fun fact",
+      items: {
+        humpback: {
+          name: "Humpback whale",
+          when: "Dec – Apr",
+          size: "14 to 16 m (46–52 ft)",
+          spot: "A wide, bushy blow about 3 m high. It breaches and slaps the water with its very long pectoral fins. When it dives it shows its tail, black and white underneath.",
+          fact: "They come from Alaska and Canada to have their calves. Males sing songs up to 20 minutes long, and every tail pattern is unique, like a fingerprint.",
+        },
+        gray: {
+          name: "Gray whale",
+          when: "Jan – Mar",
+          size: "13 to 15 m (43–49 ft)",
+          spot: "A heart- or V-shaped blow. No dorsal fin, just a row of bumps along the back, and mottled gray skin.",
+          fact: "It makes one of the longest migrations of any mammal: from the Arctic to the lagoons of Baja California Sur, about 16,000 to 20,000 km round trip. Sometimes it passes along this coast.",
+        },
+        dolphins: {
+          name: "Dolphins",
+          when: "All year",
+          size: "2 to 4 m (7–13 ft)",
+          spot: "Fins rolling in and out of the water in a group, sometimes very close to shore. Now and then they ride the waves next to the surfers.",
+          fact: "The most common here are bottlenose and common dolphins, traveling in groups of dozens.",
+        },
+        blue: {
+          name: "Blue whale",
+          when: "Jan – Apr",
+          size: "Up to 25 – 30 m (80–100 ft)",
+          spot: "A very tall, straight blow, up to 9 m. A very long blue-gray back with a tiny dorsal fin near the end.",
+          fact: "It's the largest animal that has ever lived. Rare on this side; it's seen more in the Gulf of California, around Loreto.",
+        },
+        orca: {
+          name: "Orca",
+          when: "All year",
+          size: "6 to 9 m (20–30 ft)",
+          spot: "Black and white, with a tall dorsal fin, up to 1.8 m on males.",
+          fact: "Though called the \"killer whale\", it's actually the largest dolphin. They pass along the coast now and then, with no set season.",
+        },
+      },
+    },
+    why: {
+      title: "Why do they come here?",
+      now: {
+        north: "Right now they're feeding in Alaska",
+        south: "Right now they're on their way to Cerritos",
+        here: "Right now they're here, with their calves",
+        back: "Right now they're heading back north",
+      },
+      alaska: "Alaska",
+      cerritos: "Cerritos",
+      current: "California Current",
+      temps: (north: number, south: number) => `Alaska ${north} °C → Cerritos ${south} °C`,
+      tempNote: (north: number, south: number) =>
+        `Today the sea is ${north} °C in the Gulf of Alaska and ${south} °C off Cerritos, by satellite.`,
+      yearTitle: "Their year, month by month",
+      phases: {
+        here: {
+          label: "Here in Cerritos",
+          months: "Mid-Dec – Mar",
+          body: "Calves are born with very little blubber and couldn't handle icy water, so mothers come to this warm, calm sea. They barely eat: they live off their fat and produce hundreds of liters of milk a day. Best viewing is January to March.",
+        },
+        back: {
+          label: "Heading back north",
+          months: "Apr – May",
+          body: "With their calves bigger, they start the trip back. They can arrive up north having lost up to a third of their weight.",
+        },
+        north: {
+          label: "Feeding up north",
+          months: "May – Oct",
+          body: "They spend these months in the cold waters of Alaska and Canada, full of krill and small fish, eating nonstop to build a thick layer of blubber for the rest of the year.",
+        },
+        south: {
+          label: "Traveling down the coast",
+          months: "Nov – Dec",
+          body: "When the north gets cold, they swim south for over a month along the Pacific coast. The California Current, a cold-water current, also flows down this coast and meets warm tropical waters in Baja California Sur.",
+        },
+      },
+      source: "Sea temperature: NOAA / NASA JPL (MUR SST, satellite), updated daily.",
+    },
     tipsTitle: "How to spot them",
     tips: [
       { title: "Look for the blow", body: "Before you see the whale you see its spout: a white puff about 3 meters high over the water." },

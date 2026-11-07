@@ -241,7 +241,13 @@ const es: Dictionary = {
     lit: "iluminada",
     ratings: { excellent: "Excelente para ver estrellas", good: "Buena para ver estrellas", fair: "Regular para estrellas", poor: "Mucha luna o nubes" },
     sunset: "Atardecer",
-    dark: "Noche cerrada",
+    dark: "Oscurece",
+    moonlessShort: "Sin luna",
+    lookTitle: "Qué buscar esta noche",
+    lookHint: "Toca cada una para ver cómo encontrarla y su historia.",
+    planetWindow: (start: string, end: string) => `Se ve de ${start} a ${end}.`,
+    milkyWayTip: "El centro de la galaxia, una franja brillante con nubes oscuras, hacia el sur. Se ve mejor sin luna y con los ojos acostumbrados a la oscuridad unos 20 minutos.",
+    showerKind: "lluvia de estrellas",
     moonrise: "Sale la luna",
     moonset: "Se mete la luna",
     clouds: "Nubes",
@@ -293,6 +299,100 @@ const es: Dictionary = {
     note: "Fragmentos cortos en el idioma original de cada huésped. Las reseñas completas están en Google.",
     topics: { staff: "El equipo", food: "Pizza a la leña", views: "Vista al mar", beach: "La playa", vibe: "El ambiente", again: "Volverían" },
   },
+  constellations: {
+    title: "Constelaciones de esta noche",
+    intro: "Las que mejor se ven hoy desde la azotea, cómo encontrarlas y su historia.",
+    where: (dir: string, height: string) => `Hacia ${dir}, ${height}`,
+    heights: { low: "bajita", mid: "a media altura", high: "alta", overhead: "casi arriba de tu cabeza" },
+    fromDusk: "desde que oscurece",
+    from: (time: string) => `desde las ${time}`,
+    howTo: "Cómo encontrarla",
+    story: "La historia",
+    more: "Más constelaciones esta noche",
+    rare: "Rareza del sur",
+    drawing: (name: string) => `Dibujo de la constelación ${name}`,
+    galaxy: "Galaxia de Andrómeda",
+    items: {
+      orion: {
+        name: "Orión",
+        tip: "Busca tres estrellas brillantes en línea recta: es su cinturón. A un lado brilla Betelgeuse, rojiza; al otro, Rigel, azulada.",
+        story:
+          "En México a esas tres estrellas les decimos los Tres Reyes Magos. Para los mexicas eran el Mamalhuaztli, los palos con los que se encendía el Fuego Nuevo. Para los griegos, Orión era un cazador al que mató un escorpión: por eso, cuando Escorpión sale, Orión se esconde.",
+      },
+      taurus: {
+        name: "Tauro y las Pléyades",
+        tip: "Sigue la línea del cinturón de Orión, alejándote de Sirio: llegas a Aldebarán, anaranjada, y un poco más allá a un racimo de estrellitas: las Pléyades.",
+        story:
+          "Los mexicas llamaban a las Pléyades Tianquiztli, «el mercado». Según los cronistas, cada 52 años esperaban verlas en lo más alto del cielo a medianoche para encender el Fuego Nuevo y saber que el mundo seguiría. Para los griegos eran las hijas de Atlas.",
+      },
+      canisMajor: {
+        name: "Can Mayor",
+        tip: "Sigue el cinturón de Orión hacia el otro lado: llegas a Sirio, la estrella más brillante de la noche. Cuando está bajita, titila de colores.",
+        story:
+          "Es el perro de Orión, que lo acompaña en su cacería. En el antiguo Egipto, cuando Sirio volvía a verse antes del amanecer anunciaba la crecida del Nilo y el inicio del año.",
+      },
+      gemini: {
+        name: "Géminis",
+        tip: "Dos estrellas brillantes, juntas y casi iguales: Cástor y Pólux, las cabezas de los gemelos.",
+        story:
+          "Cástor y Pólux eran gemelos, protectores de los marineros. Algunos estudiosos creen que los mexicas veían por aquí el Citlaltlachtli, el «juego de pelota de las estrellas».",
+      },
+      leo: {
+        name: "Leo",
+        tip: "Busca un signo de interrogación al revés: es la melena del león. La estrella del punto es Régulo, «el pequeño rey».",
+        story:
+          "Es el león de Nemea, de piel tan dura que ninguna arma la atravesaba. Hércules lo venció con las manos: fue el primero de sus doce trabajos.",
+      },
+      bigDipper: {
+        name: "Osa Mayor",
+        tip: "Siete estrellas en forma de cazo. Las dos del borde apuntan a la Estrella Polar, que siempre marca el norte.",
+        story:
+          "Para los griegos era Calisto, convertida en osa y subida al cielo por Zeus. En algunas lecturas del Popol Vuh maya es Vucub Caquix, el ave que se creía el sol. Los navegantes la usaban para encontrar el norte.",
+      },
+      bootes: {
+        name: "Boyero y Arturo",
+        tip: "Sigue la curva del mango de la Osa Mayor y «haz un arco hasta Arturo»: una estrella anaranjada muy brillante.",
+        story:
+          "Arturo significa «el guardián de la osa», porque parece perseguir a la Osa Mayor alrededor del polo. Es una estrella gigante, unas 25 veces más ancha que el Sol.",
+      },
+      crux: {
+        name: "Cruz del Sur",
+        tip: "Mira bajito, justo sobre el horizonte al sur, con el mar despejado: cuatro estrellas en cruz.",
+        story:
+          "Guiaba a los navegantes hacia el sur y está en las banderas de Australia, Nueva Zelanda y Brasil. Desde casi todo Estados Unidos no se ve; desde Cerritos sí, en primavera, por estar tan al sur.",
+      },
+      scorpius: {
+        name: "Escorpión",
+        tip: "Busca una estrella rojiza muy brillante, Antares, y una cola larga que se curva hacia abajo como un gancho.",
+        story:
+          "Es el escorpión que mató a Orión, y por eso nunca están juntos en el cielo. En Mesoamérica también veían un escorpión: Sahagún registró la «estrella escorpión», Citlalcolotl. Antares significa «rival de Marte», por su color.",
+      },
+      sagittarius: {
+        name: "Sagitario",
+        tip: "Busca una tetera: ocho estrellas forman el cuerpo, el asa y el pico. El «vapor» que sale del pico es la Vía Láctea.",
+        story:
+          "Hacia ahí está el centro de nuestra galaxia, a unos 26,000 años luz. Para los mayas la Vía Láctea era un gran árbol o camino; la franja oscura que la parte, cerca de aquí, se ha interpretado como el camino a Xibalbá, el inframundo.",
+      },
+      summerTriangle: {
+        name: "Triángulo de Verano",
+        tip: "Tres estrellas muy brillantes forman un triángulo grande: Vega, Deneb y Altair.",
+        story:
+          "En Japón y China, Vega es una tejedora y Altair un pastor, enamorados separados por el río del cielo, la Vía Láctea. Solo se encuentran una vez al año, en la fiesta de Tanabata, el séptimo día del séptimo mes.",
+      },
+      pegasus: {
+        name: "Pegaso y Andrómeda",
+        tip: "Cuatro estrellas forman un gran cuadrado. De una esquina sale una fila de estrellas: Andrómeda. Junto a ella, una manchita borrosa: la galaxia de Andrómeda.",
+        story:
+          "Pegaso es el caballo alado; Andrómeda, la princesa que rescató Perseo. La manchita es otra galaxia, a 2.5 millones de años luz: lo más lejano que se ve a simple vista. Desde la azotea, en noche sin luna, se alcanza a ver.",
+      },
+      cassiopeia: {
+        name: "Casiopea",
+        tip: "Cinco estrellas en forma de W (o de M), sobre el norte.",
+        story:
+          "Era una reina tan vanidosa que presumía ser más bella que las ninfas del mar. Como castigo da vueltas alrededor del polo, y a veces queda de cabeza.",
+      },
+    },
+  },
   rooftop: {
     title: "Desde la azotea",
     intro: "El cielo de esta noche, las ballenas y las olas de Cerritos, al día. Desliza o toca para cambiar.",
@@ -301,7 +401,7 @@ const es: Dictionary = {
     next: "Siguiente",
   },
   whales: {
-    title: "Ballenas jorobadas",
+    title: "Ballenas frente a Cerritos",
     intro:
       "Cada invierno las ballenas jorobadas bajan a Baja California Sur a tener a sus crías. Desde la azotea del hotel se ven soplar y saltar frente a Playa Cerritos.",
     illustration: "Cola de ballena jorobada saliendo del agua",
@@ -320,6 +420,91 @@ const es: Dictionary = {
     ratings: { excellent: "Mar liso: ideal", good: "Buena", fair: "Algo de viento", poor: "Mucho viento: difícil" },
     bestMorning: (day: string) => `La mejor mañana de la semana: ${day}`,
     noForecast: "Por ahora no hay pronóstico del mar.",
+    species: {
+      title: "Qué ballenas se ven",
+      hint: "Toca cada una para ver cómo reconocerla.",
+      now: "Temporada ahora",
+      levels: { common: "Muy común", sometimes: "A veces", rare: "Rara" },
+      size: "Tamaño",
+      howTo: "Cómo reconocerla",
+      fact: "Dato curioso",
+      items: {
+        humpback: {
+          name: "Ballena jorobada",
+          when: "Dic – abr",
+          size: "14 a 16 m",
+          spot: "Soplido ancho, como arbusto, de unos 3 m. Salta fuera del agua y golpea con sus aletas pectorales, que son larguísimas. Al sumergirse enseña la cola, blanca y negra por abajo.",
+          fact: "Llegan desde Alaska y Canadá a tener a sus crías. Los machos cantan canciones que duran hasta 20 minutos, y el dibujo de cada cola es único, como una huella digital.",
+        },
+        gray: {
+          name: "Ballena gris",
+          when: "Ene – mar",
+          size: "13 a 15 m",
+          spot: "Soplido en forma de corazón o de V. No tiene aleta dorsal, sino una fila de bultitos en el lomo, y su piel gris está llena de manchas.",
+          fact: "Hace una de las migraciones más largas de cualquier mamífero: desde el Ártico hasta las lagunas de Baja California Sur, unos 16,000 a 20,000 km ida y vuelta. A veces pasa frente a esta costa.",
+        },
+        dolphins: {
+          name: "Delfines",
+          when: "Todo el año",
+          size: "2 a 4 m",
+          spot: "Aletas que salen y entran del agua en grupo, a veces muy cerca de la orilla. De vez en cuando se meten a las olas junto a los surfistas.",
+          fact: "Los más comunes por aquí son el delfín nariz de botella y el delfín común, que viajan en grupos de decenas.",
+        },
+        blue: {
+          name: "Ballena azul",
+          when: "Ene – abr",
+          size: "Hasta 25 – 30 m",
+          spot: "Soplido altísimo y recto, de hasta 9 m. Su lomo es larguísimo, azul grisáceo, con una aleta dorsal muy chiquita al final.",
+          fact: "Es el animal más grande que ha existido. De este lado es rara; se ve más en el Golfo de California, por Loreto.",
+        },
+        orca: {
+          name: "Orca",
+          when: "Todo el año",
+          size: "6 a 9 m",
+          spot: "Blanca y negra, con una aleta dorsal alta, de hasta 1.8 m en los machos.",
+          fact: "Aunque le dicen «ballena asesina», en realidad es el delfín más grande. Pasan por la costa de vez en cuando, sin fecha fija.",
+        },
+      },
+    },
+    why: {
+      title: "¿Por qué pasan por aquí?",
+      now: {
+        north: "Ahora mismo están comiendo en Alaska",
+        south: "Ahora mismo vienen en camino hacia Cerritos",
+        here: "Ahora mismo están aquí, con sus crías",
+        back: "Ahora mismo van de regreso al norte",
+      },
+      alaska: "Alaska",
+      cerritos: "Cerritos",
+      current: "Corriente de California",
+      temps: (north: number, south: number) => `Alaska ${north} °C → Cerritos ${south} °C`,
+      tempNote: (north: number, south: number) =>
+        `Hoy el mar está a ${north} °C en el Golfo de Alaska y a ${south} °C frente a Cerritos, según el satélite.`,
+      yearTitle: "Su año, mes a mes",
+      phases: {
+        here: {
+          label: "Aquí, en Cerritos",
+          months: "Mediados de dic – mar",
+          body: "Las crías nacen con muy poca grasa y no aguantarían el agua helada, así que las mamás buscan este mar tibio y tranquilo. Casi no comen: viven de su reserva de grasa y producen cientos de litros de leche al día. Lo mejor para verlas es de enero a marzo.",
+        },
+        back: {
+          label: "De regreso al norte",
+          months: "Abr – may",
+          body: "Con las crías ya más grandes, emprenden el viaje de vuelta. Pueden llegar al norte habiendo perdido hasta un tercio de su peso.",
+        },
+        north: {
+          label: "Comiendo en el norte",
+          months: "May – oct",
+          body: "Pasan esos meses en las aguas frías de Alaska y Canadá, llenas de krill y peces chicos. Comen sin parar y juntan una capa gruesa de grasa para el resto del año.",
+        },
+        south: {
+          label: "Bajando por la costa",
+          months: "Nov – dic",
+          body: "Cuando el norte se enfría, viajan hacia el sur más de un mes, siguiendo la costa del Pacífico. Por aquí también baja la corriente de California, de agua fría, que en Baja California Sur se encuentra con las aguas tibias del trópico.",
+        },
+      },
+      source: "Temperatura del mar: NOAA / NASA JPL (MUR SST, satélite), se actualiza a diario.",
+    },
     tipsTitle: "Cómo verlas",
     tips: [
       { title: "Busca el soplido", body: "Antes de ver a la ballena ves su soplido: un chorro blanco de unos 3 metros sobre el agua." },

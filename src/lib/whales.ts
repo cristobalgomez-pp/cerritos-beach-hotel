@@ -79,3 +79,44 @@ export async function getWhaleMornings(days = 7, now = new Date()): Promise<Whal
   }
   return mornings;
 }
+
+// --- which whales (and friends) you can see from Cerritos ------------------
+
+export type SpeciesKey = "humpback" | "gray" | "blue" | "dolphins" | "orca";
+export type SpeciesLevel = "common" | "sometimes" | "rare";
+
+export interface Species {
+  key: SpeciesKey;
+  months: number[]; // 1–12, when they're around this coast
+  level: SpeciesLevel; // how likely you are to see them from shore in those months
+}
+
+export const SPECIES: Species[] = [
+  { key: "humpback", months: [12, 1, 2, 3, 4], level: "common" },
+  { key: "gray", months: [1, 2, 3], level: "sometimes" },
+  { key: "dolphins", months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], level: "common" },
+  { key: "blue", months: [1, 2, 3, 4], level: "rare" },
+  { key: "orca", months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], level: "rare" },
+];
+
+// --- the humpbacks' year, as seen from Cerritos ------------------------------
+
+export type MigrationPhase = "north" | "south" | "here" | "back";
+
+/** Where the humpbacks are each month (1–12): feeding up north, on their way, here, or heading back */
+export const MIGRATION_BY_MONTH: Record<number, MigrationPhase> = {
+  1: "here",
+  2: "here",
+  3: "here",
+  4: "back",
+  5: "north",
+  6: "north",
+  7: "north",
+  8: "north",
+  9: "north",
+  10: "north",
+  11: "south",
+  12: "here",
+};
+
+export const MIGRATION_ORDER: MigrationPhase[] = ["here", "back", "north", "south"];

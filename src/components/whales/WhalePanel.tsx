@@ -1,8 +1,10 @@
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/en";
+import DetailRow, { DetailList } from "@/components/outlook/DetailRow";
 import MobileMore from "@/components/outlook/MobileMore";
+import WhyHere from "./WhyHere";
 import { formatWeekday } from "@/lib/sky";
-import { getWhaleMornings, MONTH_ACTIVITY, seasonStatus, type WhaleRating } from "@/lib/whales";
+import { getWhaleMornings, MONTH_ACTIVITY, seasonStatus, SPECIES, type SpeciesKey, type WhaleRating } from "@/lib/whales";
 
 const RATING_DOTS: Record<WhaleRating, number> = { excellent: 4, good: 3, fair: 2, poor: 1 };
 
@@ -38,6 +40,48 @@ function Fluke({ label, className = "" }: { label: string; className?: string })
   );
 }
 
+function SpeciesIcon({ k }: { k: SpeciesKey }) {
+  if (k === "dolphins" || k === "orca") {
+    // Dorsal fin over the water
+    return (
+      <svg viewBox="0 0 24 24" className="h-7 w-7" aria-hidden="true">
+        <path
+          d={k === "orca" ? "M8 17 C10 13 11 7 13 3 C13.5 8 15 13 18 17 Z" : "M7 17 C10 14 12 10 13 6 C14 10 16 14 19 17 Z"}
+          fill="currentColor"
+        />
+        <path
+          d="M3 18.5 C6 17.5 9 17.5 12 18.5 C15 19.5 18 19.5 21 18.5"
+          fill="none"
+          stroke="white"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          opacity="0.6"
+        />
+      </svg>
+    );
+  }
+  // Tail fluke, bigger for the bigger whales
+  const scale = k === "blue" ? 1 : k === "humpback" ? 0.9 : 0.8;
+  return (
+    <svg viewBox="0 0 24 24" className="h-7 w-7" aria-hidden="true">
+      <g transform={`translate(12 18) scale(${scale}) translate(-12 -18)`}>
+        <path
+          fill="currentColor"
+          d="M10.4 18 C10.9 15.6 11.2 13.6 11.3 11.6 C9.2 11.2 6.5 10.3 4.6 8.6 C3.4 7.5 2.6 6.2 2.2 4.4 C3.5 5.2 5 5.5 6.4 5.6 C8.4 6.3 10.4 7.4 12 8.9 C13.6 7.4 15.6 6.3 17.6 5.6 C19 5.5 20.5 5.2 21.8 4.4 C21.4 6.2 20.6 7.5 19.4 8.6 C17.5 10.3 14.8 11.2 12.7 11.6 C12.8 13.6 13.1 15.6 13.6 18 Z"
+        />
+      </g>
+      <path
+        d="M3 19.5 C6 18.5 9 18.5 12 19.5 C15 20.5 18 20.5 21 19.5"
+        fill="none"
+        stroke="white"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        opacity="0.6"
+      />
+    </svg>
+  );
+}
+
 export default async function WhalePanel({ lang, t }: { lang: Locale; t: Dictionary }) {
   const w = t.whales;
   const now = previewNow();
@@ -45,10 +89,12 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
   const mornings = season.inSeason ? await getWhaleMornings(7) : [];
   const best = mornings.reduce<(typeof mornings)[number] | undefined>(
     (a, m) => (!a || RATING_DOTS[m.rating] > RATING_DOTS[a.rating] || (m.rating === a.rating && m.windKmh < a.windKmh) ? m : a),
-    undefined
+    undefined,
   );
   const monthNames = Array.from({ length: 12 }, (_, i) =>
-    new Intl.DateTimeFormat(lang === "es" ? "es-MX" : "en-US", { month: "short", timeZone: "UTC" }).format(new Date(Date.UTC(2026, i, 1)))
+    new Intl.DateTimeFormat(lang === "es" ? "es-MX" : "en-US", { month: "short", timeZone: "UTC" }).format(
+      new Date(Date.UTC(2026, i, 1)),
+    ),
   );
 
   const headline = season.inSeason ? (season.peak ? w.peak : w.inSeason) : w.startsIn(season.daysUntilStart);
@@ -78,7 +124,9 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
               const current = i + 1 === season.month;
               return (
                 <li key={i} className="flex flex-col items-center gap-2">
-                  <span className={`text-[10px] font-semibold uppercase tracking-wide ${current ? "text-moon" : "text-transparent"}`}>
+                  <span
+                    className={`text-[10px] font-semibold uppercase tracking-wide ${current ? "text-moon" : "text-transparent"}`}
+                  >
                     {w.today}
                   </span>
                   <div className="flex h-16 w-full items-end md:h-24">
@@ -111,6 +159,46 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
         </div>
       </div>
 
+      {/* Which species: one row each, details on tap */}
+      <div className="mt-8 md:mt-14">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+          <h4 className="text-lg font-bold md:text-xl">{w.species.title}</h4>
+          <p className="text-sm text-white/60">{w.species.hint}</p>
+        </div>
+        <div className="mt-3">
+          <DetailList
+            rows={SPECIES.map((sp) => {
+              const text = w.species.items[sp.key];
+              const inSeasonNow = sp.months.includes(season.month) && sp.months.length < 12;
+              return (
+                <DetailRow
+                  key={sp.key}
+                  icon={<SpeciesIcon k={sp.key} />}
+                  title={text.name}
+                  meta={`${text.when} · ${w.species.levels[sp.level]}`}
+                  badge={inSeasonNow ? w.species.now : undefined}
+                >
+                  <p>
+                    <span className="font-semibold text-white">{w.species.size}: </span>
+                    {text.size}
+                  </p>
+                  <p className="mt-2">
+                    <span className="font-semibold text-white">{w.species.howTo}: </span>
+                    {text.spot}
+                  </p>
+                  <p className="mt-2 text-white/70">
+                    <span className="font-semibold text-moon/90">{w.species.fact}: </span>
+                    {text.fact}
+                  </p>
+                </DetailRow>
+              );
+            })}
+          />
+        </div>
+      </div>
+
+      <WhyHere lang={lang} t={t} month={season.month} />
+
       {season.inSeason && (
         <div className="mt-8 border-t border-white/15 pt-6 md:mt-16 md:pt-12">
           <h4 className="text-lg font-bold md:text-2xl">{w.morningsTitle}</h4>
@@ -133,9 +221,17 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
                     </span>
                     <span className="font-display text-base font-bold sm:text-lg">{m.windKmh}</span>
                     <span className="-mt-1 text-[11px] text-white/60">km/h{m.rain ? ` · ${w.rain}` : ""}</span>
-                    <span className="flex gap-0.5 sm:gap-1" role="img" aria-label={w.ratings[m.rating]} title={w.ratings[m.rating]}>
+                    <span
+                      className="flex gap-0.5 sm:gap-1"
+                      role="img"
+                      aria-label={w.ratings[m.rating]}
+                      title={w.ratings[m.rating]}
+                    >
                       {[1, 2, 3, 4].map((d) => (
-                        <span key={d} className={`h-1 w-1 rounded-full sm:h-1.5 sm:w-1.5 ${d <= RATING_DOTS[m.rating] ? "bg-moon" : "bg-white/20"}`} />
+                        <span
+                          key={d}
+                          className={`h-1 w-1 rounded-full sm:h-1.5 sm:w-1.5 ${d <= RATING_DOTS[m.rating] ? "bg-moon" : "bg-white/20"}`}
+                        />
                       ))}
                     </span>
                   </li>
