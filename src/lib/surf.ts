@@ -35,8 +35,8 @@ type WavePoint = { t: number; hs: number; per: number; dir: number; swell: numbe
 
 async function fetchSwell(now: Date): Promise<WavePoint[]> {
   const from = new Date(now.getTime() - 3600_000).toISOString().slice(0, 13) + ":00:00Z";
-  const to = new Date(now.getTime() + 7 * 86_400_000).toISOString().slice(0, 13) + ":00:00Z";
-  const range = `[(${from}):(${to})]${POINT}`;
+  // Up to the end of the latest model run (about 7 days ahead)
+  const range = `[(${from}):last]${POINT}`;
   const vars = ["Thgt", "Tper", "Tdir", "shgt", "sper", "sdir"].map((v) => `${v}${range}`).join(",");
   try {
     const res = await fetch(`${WW3}?${encodeURI(vars)}`, { next: { revalidate: 3 * 3600 } });
