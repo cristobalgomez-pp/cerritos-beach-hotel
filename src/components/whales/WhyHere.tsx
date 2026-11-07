@@ -85,7 +85,7 @@ export default async function WhyHere({ t }: { t: Dictionary }) {
         </div>
         <div className="md:col-span-8">
           {/* Phones: the story folds; larger screens: always open */}
-          <MobileMore title={y.stepsTitle} titleClassName="hidden">
+          <MobileMore title={y.stepsTitle} titleClassName="text-sm font-semibold uppercase tracking-wide text-white/60">
             {steps}
           </MobileMore>
           <p className="mt-6 text-xs text-white/45">{y.source}</p>
