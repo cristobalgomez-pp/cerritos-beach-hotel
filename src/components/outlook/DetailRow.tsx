@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 /** A list row that opens on tap (native <details>, works without JavaScript) */
 export default function DetailRow({ icon, title, meta, badge, children }: { icon: ReactNode; title: string; meta: string; badge?: string; children: ReactNode }) {
   return (
-    <li className="break-inside-avoid">
-      <details className="group border-b border-white/10 lg:border-t">
+    <li>
+      <details className="group border-b border-white/10">
         <summary className="flex min-h-14 cursor-pointer list-none items-center gap-3 py-3 [&::-webkit-details-marker]:hidden">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center text-moon">{icon}</span>
           <span className="min-w-0 flex-1">
@@ -28,5 +28,16 @@ export default function DetailRow({ icon, title, meta, badge, children }: { icon
         <div className="pb-5 pl-12 pr-2 text-sm leading-relaxed text-white/80">{children}</div>
       </details>
     </li>
+  );
+}
+
+/** Rows in one list on phones, split into two fixed columns on large screens (opening a row never moves the others) */
+export function DetailList({ rows }: { rows: ReactNode[] }) {
+  const half = Math.ceil(rows.length / 2);
+  return (
+    <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-10">
+      <ul className="border-t border-white/10">{rows.slice(0, half)}</ul>
+      <ul className="lg:border-t lg:border-white/10">{rows.slice(half)}</ul>
+    </div>
   );
 }

@@ -1,5 +1,5 @@
 import type { Locale } from "@/i18n/config";
-import DetailRow from "@/components/outlook/DetailRow";
+import DetailRow, { DetailList } from "@/components/outlook/DetailRow";
 import type { Dictionary } from "@/i18n/dictionaries/en";
 import { CONSTELLATIONS, constellationsTonight, shapeOf, type ConstellationKey } from "@/lib/constellations";
 import { formatTime, type Night } from "@/lib/sky";
@@ -60,8 +60,9 @@ export default function TonightList({ night, lang, t }: { night: Night; lang: Lo
   const brightness = (mag: number) => (mag < -1 ? s.brightness.veryBright : mag < 1 ? s.brightness.bright : s.brightness.visible);
 
   return (
-    <ul className="border-t border-white/10 lg:columns-2 lg:gap-x-10 lg:border-t-0">
-      {constellations.map((item) => {
+    <DetailList
+      rows={[
+        ...constellations.map((item) => {
         const text = c.items[item.key];
         const when = item.fromDusk ? c.fromDusk : c.from(formatTime(item.from, lang));
         const where = item.height === "overhead" ? c.heights.overhead : dir(item.direction);
@@ -88,9 +89,8 @@ export default function TonightList({ night, lang, t }: { night: Night; lang: Lo
             </div>
           </DetailRow>
         );
-      })}
-
-      {planets.map((p) => (
+        }),
+        ...planets.map((p) => (
         <DetailRow
           key={p.key}
           icon={<span className="h-3.5 w-3.5 rounded-full bg-moon shadow-[0_0_12px_rgba(243,227,179,0.8)]" />}
@@ -102,10 +102,10 @@ export default function TonightList({ night, lang, t }: { night: Night; lang: Lo
             {s.planetWindow(formatTime(p.start, lang), formatTime(p.end, lang))} {s.planetLine(s.directions[p.direction], formatTime(p.best, lang))}.
           </p>
         </DetailRow>
-      ))}
-
-      {night.milkyWay && (
+        )),
+        night.milkyWay && (
         <DetailRow
+          key="milkyWay"
           icon={
             <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
               <path d="M3 18 C8 14 14 10 21 5" stroke="currentColor" strokeWidth="5" strokeLinecap="round" opacity="0.35" />
@@ -117,9 +117,9 @@ export default function TonightList({ night, lang, t }: { night: Night; lang: Lo
         >
           <p>{s.milkyWayTip}</p>
         </DetailRow>
-      )}
-
-      <DetailRow
+        ),
+        <DetailRow
+          key="shower"
         icon={
           <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" aria-hidden="true">
             <path d="M4 4l9 9M8 3l7 7M3 9l6 6" opacity="0.5" />
@@ -132,7 +132,8 @@ export default function TonightList({ night, lang, t }: { night: Night; lang: Lo
         <p>
           {s.showerRate(shower.perHour)}. {showerMoon}.
         </p>
-      </DetailRow>
-    </ul>
+      </DetailRow>,
+      ].filter(Boolean)}
+    />
   );
 }

@@ -1,6 +1,6 @@
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/en";
-import DetailRow from "@/components/outlook/DetailRow";
+import DetailRow, { DetailList } from "@/components/outlook/DetailRow";
 import MobileMore from "@/components/outlook/MobileMore";
 import { formatWeekday } from "@/lib/sky";
 import { getWhaleMornings, MONTH_ACTIVITY, seasonStatus, SPECIES, type SpeciesKey, type WhaleRating } from "@/lib/whales";
@@ -143,8 +143,9 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
           <h4 className="text-lg font-bold md:text-xl">{w.species.title}</h4>
           <p className="text-sm text-white/60">{w.species.hint}</p>
         </div>
-        <ul className="mt-3 border-t border-white/10 lg:columns-2 lg:gap-x-10 lg:border-t-0">
-          {SPECIES.map((sp) => {
+        <div className="mt-3">
+          <DetailList
+            rows={SPECIES.map((sp) => {
             const text = w.species.items[sp.key];
             const inSeasonNow = sp.months.includes(season.month) && sp.months.length < 12;
             return (
@@ -169,8 +170,9 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
                 </p>
               </DetailRow>
             );
-          })}
-        </ul>
+            })}
+          />
+        </div>
       </div>
 
       {season.inSeason && (
