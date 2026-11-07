@@ -3,6 +3,7 @@ import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/en";
 import MoonMark from "@/components/MoonMark";
 import SkyPanel from "@/components/sky/SkyPanel";
+import SurfPanel from "@/components/surf/SurfPanel";
 import WhalePanel from "@/components/whales/WhalePanel";
 import OutlookTabs from "./OutlookTabs";
 
@@ -13,6 +14,15 @@ const STARS = Array.from({ length: 70 }, (_, i) => {
   const r = i % 9 === 0 ? 1.4 : i % 3 === 0 ? 0.9 : 0.6;
   return { x, y, r, o: 0.25 + ((i * 17) % 50) / 100 };
 });
+
+function WaveIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" aria-hidden="true">
+      <path d="M2 16c2.5 0 3-2 5-2s2.5 2 5 2 3-2 5-2 2.5 2 5 2" />
+      <path d="M4 11c1-4 4-7 8-7 3 0 5 2 5 4.5S15 12 13.5 11 13 8 15 8" />
+    </svg>
+  );
+}
 
 function TailIcon() {
   return (
@@ -25,7 +35,7 @@ function TailIcon() {
   );
 }
 
-/** "From the rooftop": tonight's sky and the whales, as one slider over the dusk photo */
+/** "From the rooftop": tonight's sky, the whales and the surf, as one slider over the dusk photo */
 export default async function FromTheRooftop({ lang, t }: { lang: Locale; t: Dictionary }) {
   const r = t.rooftop;
   return (
@@ -62,6 +72,12 @@ export default async function FromTheRooftop({ lang, t }: { lang: Locale; t: Dic
               label: r.tabs.whales.label,
               icon: <TailIcon />,
               panel: <WhalePanel lang={lang} t={t} />,
+            },
+            {
+              id: r.tabs.surf.id,
+              label: r.tabs.surf.label,
+              icon: <WaveIcon />,
+              panel: <SurfPanel lang={lang} t={t} />,
             },
           ]}
         />
