@@ -24,35 +24,35 @@ export default async function SkyPanel({ lang, t }: { lang: Locale; t: Dictionar
         <p className="mt-3 hidden text-lg text-white/75 md:block">{s.intro}</p>
       </div>
 
-      <div className="mt-6 grid gap-8 md:mt-10 lg:grid-cols-12 lg:gap-12">
-        {/* Tonight at a glance */}
-        <div className="lg:col-span-5">
-          <div className="flex items-center gap-5">
-            <MoonPhase
-              illumination={tonight.moonIllumination}
-              waxing={tonight.moonWaxing}
-              size={120}
-              className="h-20 w-20 shrink-0 drop-shadow-[0_0_40px_rgba(243,227,179,0.25)] md:h-28 md:w-28"
-              label={s.phases[tonight.moonPhase]}
-            />
-            <div>
-              <p className="font-display text-2xl font-bold text-moon md:text-3xl">{s.ratings[tonight.rating]}</p>
-              <p className="mt-1 text-white/70">
-                {s.phases[tonight.moonPhase]} · {Math.round(tonight.moonIllumination * 100)}% {s.lit}
-              </p>
-            </div>
+      {/* Tonight at a glance: one band (moon · key facts · the week) */}
+      <div className="mt-6 grid gap-6 md:mt-10 lg:grid-cols-12 lg:items-center lg:gap-10">
+        <div className="flex items-center gap-5 lg:col-span-4">
+          <MoonPhase
+            illumination={tonight.moonIllumination}
+            waxing={tonight.moonWaxing}
+            size={120}
+            className="h-20 w-20 shrink-0 drop-shadow-[0_0_40px_rgba(243,227,179,0.25)] md:h-24 md:w-24"
+            label={s.phases[tonight.moonPhase]}
+          />
+          <div>
+            <p className="font-display text-2xl font-bold text-moon">{s.ratings[tonight.rating]}</p>
+            <p className="mt-1 text-white/70">
+              {s.phases[tonight.moonPhase]} · {Math.round(tonight.moonIllumination * 100)}% {s.lit}
+            </p>
           </div>
-          <dl className="mt-6 grid grid-cols-3 gap-x-4 border-t border-white/15 pt-5">
-            {facts.map(([k, v]) => (
-              <div key={k}>
-                <dt className="text-xs text-white/60 md:text-sm">{k}</dt>
-                <dd className="mt-0.5 font-semibold">{v}</dd>
-              </div>
-            ))}
-          </dl>
+        </div>
 
-          {/* The week, compact */}
-          <h4 className="mt-8 text-sm font-semibold text-white/80">{s.weekTitle}</h4>
+        <dl className="grid grid-cols-3 gap-x-4 border-t border-white/15 pt-5 lg:col-span-3 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+          {facts.map(([k, v]) => (
+            <div key={k} className="lg:col-span-3 lg:flex lg:items-baseline lg:justify-between lg:gap-3 lg:py-1">
+              <dt className="text-xs text-white/60 md:text-sm">{k}</dt>
+              <dd className="mt-0.5 font-semibold lg:mt-0">{v}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="lg:col-span-5 lg:border-l lg:border-white/15 lg:pl-8">
+          <h4 className="text-sm font-semibold text-white/80">{s.weekTitle}</h4>
           <ol className="mt-3 grid grid-cols-7 gap-1">
             {nights.map((n, i) => {
               const isBest = n.date === best.date;
@@ -77,16 +77,18 @@ export default async function SkyPanel({ lang, t }: { lang: Locale; t: Dictionar
             })}
           </ol>
         </div>
+      </div>
 
-        {/* What to look for: one row each, details on tap */}
-        <div className="lg:col-span-7">
+      {/* What to look for: full width, two columns on large screens; details on tap */}
+      <div className="mt-8 md:mt-12">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
           <h4 className="text-lg font-bold md:text-xl">{s.lookTitle}</h4>
-          <p className="mt-1 text-sm text-white/60">{s.lookHint}</p>
-          <div className="mt-3">
-            <TonightList night={tonight} lang={lang} t={t} />
-          </div>
-          <p className="mt-6 hidden text-xs text-white/45 md:block">{s.source}</p>
+          <p className="text-sm text-white/60">{s.lookHint}</p>
         </div>
+        <div className="mt-3">
+          <TonightList night={tonight} lang={lang} t={t} />
+        </div>
+        <p className="mt-6 hidden text-xs text-white/45 md:block">{s.source}</p>
       </div>
     </div>
   );

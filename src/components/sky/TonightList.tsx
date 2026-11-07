@@ -44,7 +44,7 @@ function ConstellationDrawing({ k, label, className = "" }: { k: ConstellationKe
 function Row({ icon, title, meta, badge, children }: { icon: ReactNode; title: string; meta: string; badge?: string; children: ReactNode }) {
   return (
     <li>
-      <details className="group border-b border-white/10">
+      <details className="group border-b border-white/10 lg:border-t">
         <summary className="flex min-h-14 cursor-pointer list-none items-center gap-3 py-3 [&::-webkit-details-marker]:hidden">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center text-moon">{icon}</span>
           <span className="min-w-0 flex-1">
@@ -90,7 +90,7 @@ export default function TonightList({ night, lang, t }: { night: Night; lang: Lo
   const brightness = (mag: number) => (mag < -1 ? s.brightness.veryBright : mag < 1 ? s.brightness.bright : s.brightness.visible);
 
   return (
-    <ul className="border-t border-white/10">
+    <ul className="grid border-t border-white/10 lg:grid-cols-2 lg:items-start lg:gap-x-10 lg:border-t-0">
       {constellations.map((item) => {
         const text = c.items[item.key];
         const when = item.fromDusk ? c.fromDusk : c.from(formatTime(item.from, lang));
