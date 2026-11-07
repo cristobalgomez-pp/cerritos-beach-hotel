@@ -49,7 +49,9 @@ function Card({ item, lang, t }: { item: ConstellationTonight; lang: Locale; t: 
           )}
           <h5 className="font-display text-xl font-bold text-moon">{text.name}</h5>
           <p className="mt-1 text-sm font-semibold text-white/85">
-            {c.where(t.sky.directions[item.direction], c.heights[item.height])}
+            {item.height === "overhead"
+              ? c.heights.overhead.charAt(0).toUpperCase() + c.heights.overhead.slice(1)
+              : c.where(t.sky.directions[item.direction], c.heights[item.height])}
           </p>
           <p className="text-sm text-white/65">{when}</p>
         </div>

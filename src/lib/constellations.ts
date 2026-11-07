@@ -80,6 +80,7 @@ export const CONSTELLATIONS: ConstellationDef[] = [
   },
   {
     key: "canisMajor",
+    weight: 1.1,
     stars: [
       [6.752, -16.72, -1.46], // 0 Sirius
       [6.378, -17.96, 2.0], // 1 Mirzam
@@ -93,6 +94,7 @@ export const CONSTELLATIONS: ConstellationDef[] = [
   },
   {
     key: "gemini",
+    weight: 0.95,
     stars: [
       [7.577, 31.89, 1.6], // 0 Castor
       [7.755, 28.03, 1.1], // 1 Pollux
@@ -157,7 +159,7 @@ export const CONSTELLATIONS: ConstellationDef[] = [
   },
   {
     key: "scorpius",
-    weight: 1.1,
+    weight: 1.4,
     stars: [
       [16.091, -19.81, 2.6], // 0 Graffias
       [16.006, -22.62, 2.3], // 1 Dschubba
@@ -179,6 +181,7 @@ export const CONSTELLATIONS: ConstellationDef[] = [
   },
   {
     key: "sagittarius",
+    weight: 1.45,
     stars: [
       [18.403, -34.38, 1.8], // 0 Kaus Australis
       [18.35, -29.83, 2.7], // 1 Kaus Media
@@ -285,7 +288,8 @@ export function constellationsTonight(night: Night, count = 3): ConstellationTon
     if (!firstGood) return null;
     // Point people to the moment it's best placed, but no later than needed
     const when = def.southern ? best : firstGood.alt >= 45 ? firstGood : best;
-    const score = def.southern ? 1000 : best.alt * (def.weight ?? 1);
+    // Anything above 60° is equally easy to see, so low southern classics (Sirius, the Teapot) get a fair chance
+    const score = def.southern ? 1000 : Math.min(best.alt, 60) * (def.weight ?? 1);
     return {
       score,
       result: {
