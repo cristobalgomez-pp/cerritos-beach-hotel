@@ -197,7 +197,7 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
         </div>
       </div>
 
-      <WhyHere t={t} />
+      <WhyHere lang={lang} t={t} month={season.month} />
 
       {season.inSeason && (
         <div className="mt-8 border-t border-white/15 pt-6 md:mt-16 md:pt-12">

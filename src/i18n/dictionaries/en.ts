@@ -462,30 +462,41 @@ const en = {
     },
     why: {
       title: "Why do they come here?",
-      stepsTitle: "How the migration works",
+      now: {
+        north: "Right now they're feeding in Alaska",
+        south: "Right now they're on their way to Cerritos",
+        here: "Right now they're here, with their calves",
+        back: "Right now they're heading back north",
+      },
       alaska: "Alaska",
       cerritos: "Cerritos",
       current: "California Current",
+      temps: (north: number, south: number) => `Alaska ${north} °C → Cerritos ${south} °C`,
       tempNote: (north: number, south: number) =>
         `Today the sea is ${north} °C in the Gulf of Alaska and ${south} °C off Cerritos, by satellite.`,
-      steps: [
-        {
-          title: "In summer they feed up north",
-          body: "They spend the summer in the cold waters of Alaska and Canada, full of krill and small fish. There they eat nonstop and build up a thick layer of blubber.",
+      yearTitle: "Their year, month by month",
+      phases: {
+        here: {
+          label: "Here in Cerritos",
+          months: "Mid-Dec – Mar",
+          body: "Calves are born with very little blubber and couldn't handle icy water, so mothers come to this warm, calm sea. They barely eat: they live off their fat and produce hundreds of liters of milk a day. Best viewing is January to March.",
         },
-        {
-          title: "In the fall they travel down the coast",
-          body: "When the north gets cold, they swim south for over a month, following the Pacific coast. The California Current, a cold-water current, also flows down this coast and meets warm tropical waters in Baja California Sur.",
+        back: {
+          label: "Heading back north",
+          months: "Apr – May",
+          body: "With their calves bigger, they start the trip back. They can arrive up north having lost up to a third of their weight.",
         },
-        {
-          title: "In winter they have their calves here",
-          body: "Calves are born with very little blubber and couldn't handle icy water, so mothers look for warm, calm seas. Here they barely eat: they live off their fat, and mothers produce hundreds of liters of milk a day.",
+        north: {
+          label: "Feeding up north",
+          months: "May – Oct",
+          body: "They spend these months in the cold waters of Alaska and Canada, full of krill and small fish, eating nonstop to build a thick layer of blubber for the rest of the year.",
         },
-        {
-          title: "In spring they head back",
-          body: "Around April they return north to feed, with their calves bigger. They can arrive having lost up to a third of their weight.",
+        south: {
+          label: "Traveling down the coast",
+          months: "Nov – Dec",
+          body: "When the north gets cold, they swim south for over a month along the Pacific coast. The California Current, a cold-water current, also flows down this coast and meets warm tropical waters in Baja California Sur.",
         },
-      ],
+      },
       source: "Sea temperature: NOAA / NASA JPL (MUR SST, satellite), updated daily.",
     },
     tipsTitle: "How to spot them",

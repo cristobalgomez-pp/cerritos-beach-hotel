@@ -468,30 +468,41 @@ const es: Dictionary = {
     },
     why: {
       title: "¿Por qué pasan por aquí?",
-      stepsTitle: "Cómo funciona la migración",
+      now: {
+        north: "Ahora mismo están comiendo en Alaska",
+        south: "Ahora mismo vienen en camino hacia Cerritos",
+        here: "Ahora mismo están aquí, con sus crías",
+        back: "Ahora mismo van de regreso al norte",
+      },
       alaska: "Alaska",
       cerritos: "Cerritos",
       current: "Corriente de California",
+      temps: (north: number, south: number) => `Alaska ${north} °C → Cerritos ${south} °C`,
       tempNote: (north: number, south: number) =>
         `Hoy el mar está a ${north} °C en el Golfo de Alaska y a ${south} °C frente a Cerritos, según el satélite.`,
-      steps: [
-        {
-          title: "En verano comen en el norte",
-          body: "Pasan el verano en las aguas frías de Alaska y Canadá, que están llenas de krill y peces chicos. Ahí comen sin parar y juntan una capa gruesa de grasa.",
+      yearTitle: "Su año, mes a mes",
+      phases: {
+        here: {
+          label: "Aquí, en Cerritos",
+          months: "Mediados de dic – mar",
+          body: "Las crías nacen con muy poca grasa y no aguantarían el agua helada, así que las mamás buscan este mar tibio y tranquilo. Casi no comen: viven de su reserva de grasa y producen cientos de litros de leche al día. Lo mejor para verlas es de enero a marzo.",
         },
-        {
-          title: "En otoño bajan por la costa",
-          body: "Cuando el norte se enfría, viajan hacia el sur más de un mes, siguiendo la costa del Pacífico. Por esta costa también baja la corriente de California, de agua fría, que en Baja California Sur se encuentra con las aguas tibias del trópico.",
+        back: {
+          label: "De regreso al norte",
+          months: "Abr – may",
+          body: "Con las crías ya más grandes, emprenden el viaje de vuelta. Pueden llegar al norte habiendo perdido hasta un tercio de su peso.",
         },
-        {
-          title: "En invierno tienen a sus crías aquí",
-          body: "Las crías nacen con muy poca grasa y no aguantarían el agua helada, así que las mamás buscan mares tibios y tranquilos. Aquí casi no comen: viven de su reserva de grasa, y las mamás producen cientos de litros de leche al día.",
+        north: {
+          label: "Comiendo en el norte",
+          months: "May – oct",
+          body: "Pasan esos meses en las aguas frías de Alaska y Canadá, llenas de krill y peces chicos. Comen sin parar y juntan una capa gruesa de grasa para el resto del año.",
         },
-        {
-          title: "En primavera regresan",
-          body: "Hacia abril vuelven al norte a comer, con las crías ya más grandes. Pueden regresar habiendo perdido hasta un tercio de su peso.",
+        south: {
+          label: "Bajando por la costa",
+          months: "Nov – dic",
+          body: "Cuando el norte se enfría, viajan hacia el sur más de un mes, siguiendo la costa del Pacífico. Por aquí también baja la corriente de California, de agua fría, que en Baja California Sur se encuentra con las aguas tibias del trópico.",
         },
-      ],
+      },
       source: "Temperatura del mar: NOAA / NASA JPL (MUR SST, satélite), se actualiza a diario.",
     },
     tipsTitle: "Cómo verlas",
