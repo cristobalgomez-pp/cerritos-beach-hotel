@@ -136,7 +136,7 @@ function daylight(day: number) {
   const { lat, lng } = HOTEL.coordinates;
   const noon = new Date(day + (12 - TZ_OFFSET_H) * 3600_000);
   const times = SunCalc.getTimes(noon, lat, lng);
-  return { first: localHourOf(times.sunrise.getTime()) + 1, last: localHourOf(times.sunset.getTime()) - 1 };
+  return { first: localHourOf(times.sunrise!.getTime()) + 1, last: localHourOf(times.sunset!.getTime()) - 1 };
 }
 
 function buildDay(day: number, isToday: boolean, fromHour: number, waves: WavePoint[], weather: MetPoint[]): SurfDay | undefined {
