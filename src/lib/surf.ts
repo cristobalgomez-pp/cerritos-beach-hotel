@@ -115,20 +115,32 @@ function windPenalty(kmh?: number) {
 
 const SIZE_SCORE: Record<SurfSize, number> = { flat: 10, small: 60, medium: 90, big: 80, huge: 55 };
 
+// Long-period swell breaks cleaner and stronger; short wind swell is mushy
+function periodBonus(seconds: number) {
+  return seconds >= 13 ? 5 : seconds >= 10 ? 0 : seconds >= 8 ? -8 : -15;
+}
+
+// In Cerritos the sea breeze usually picks up after midday. Used only when the wind
+// forecast isn't hourly (MET gives 6-hourly steps beyond ~2.5 days), so a whole day doesn't look the same.
+function afternoonPenalty(hour: number) {
+  return hour >= 13 ? 12 : hour >= 11 ? 6 : 0;
+}
+
 function ratingOf(score: number): SurfRating {
-  if (score >= 80) return "excellent";
-  if (score >= 60) return "good";
-  if (score >= 35) return "fair";
+  if (score >= 90) return "excellent";
+  if (score >= 72) return "good";
+  if (score >= 45) return "fair";
   return "poor";
 }
 
 const localHourOf = (t: number) => new Date(t + TZ_OFFSET_H * 3600_000).getUTCHours();
 
 /** Nearest wind reading within 3 h (MET is hourly for ~2.5 days, then every 6 h). */
-function windAt(points: MetPoint[], t: number): number | undefined {
+function windAt(points: MetPoint[], t: number): { kmh?: number; hourly: boolean } {
   let best: MetPoint | undefined;
   for (const p of points) if (!best || Math.abs(p.t - t) < Math.abs(best.t - t)) best = p;
-  return best && Math.abs(best.t - t) <= 3 * 3600_000 ? Math.round(best.wind * 3.6) : undefined;
+  if (!best || Math.abs(best.t - t) > 3 * 3600_000) return { hourly: false };
+  return { kmh: Math.round(best.wind * 3.6), hourly: Math.abs(best.t - t) <= 3600_000 };
 }
 
 /** Daylight hours at the hotel for a local date (first full hour after sunrise … last before sunset). */
@@ -148,8 +160,8 @@ function buildDay(day: number, isToday: boolean, fromHour: number, waves: WavePo
     if (!wave) continue;
     const faceM = faceRange(wave.hs, wave.per, wave.dir);
     const size = sizeOf((faceM[0] + faceM[1]) / 2);
-    const windKmh = windAt(weather, t);
-    const score = SIZE_SCORE[size] - windPenalty(windKmh);
+    const { kmh: windKmh, hourly } = windAt(weather, t);
+    const score = SIZE_SCORE[size] + periodBonus(wave.per) - windPenalty(windKmh) - (hourly ? 0 : afternoonPenalty(h));
     hours.push({
       hour: h,
       faceM,
@@ -166,7 +178,7 @@ function buildDay(day: number, isToday: boolean, fromHour: number, waves: WavePo
 
   // Recommended hours: close to the best of the day (and not poor); the window is the longest run of them
   const top = Math.max(...hours.map((h) => h.score));
-  for (const h of hours) h.recommended = h.score >= top - 8 && h.rating !== "poor";
+  for (const h of hours) h.recommended = h.score >= top - 5 && h.rating !== "poor";
   let best: SurfDay["best"];
   for (let i = 0; i < hours.length; i++) {
     if (!hours[i].recommended) continue;
