@@ -460,6 +460,34 @@ const en = {
         },
       },
     },
+    why: {
+      title: "Why do they come here?",
+      stepsTitle: "How the migration works",
+      alaska: "Alaska",
+      cerritos: "Cerritos",
+      current: "California Current",
+      tempNote: (north: number, south: number) =>
+        `Today the sea is ${north} °C in the Gulf of Alaska and ${south} °C off Cerritos, by satellite.`,
+      steps: [
+        {
+          title: "In summer they feed up north",
+          body: "They spend the summer in the cold waters of Alaska and Canada, full of krill and small fish. There they eat nonstop and build up a thick layer of blubber.",
+        },
+        {
+          title: "In the fall they travel down the coast",
+          body: "When the north gets cold, they swim south for over a month, following the Pacific coast. The California Current, a cold-water current, also flows down this coast and meets warm tropical waters in Baja California Sur.",
+        },
+        {
+          title: "In winter they have their calves here",
+          body: "Calves are born with very little blubber and couldn't handle icy water, so mothers look for warm, calm seas. Here they barely eat: they live off their fat, and mothers produce hundreds of liters of milk a day.",
+        },
+        {
+          title: "In spring they head back",
+          body: "Around April they return north to feed, with their calves bigger. They can arrive having lost up to a third of their weight.",
+        },
+      ],
+      source: "Sea temperature: NOAA / NASA JPL (MUR SST, satellite), updated daily.",
+    },
     tipsTitle: "How to spot them",
     tips: [
       { title: "Look for the blow", body: "Before you see the whale you see its spout: a white puff about 3 meters high over the water." },

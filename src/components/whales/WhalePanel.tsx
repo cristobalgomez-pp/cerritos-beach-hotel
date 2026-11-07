@@ -2,6 +2,7 @@ import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/en";
 import DetailRow, { DetailList } from "@/components/outlook/DetailRow";
 import MobileMore from "@/components/outlook/MobileMore";
+import WhyHere from "./WhyHere";
 import { formatWeekday } from "@/lib/sky";
 import { getWhaleMornings, MONTH_ACTIVITY, seasonStatus, SPECIES, type SpeciesKey, type WhaleRating } from "@/lib/whales";
 
@@ -195,6 +196,8 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
           />
         </div>
       </div>
+
+      <WhyHere t={t} />
 
       {season.inSeason && (
         <div className="mt-8 border-t border-white/15 pt-6 md:mt-16 md:pt-12">

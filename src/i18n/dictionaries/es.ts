@@ -466,6 +466,34 @@ const es: Dictionary = {
         },
       },
     },
+    why: {
+      title: "¿Por qué pasan por aquí?",
+      stepsTitle: "Cómo funciona la migración",
+      alaska: "Alaska",
+      cerritos: "Cerritos",
+      current: "Corriente de California",
+      tempNote: (north: number, south: number) =>
+        `Hoy el mar está a ${north} °C en el Golfo de Alaska y a ${south} °C frente a Cerritos, según el satélite.`,
+      steps: [
+        {
+          title: "En verano comen en el norte",
+          body: "Pasan el verano en las aguas frías de Alaska y Canadá, que están llenas de krill y peces chicos. Ahí comen sin parar y juntan una capa gruesa de grasa.",
+        },
+        {
+          title: "En otoño bajan por la costa",
+          body: "Cuando el norte se enfría, viajan hacia el sur más de un mes, siguiendo la costa del Pacífico. Por esta costa también baja la corriente de California, de agua fría, que en Baja California Sur se encuentra con las aguas tibias del trópico.",
+        },
+        {
+          title: "En invierno tienen a sus crías aquí",
+          body: "Las crías nacen con muy poca grasa y no aguantarían el agua helada, así que las mamás buscan mares tibios y tranquilos. Aquí casi no comen: viven de su reserva de grasa, y las mamás producen cientos de litros de leche al día.",
+        },
+        {
+          title: "En primavera regresan",
+          body: "Hacia abril vuelven al norte a comer, con las crías ya más grandes. Pueden regresar habiendo perdido hasta un tercio de su peso.",
+        },
+      ],
+      source: "Temperatura del mar: NOAA / NASA JPL (MUR SST, satélite), se actualiza a diario.",
+    },
     tipsTitle: "Cómo verlas",
     tips: [
       { title: "Busca el soplido", body: "Antes de ver a la ballena ves su soplido: un chorro blanco de unos 3 metros sobre el agua." },
