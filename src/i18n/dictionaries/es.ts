@@ -296,6 +296,13 @@ const es: Dictionary = {
     tonight: "Hoy",
     source: "Pronóstico de nubes: MET Norway. Horarios de Playa Cerritos.",
   },
+  rooftop: {
+    title: "Desde la azotea",
+    intro: "El cielo de esta noche y las ballenas frente a Cerritos, al día. Desliza o toca para cambiar.",
+    tabs: { sky: { id: "cielo", label: "El cielo" }, whales: { id: "ballenas", label: "Ballenas" } },
+    prev: "Anterior",
+    next: "Siguiente",
+  },
   whales: {
     title: "Ballenas desde la azotea",
     intro:

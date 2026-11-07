@@ -292,6 +292,13 @@ const en = {
     tonight: "Tonight",
     source: "Cloud forecast: MET Norway. Times for Cerritos Beach.",
   },
+  rooftop: {
+    title: "From the rooftop",
+    intro: "Tonight's sky and the whales off Cerritos, updated every day. Swipe or tap to switch.",
+    tabs: { sky: { id: "sky", label: "Tonight's sky" }, whales: { id: "whales", label: "Whales" } },
+    prev: "Previous",
+    next: "Next",
+  },
   whales: {
     title: "Whales from the rooftop",
     intro:

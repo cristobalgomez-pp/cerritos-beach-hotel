@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/en";
 import { formatTime, formatWeekday, getSkyOutlook, type Rating } from "@/lib/sky";
@@ -7,15 +6,8 @@ import MoonPhase from "./MoonPhase";
 
 const RATING_DOTS: Record<Rating, number> = { excellent: 4, good: 3, fair: 2, poor: 1 };
 
-// Fixed pseudo-random star field (same on every render)
-const STARS = Array.from({ length: 70 }, (_, i) => {
-  const x = (i * 73.13) % 100;
-  const y = (i * 37.71 + (i % 7) * 11) % 100;
-  const r = i % 9 === 0 ? 1.4 : i % 3 === 0 ? 0.9 : 0.6;
-  return { x, y, r, o: 0.25 + ((i * 17) % 50) / 100 };
-});
 
-export default async function TonightSky({ lang, t }: { lang: Locale; t: Dictionary }) {
+export default async function SkyPanel({ lang, t }: { lang: Locale; t: Dictionary }) {
   const nights = await getSkyOutlook(7);
   const tonight = nights[0];
   const s = t.sky;
@@ -48,24 +40,11 @@ export default async function TonightSky({ lang, t }: { lang: Locale; t: Diction
   ];
 
   return (
-    <section className="relative isolate overflow-hidden bg-night text-white" aria-labelledby="sky-title">
-      <div className="absolute inset-x-0 top-0 -z-20 h-[520px]" aria-hidden="true">
-        <Image src="/images/hd/pergola-dusk.jpg" alt="" fill sizes="100vw" className="object-cover opacity-60" />
-        <div className="absolute inset-0 bg-gradient-to-b from-night/30 via-night/70 to-night" />
+    <div>
+      <div className="max-w-2xl">
+        <h3 className="text-3xl font-bold md:text-4xl">{s.title}</h3>
+        <p className="mt-3 text-lg text-white/75">{s.intro}</p>
       </div>
-      <svg className="absolute inset-0 -z-10 h-full w-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 100 100" aria-hidden="true">
-        {STARS.map((st, i) => (
-          <circle key={i} cx={st.x} cy={st.y} r={st.r * 0.12} fill="white" opacity={st.o} />
-        ))}
-      </svg>
-
-      <div className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
-        <div className="max-w-2xl">
-          <h2 id="sky-title" className="text-4xl font-bold md:text-5xl">
-            {s.title}
-          </h2>
-          <p className="mt-4 text-lg text-white/75">{s.intro}</p>
-        </div>
 
         <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:items-center">
           <div className="flex items-center gap-8 lg:col-span-5">
@@ -99,10 +78,10 @@ export default async function TonightSky({ lang, t }: { lang: Locale; t: Diction
         </div>
 
         <div className="mt-20 border-t border-white/15 pt-14">
-          <h3 className="text-3xl font-bold">{s.seeTitle}</h3>
+          <h4 className="text-2xl font-bold">{s.seeTitle}</h4>
           <div className="mt-10 grid gap-12 md:grid-cols-3">
             <div>
-              <h4 className="font-display text-lg font-bold text-moon">{s.planetsTitle}</h4>
+              <h5 className="font-display text-lg font-bold text-moon">{s.planetsTitle}</h5>
               {planets.length ? (
                 <ul className="mt-4 space-y-4">
                   {planets.map((p) => (
@@ -123,7 +102,7 @@ export default async function TonightSky({ lang, t }: { lang: Locale; t: Diction
             </div>
 
             <div>
-              <h4 className="font-display text-lg font-bold text-moon">{s.showerTitle}</h4>
+              <h5 className="font-display text-lg font-bold text-moon">{s.showerTitle}</h5>
               <p className="mt-4 font-display text-2xl font-bold">{s.showers[shower.key]}</p>
               <p className="mt-1 font-semibold">
                 {s.showerWhen(shower.daysAway)} <span className="font-normal text-white/60">· {showerDate}</span>
@@ -133,7 +112,7 @@ export default async function TonightSky({ lang, t }: { lang: Locale; t: Diction
             </div>
 
             <div>
-              <h4 className="font-display text-lg font-bold text-moon">{s.seasonTitle}</h4>
+              <h5 className="font-display text-lg font-bold text-moon">{s.seasonTitle}</h5>
               <ul className="mt-4 space-y-4">
                 {highlights.map((h) => (
                   <li key={h} className="leading-relaxed text-white/85">
@@ -146,7 +125,7 @@ export default async function TonightSky({ lang, t }: { lang: Locale; t: Diction
         </div>
 
         <div className="mt-16">
-          <h3 className="text-xl font-bold">{s.weekTitle}</h3>
+          <h4 className="text-xl font-bold">{s.weekTitle}</h4>
           <ol className="mt-6 grid grid-cols-4 gap-3 sm:grid-cols-7">
             {nights.map((n, i) => {
               const isBest = n.date === best.date;
@@ -175,7 +154,6 @@ export default async function TonightSky({ lang, t }: { lang: Locale; t: Diction
           </ol>
           <p className="mt-6 text-xs text-white/45">{s.source}</p>
         </div>
-      </div>
-    </section>
+    </div>
   );
 }
