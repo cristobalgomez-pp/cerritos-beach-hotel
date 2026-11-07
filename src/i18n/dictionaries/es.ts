@@ -341,7 +341,7 @@ const es: Dictionary = {
     bestShort: "Mejor",
     noGoodWindow: "Hoy no hay una hora que destaque.",
     hourlyTitle: (day: string) => `${day}, hora por hora`,
-    hourlyHint: "Las horas recomendadas están marcadas.",
+    sizeAxis: "Tamaño de ola en metros",
     recommended: "Recomendada",
     sizes: { flat: "Casi plano", small: "Chico", medium: "Mediano", big: "Grande", huge: "Muy grande" },
     levels: {

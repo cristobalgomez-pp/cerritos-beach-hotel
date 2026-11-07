@@ -123,28 +123,15 @@ export default async function SurfPanel({ lang, t }: { lang: Locale; t: Dictiona
             </div>
           </div>
 
-          {/* Hour by hour until sunset; recommended hours highlighted */}
+          {/* Timeline until sunset: wave size as one line, best window shaded, wind as a color strip */}
           <div className="mt-8 md:mt-12">
-            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-              <h4 className="text-lg font-bold md:text-xl">{u.hourlyTitle(dayLabel(focus))}</h4>
-              <p className="text-xs text-white/60 md:text-sm">{u.hourlyHint}</p>
-            </div>
-            <ol className="mt-4 grid grid-cols-6 gap-1 sm:grid-cols-12 sm:gap-2">
-              {focus.hours.map((h) => (
-                <li
-                  key={h.hour}
-                  className={`flex flex-col items-center gap-1 rounded-xl px-0.5 py-2.5 text-center ${
-                    h.recommended ? "bg-moon/15 ring-1 ring-moon" : "bg-white/5"
-                  }`}
-                >
-                  <span className="text-[11px] font-semibold text-white/80 sm:text-xs">{hourLabel(h.hour)}</span>
-                  <span className="font-display text-base font-bold">{fmt((h.faceM[0] + h.faceM[1]) / 2)}</span>
-                  <span className="-mt-1 text-[10px] text-white/60">m</span>
-                  <span className="text-[10px] text-white/60 sm:text-[11px]">{h.windKmh ?? "—"} km/h</span>
-                  {h.recommended && <span className="sr-only">{u.recommended}</span>}
-                </li>
-              ))}
-            </ol>
+            <h4 className="text-lg font-bold md:text-xl">{u.hourlyTitle(dayLabel(focus))}</h4>
+            <SurfTimeline
+              day={focus}
+              hourLabel={hourLabel}
+              fmt={fmt}
+              labels={{ best: u.bestShort, wind: u.wind, windQuality: u.windQuality, size: u.sizeAxis }}
+            />
           </div>
 
           <div className="mt-6 flex flex-wrap gap-3">
@@ -214,6 +201,120 @@ export default async function SurfPanel({ lang, t }: { lang: Locale; t: Dictiona
         </ul>
         <p className="mt-8 text-xs text-white/45 md:mt-10">{u.source}</p>
       </MobileMore>
+    </div>
+  );
+}
+
+type TimelineLabels = {
+  best: string;
+  wind: string;
+  size: string;
+  windQuality: Record<"clean" | "fair" | "choppy", string>;
+};
+
+const WIND_COLOR = { clean: "bg-moon", fair: "bg-white/35", choppy: "bg-adobe" } as const;
+
+/** One line from now until sunset: estimated wave size, best window shaded, wind underneath. */
+function SurfTimeline({
+  day,
+  hourLabel,
+  fmt,
+  labels,
+}: {
+  day: SurfDay;
+  hourLabel: (h: number, short?: boolean) => string;
+  fmt: (n: number) => string;
+  labels: TimelineLabels;
+}) {
+  const hours = day.hours;
+  const n = hours.length;
+  const mids = hours.map((h) => (h.faceM[0] + h.faceM[1]) / 2);
+  const top = Math.max(...mids) * 1.25 || 1;
+  const x = (i: number) => ((i + 0.5) / n) * 100; // % across, centered on each hour
+  const y = (v: number) => 100 - (v / top) * 78; // % down, leaving room for labels on top
+  const line = mids.map((v, i) => `${i ? "L" : "M"}${x(i)},${y(v)}`).join(" ");
+  const area = `${line} L${x(n - 1)},100 L${x(0)},100 Z`;
+  const firstBest = day.best ? hours.findIndex((h) => h.hour === day.best!.from) : -1;
+  const bestLen = day.best ? day.best.to - day.best.from : 0;
+  // On phones, label every other hour so the text doesn't collide
+  const labelEvery = n > 7 ? 2 : 1;
+
+  return (
+    <div className="mt-10">
+      <div className="relative h-36 md:h-44">
+        {firstBest >= 0 && (
+          <div
+            className="absolute inset-y-0 rounded-xl bg-moon/15 ring-1 ring-moon/50"
+            style={{ left: `${(firstBest / n) * 100}%`, width: `${(bestLen / n) * 100}%` }}
+          >
+            <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-full bg-moon px-2 py-0.5 text-[11px] font-bold text-night">
+              {labels.best} {hourLabel(day.best!.from, true)}–{hourLabel(day.best!.to)}
+            </span>
+          </div>
+        )}
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
+          <path d={area} className="fill-moon/10" />
+          <path d={line} fill="none" stroke="currentColor" strokeWidth={2.5} vectorEffect="non-scaling-stroke" className="text-moon" />
+        </svg>
+        {mids.map((v, i) => (
+          <div
+            key={hours[i].hour}
+            className={`absolute -translate-x-1/2 -translate-y-1/2 ${i % labelEvery ? "hidden sm:block" : ""}`}
+            style={{ left: `${x(i)}%`, top: `${y(v)}%` }}
+          >
+            <span className="block h-2 w-2 rounded-full bg-moon ring-2 ring-night" />
+            <span className="absolute bottom-full left-1/2 mb-1 -translate-x-1/2 whitespace-nowrap text-[11px] font-semibold text-white sm:text-xs">
+              {fmt(v)}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Hours */}
+      <div className="relative mt-2 h-4 text-[10px] text-white/60 sm:text-xs">
+        {hours.map((h, i) => (
+          <span
+            key={h.hour}
+            className={`absolute -translate-x-1/2 whitespace-nowrap ${i % labelEvery ? "hidden sm:inline" : ""}`}
+            style={{ left: `${x(i)}%` }}
+          >
+            {hourLabel(h.hour, true)}
+          </span>
+        ))}
+      </div>
+
+      {/* Wind strip */}
+      <div className="mt-3 flex items-center gap-2">
+        <span className="w-12 shrink-0 text-[11px] text-white/60 sm:w-14 sm:text-xs">{labels.wind}</span>
+        <div className="flex h-2 flex-1 overflow-hidden rounded-full">
+          {hours.map((h) => (
+            <span
+              key={h.hour}
+              className={`h-full flex-1 ${h.wind ? WIND_COLOR[h.wind] : "bg-white/10"}`}
+              title={h.windKmh !== undefined ? `${hourLabel(h.hour)} · ${h.windKmh} km/h` : undefined}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 pl-14 text-[11px] text-white/60 sm:pl-16 sm:text-xs">
+        {(["clean", "fair", "choppy"] as const).map((k) => (
+          <span key={k} className="flex items-center gap-1.5">
+            <span className={`h-2 w-2 rounded-full ${WIND_COLOR[k]}`} aria-hidden="true" />
+            {labels.windQuality[k]}
+          </span>
+        ))}
+        <span className="ml-auto">{labels.size}</span>
+      </div>
+
+      {/* Same data as a list, for screen readers */}
+      <ul className="sr-only">
+        {hours.map((h) => (
+          <li key={h.hour}>
+            {hourLabel(h.hour)}: {fmt((h.faceM[0] + h.faceM[1]) / 2)} m, {labels.wind} {h.windKmh ?? "—"} km/h
+            {h.recommended ? ` (${labels.best})` : ""}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

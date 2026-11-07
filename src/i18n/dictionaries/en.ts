@@ -337,7 +337,7 @@ const en = {
     bestShort: "Best",
     noGoodWindow: "No hour stands out today.",
     hourlyTitle: (day: string) => `${day}, hour by hour`,
-    hourlyHint: "Recommended hours are highlighted.",
+    sizeAxis: "Wave size in meters",
     recommended: "Recommended",
     sizes: { flat: "Almost flat", small: "Small", medium: "Medium", big: "Big", huge: "Very big" },
     levels: {
