@@ -49,21 +49,6 @@ const en = {
     barBody:
       "Sea-to-table food, the perfect margarita and a wall of more than 2,000 rocks painted by our guests. Paint yours and leave your story.",
     barCta: "See the bar",
-    reviewsTitle: "What guests say",
-    reviews: [
-      {
-        name: "Angela Sosna",
-        text: "Great location. Wonderful staff. Awesome margaritas.",
-      },
-      {
-        name: "Tracey Anne Mcewing",
-        text: "Got a last minute booking for New Year's. The staff were very accommodating and helpful. The rooms were spacious and very clean and we had a nice view of the ocean. Will definitely stay here again.",
-      },
-      {
-        name: "Stephanie Kunz",
-        text: "A big thank you to Bobby and his team. You made our stay unforgettable. Great service and best margaritas ever!",
-      },
-    ],
     findUsTitle: "Find us",
     findUsBody: "Parcela 2740, El Pescadero, Baja California Sur. About an hour and a half from Los Cabos airport.",
   },
@@ -291,6 +276,18 @@ const en = {
     weekTitle: "Best nights this week",
     tonight: "Tonight",
     source: "Cloud forecast: MET Norway. Times for Cerritos Beach.",
+  },
+  reviews: {
+    title: "What guests say",
+    intro: "Real reviews from guests on Google and Tripadvisor.",
+    starsLabel: (n: number) => `${n} out of 5 stars`,
+    basedOn: (n: number) => `${n} Google reviews`,
+    breakdown: "Reviews by number of stars",
+    share: (n: number) => `${n} out of 10 guests give us 4 or 5 stars.`,
+    readAll: "Read all reviews on Google",
+    onSource: (source: string, year: number) => `on ${source} · ${year}`,
+    note: "Short excerpts in the guests' own words. Full reviews on Google.",
+    topics: { staff: "The team", food: "Wood-fired pizza", views: "Ocean view", beach: "The beach", vibe: "The vibe", again: "Coming back" },
   },
   rooftop: {
     title: "From the rooftop",

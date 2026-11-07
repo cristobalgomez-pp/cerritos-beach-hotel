@@ -10,6 +10,7 @@ import HeroSlideshow from "@/components/home/HeroSlideshow";
 import RoomTile from "@/components/rooms/RoomTile";
 import BookButton from "@/components/BookButton";
 import FeatureList from "@/components/FeatureList";
+import GuestReviews from "@/components/GuestReviews";
 import FromTheRooftop from "@/components/outlook/FromTheRooftop";
 
 // The sky section uses live data (moon, clouds): rebuild this page at most once an hour
@@ -170,18 +171,7 @@ export default async function Home({ params }: Props) {
 
       <FeatureList title={t.features.title} items={t.features.items} />
 
-      {/* Reviews */}
-      <section className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
-        <h2 className="text-4xl font-bold md:text-5xl">{t.home.reviewsTitle}</h2>
-        <div className="mt-12 grid gap-10 md:grid-cols-3">
-          {t.home.reviews.map((r) => (
-            <figure key={r.name} className="border-l-2 border-adobe pl-6">
-              <blockquote className="text-lg leading-relaxed">“{r.text}”</blockquote>
-              <figcaption className="mt-4 font-semibold text-ink/70">{r.name}</figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
+      <GuestReviews lang={lang} t={t} />
 
       {/* Find us */}
       <section className="bg-sand">

@@ -52,21 +52,6 @@ const es: Dictionary = {
     barBody:
       "Comida del mar a la mesa, la margarita perfecta y un muro con más de 2,000 piedras pintadas por nuestros huéspedes. Pinta la tuya y deja tu historia.",
     barCta: "Ver el bar",
-    reviewsTitle: "Lo que dicen los huéspedes",
-    reviews: [
-      {
-        name: "Angela Sosna",
-        text: "Gran ubicación. Personal maravilloso. Margaritas increíbles.",
-      },
-      {
-        name: "Tracey Anne Mcewing",
-        text: "Reservamos de último minuto para Año Nuevo. El personal fue muy atento y servicial. Los cuartos eran amplios y muy limpios, y teníamos una linda vista al mar. Sin duda volveremos.",
-      },
-      {
-        name: "Stephanie Kunz",
-        text: "Muchas gracias a Bobby y su equipo. Hicieron nuestra estancia inolvidable. ¡Gran servicio y las mejores margaritas!",
-      },
-    ],
     findUsTitle: "Dónde estamos",
     findUsBody:
       "Parcela 2740, El Pescadero, Baja California Sur. A una hora y media del aeropuerto de Los Cabos.",
@@ -295,6 +280,18 @@ const es: Dictionary = {
     weekTitle: "Las mejores noches de la semana",
     tonight: "Hoy",
     source: "Pronóstico de nubes: MET Norway. Horarios de Playa Cerritos.",
+  },
+  reviews: {
+    title: "Lo que dicen los huéspedes",
+    intro: "Reseñas reales de huéspedes en Google y Tripadvisor.",
+    starsLabel: (n: number) => `${n} de 5 estrellas`,
+    basedOn: (n: number) => `${n} reseñas en Google`,
+    breakdown: "Reseñas por número de estrellas",
+    share: (n: number) => `${n} de cada 10 huéspedes nos dan 4 o 5 estrellas.`,
+    readAll: "Leer todas las reseñas en Google",
+    onSource: (source: string, year: number) => `en ${source} · ${year}`,
+    note: "Fragmentos cortos en el idioma original de cada huésped. Las reseñas completas están en Google.",
+    topics: { staff: "El equipo", food: "Pizza a la leña", views: "Vista al mar", beach: "La playa", vibe: "El ambiente", again: "Volverían" },
   },
   rooftop: {
     title: "Desde la azotea",
