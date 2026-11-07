@@ -293,6 +293,100 @@ const es: Dictionary = {
     note: "Fragmentos cortos en el idioma original de cada huésped. Las reseñas completas están en Google.",
     topics: { staff: "El equipo", food: "Pizza a la leña", views: "Vista al mar", beach: "La playa", vibe: "El ambiente", again: "Volverían" },
   },
+  constellations: {
+    title: "Constelaciones de esta noche",
+    intro: "Las que mejor se ven hoy desde la azotea, cómo encontrarlas y su historia.",
+    where: (dir: string, height: string) => `Hacia ${dir}, ${height}`,
+    heights: { low: "bajita", mid: "a media altura", high: "alta", overhead: "casi arriba de tu cabeza" },
+    fromDusk: "desde que oscurece",
+    from: (time: string) => `desde las ${time}`,
+    howTo: "Cómo encontrarla",
+    story: "La historia",
+    more: "Más constelaciones esta noche",
+    rare: "Rareza del sur",
+    drawing: (name: string) => `Dibujo de la constelación ${name}`,
+    galaxy: "Galaxia de Andrómeda",
+    items: {
+      orion: {
+        name: "Orión",
+        tip: "Busca tres estrellas brillantes en línea recta: es su cinturón. A un lado brilla Betelgeuse, rojiza; al otro, Rigel, azulada.",
+        story:
+          "En México a esas tres estrellas les decimos los Tres Reyes Magos. Para los mexicas eran el Mamalhuaztli, los palos con los que se encendía el Fuego Nuevo. Para los griegos, Orión era un cazador al que mató un escorpión: por eso, cuando Escorpión sale, Orión se esconde.",
+      },
+      taurus: {
+        name: "Tauro y las Pléyades",
+        tip: "Sigue la línea del cinturón de Orión, alejándote de Sirio: llegas a Aldebarán, anaranjada, y un poco más allá a un racimo de estrellitas: las Pléyades.",
+        story:
+          "Los mexicas llamaban a las Pléyades Tianquiztli, «el mercado». Según los cronistas, cada 52 años esperaban verlas en lo más alto del cielo a medianoche para encender el Fuego Nuevo y saber que el mundo seguiría. Para los griegos eran las hijas de Atlas.",
+      },
+      canisMajor: {
+        name: "Can Mayor",
+        tip: "Sigue el cinturón de Orión hacia el otro lado: llegas a Sirio, la estrella más brillante de la noche. Cuando está bajita, titila de colores.",
+        story:
+          "Es el perro de Orión, que lo acompaña en su cacería. En el antiguo Egipto, cuando Sirio volvía a verse antes del amanecer anunciaba la crecida del Nilo y el inicio del año.",
+      },
+      gemini: {
+        name: "Géminis",
+        tip: "Dos estrellas brillantes, juntas y casi iguales: Cástor y Pólux, las cabezas de los gemelos.",
+        story:
+          "Cástor y Pólux eran gemelos, protectores de los marineros. Algunos estudiosos creen que los mexicas veían por aquí el Citlaltlachtli, el «juego de pelota de las estrellas».",
+      },
+      leo: {
+        name: "Leo",
+        tip: "Busca un signo de interrogación al revés: es la melena del león. La estrella del punto es Régulo, «el pequeño rey».",
+        story:
+          "Es el león de Nemea, de piel tan dura que ninguna arma la atravesaba. Hércules lo venció con las manos: fue el primero de sus doce trabajos.",
+      },
+      bigDipper: {
+        name: "Osa Mayor",
+        tip: "Siete estrellas en forma de cazo. Las dos del borde apuntan a la Estrella Polar, que siempre marca el norte.",
+        story:
+          "Para los griegos era Calisto, convertida en osa y subida al cielo por Zeus. En algunas lecturas del Popol Vuh maya es Vucub Caquix, el ave que se creía el sol. Los navegantes la usaban para encontrar el norte.",
+      },
+      bootes: {
+        name: "Boyero y Arturo",
+        tip: "Sigue la curva del mango de la Osa Mayor y «haz un arco hasta Arturo»: una estrella anaranjada muy brillante.",
+        story:
+          "Arturo significa «el guardián de la osa», porque parece perseguir a la Osa Mayor alrededor del polo. Es una estrella gigante, unas 25 veces más ancha que el Sol.",
+      },
+      crux: {
+        name: "Cruz del Sur",
+        tip: "Mira bajito, justo sobre el horizonte al sur, con el mar despejado: cuatro estrellas en cruz.",
+        story:
+          "Guiaba a los navegantes hacia el sur y está en las banderas de Australia, Nueva Zelanda y Brasil. Desde casi todo Estados Unidos no se ve; desde Cerritos sí, en primavera, por estar tan al sur.",
+      },
+      scorpius: {
+        name: "Escorpión",
+        tip: "Busca una estrella rojiza muy brillante, Antares, y una cola larga que se curva hacia abajo como un gancho.",
+        story:
+          "Es el escorpión que mató a Orión, y por eso nunca están juntos en el cielo. En Mesoamérica también veían un escorpión: Sahagún registró la «estrella escorpión», Citlalcolotl. Antares significa «rival de Marte», por su color.",
+      },
+      sagittarius: {
+        name: "Sagitario",
+        tip: "Busca una tetera: ocho estrellas forman el cuerpo, el asa y el pico. El «vapor» que sale del pico es la Vía Láctea.",
+        story:
+          "Hacia ahí está el centro de nuestra galaxia, a unos 26,000 años luz. Para los mayas la Vía Láctea era un gran árbol o camino; la franja oscura que la parte, cerca de aquí, se ha interpretado como el camino a Xibalbá, el inframundo.",
+      },
+      summerTriangle: {
+        name: "Triángulo de Verano",
+        tip: "Tres estrellas muy brillantes forman un triángulo grande: Vega, Deneb y Altair.",
+        story:
+          "En Japón y China, Vega es una tejedora y Altair un pastor, enamorados separados por el río del cielo, la Vía Láctea. Solo se encuentran una vez al año, en la fiesta de Tanabata, el séptimo día del séptimo mes.",
+      },
+      pegasus: {
+        name: "Pegaso y Andrómeda",
+        tip: "Cuatro estrellas forman un gran cuadrado. De una esquina sale una fila de estrellas: Andrómeda. Junto a ella, una manchita borrosa: la galaxia de Andrómeda.",
+        story:
+          "Pegaso es el caballo alado; Andrómeda, la princesa que rescató Perseo. La manchita es otra galaxia, a 2.5 millones de años luz: lo más lejano que se ve a simple vista. Desde la azotea, en noche sin luna, se alcanza a ver.",
+      },
+      cassiopeia: {
+        name: "Casiopea",
+        tip: "Cinco estrellas en forma de W (o de M), sobre el norte.",
+        story:
+          "Era una reina tan vanidosa que presumía ser más bella que las ninfas del mar. Como castigo da vueltas alrededor del polo, y a veces queda de cabeza.",
+      },
+    },
+  },
   rooftop: {
     title: "Desde la azotea",
     intro: "El cielo de esta noche, las ballenas y las olas de Cerritos, al día. Desliza o toca para cambiar.",

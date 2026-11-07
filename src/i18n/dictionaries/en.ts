@@ -289,6 +289,98 @@ const en = {
     note: "Short excerpts in the guests' own words. Full reviews on Google.",
     topics: { staff: "The team", food: "Wood-fired pizza", views: "Ocean view", beach: "The beach", vibe: "The vibe", again: "Coming back" },
   },
+  constellations: {
+    title: "Tonight's constellations",
+    intro: "The ones best placed tonight from the rooftop, how to find them and their stories.",
+    where: (dir: string, height: string) => `Toward the ${dir}, ${height}`,
+    heights: { low: "low in the sky", mid: "halfway up", high: "high up", overhead: "almost overhead" },
+    fromDusk: "from dusk",
+    from: (time: string) => `from ${time}`,
+    howTo: "How to find it",
+    story: "The story",
+    more: "More constellations tonight",
+    rare: "Southern rarity",
+    drawing: (name: string) => `Drawing of the constellation ${name}`,
+    galaxy: "Andromeda galaxy",
+    items: {
+      orion: {
+        name: "Orion",
+        tip: "Look for three bright stars in a straight line: his belt. On one side shines reddish Betelgeuse; on the other, bluish Rigel.",
+        story:
+          "In Mexico those three stars are called the Three Wise Men. For the Mexica (Aztecs) they were the Mamalhuaztli, the fire drill used to light the New Fire. For the Greeks, Orion was a hunter killed by a scorpion: that's why, when Scorpius rises, Orion sets.",
+      },
+      taurus: {
+        name: "Taurus and the Pleiades",
+        tip: "Follow Orion's belt away from Sirius: you reach orange Aldebaran, and a bit further a little cluster of stars: the Pleiades.",
+        story:
+          "The Mexica called the Pleiades Tianquiztli, \"the marketplace\". According to the chroniclers, every 52 years they waited to see them at the top of the sky at midnight to light the New Fire and know the world would go on. For the Greeks they were the daughters of Atlas.",
+      },
+      canisMajor: {
+        name: "Canis Major",
+        tip: "Follow Orion's belt the other way: you reach Sirius, the brightest star of the night. When it's low, it twinkles in colors.",
+        story:
+          "It's Orion's hunting dog. In ancient Egypt, Sirius reappearing before dawn announced the flooding of the Nile and the start of the year.",
+      },
+      gemini: {
+        name: "Gemini",
+        tip: "Two bright stars close together and almost equal: Castor and Pollux, the twins' heads.",
+        story:
+          "Castor and Pollux were twin brothers, protectors of sailors. Some scholars believe the Mexica saw the Citlaltlachtli here, \"the ball game of the stars\".",
+      },
+      leo: {
+        name: "Leo",
+        tip: "Look for a backwards question mark: the lion's mane. The star at the dot is Regulus, \"the little king\".",
+        story: "It's the Nemean lion, whose hide no weapon could pierce. Hercules beat it with his bare hands: the first of his twelve labors.",
+      },
+      bigDipper: {
+        name: "Big Dipper",
+        tip: "Seven stars shaped like a ladle. The two at the edge point to Polaris, which always marks north.",
+        story:
+          "For the Greeks it was Callisto, turned into a bear and lifted to the sky by Zeus. In some readings of the Maya Popol Vuh it's Vucub Caquix, the bird who thought he was the sun. Sailors used it to find north.",
+      },
+      bootes: {
+        name: "Boötes and Arcturus",
+        tip: "Follow the curve of the Big Dipper's handle and \"arc to Arcturus\": a very bright orange star.",
+        story:
+          "Arcturus means \"guardian of the bear\", since it seems to chase the Big Dipper around the pole. It's a giant star, about 25 times wider than the Sun.",
+      },
+      crux: {
+        name: "Southern Cross",
+        tip: "Look low, just above the southern horizon over the sea: four stars in a cross.",
+        story:
+          "It guided sailors south and appears on the flags of Australia, New Zealand and Brazil. It can't be seen from most of the United States; from Cerritos it can, in spring, because we're so far south.",
+      },
+      scorpius: {
+        name: "Scorpius",
+        tip: "Look for a very bright reddish star, Antares, and a long tail that curls down like a hook.",
+        story:
+          "It's the scorpion that killed Orion, so they're never in the sky together. Mesoamericans saw a scorpion too: Sahagún recorded the \"scorpion star\", Citlalcolotl. Antares means \"rival of Mars\", for its color.",
+      },
+      sagittarius: {
+        name: "Sagittarius",
+        tip: "Look for a teapot: eight stars make the body, handle and spout. The \"steam\" rising from the spout is the Milky Way.",
+        story:
+          "That's where the center of our galaxy lies, about 26,000 light-years away. For the Maya the Milky Way was a great tree or road; the dark rift splitting it, near here, has been read as the road to Xibalba, the underworld.",
+      },
+      summerTriangle: {
+        name: "Summer Triangle",
+        tip: "Three very bright stars make a big triangle: Vega, Deneb and Altair.",
+        story:
+          "In Japan and China, Vega is a weaver and Altair a cowherd, lovers separated by the river of the sky, the Milky Way. They meet only once a year, at the Tanabata festival, on the seventh day of the seventh month.",
+      },
+      pegasus: {
+        name: "Pegasus and Andromeda",
+        tip: "Four stars make a great square. A line of stars runs from one corner: Andromeda. Next to it, a faint smudge: the Andromeda galaxy.",
+        story:
+          "Pegasus is the winged horse; Andromeda, the princess rescued by Perseus. The smudge is another galaxy, 2.5 million light-years away: the farthest thing you can see with the naked eye. From the rooftop, on a moonless night, you can spot it.",
+      },
+      cassiopeia: {
+        name: "Cassiopeia",
+        tip: "Five stars shaped like a W (or an M), over the north.",
+        story: "She was a queen so vain she boasted of being lovelier than the sea nymphs. As punishment she circles the pole, sometimes upside down.",
+      },
+    },
+  },
   rooftop: {
     title: "From the rooftop",
     intro: "Tonight's sky, the whales and the waves off Cerritos, updated every day. Swipe or tap to switch.",

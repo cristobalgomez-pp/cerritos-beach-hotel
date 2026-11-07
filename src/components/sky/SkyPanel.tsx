@@ -3,6 +3,7 @@ import type { Dictionary } from "@/i18n/dictionaries/en";
 import { formatTime, formatWeekday, getSkyOutlook, type Rating } from "@/lib/sky";
 import { nextMeteorShower, seasonalHighlights, visiblePlanets } from "@/lib/sky-sights";
 import MobileMore from "@/components/outlook/MobileMore";
+import Constellations from "./Constellations";
 import MoonPhase from "./MoonPhase";
 
 const RATING_DOTS: Record<Rating, number> = { excellent: 4, good: 3, fair: 2, poor: 1 };
@@ -78,6 +79,8 @@ export default async function SkyPanel({ lang, t }: { lang: Locale; t: Dictionar
           </dl>
         </div>
       </div>
+
+      <Constellations night={tonight} lang={lang} t={t} />
 
       <MobileMore title={s.seeTitle} className="mt-8 border-t border-white/15 pt-4 md:mt-20 md:pt-14">
         <div className="mt-4 grid gap-8 md:mt-10 md:grid-cols-3 md:gap-12">
