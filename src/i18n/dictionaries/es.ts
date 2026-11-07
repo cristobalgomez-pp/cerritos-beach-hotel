@@ -317,8 +317,7 @@ const es: Dictionary = {
     today: "Hoy",
     levels: { high: "Muy probable", some: "Algunos días", none: "Rara vez" },
     morningsTitle: "Las próximas mañanas",
-    morningsIntro:
-      "Con el mar en calma es mucho más fácil ver los soplidos y los saltos. Aquí está el viento entre 7 y 11 de la mañana, que suele ser lo más tranquilo del día.",
+    morningsIntroShort: "Viento entre 7 y 11 de la mañana. Entre más calmado el mar, más fácil se ven.",
     thisMorning: "Hoy",
     rain: "lluvia",
     ratings: { excellent: "Mar liso: ideal", good: "Buena", fair: "Algo de viento", poor: "Mucho viento: difícil" },

@@ -1,5 +1,6 @@
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/en";
+import MobileMore from "@/components/outlook/MobileMore";
 import { formatWeekday } from "@/lib/sky";
 import { getWhaleMornings, MONTH_ACTIVITY, seasonStatus, type WhaleRating } from "@/lib/whales";
 
@@ -56,16 +57,16 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
   return (
     <div>
       <div className="max-w-2xl">
-        <h3 className="text-3xl font-bold md:text-4xl">{w.title}</h3>
-        <p className="mt-3 text-lg text-white/75">{w.intro}</p>
+        <h3 className="text-2xl font-bold md:text-4xl">{w.title}</h3>
+        <p className="mt-3 hidden text-lg text-white/75 md:block">{w.intro}</p>
       </div>
 
-      <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:items-center">
-        <div className="flex items-center gap-6 lg:col-span-5">
-          <Fluke label={w.illustration} className="w-36 shrink-0 text-moon md:w-44" />
+      <div className="mt-6 grid gap-8 md:mt-14 md:gap-12 lg:grid-cols-12 lg:items-center">
+        <div className="flex items-center gap-5 md:gap-6 lg:col-span-5">
+          <Fluke label={w.illustration} className="w-24 shrink-0 text-moon md:w-44" />
           <div>
-            <p className="font-display text-3xl font-bold text-moon">{headline}</p>
-            <p className="mt-1 text-white/75">{subline}</p>
+            <p className="font-display text-2xl font-bold text-moon md:text-3xl">{headline}</p>
+            <p className="mt-1 text-sm text-white/75 md:text-base">{subline}</p>
           </div>
         </div>
 
@@ -80,7 +81,7 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
                   <span className={`text-[10px] font-semibold uppercase tracking-wide ${current ? "text-moon" : "text-transparent"}`}>
                     {w.today}
                   </span>
-                  <div className="flex h-24 w-full items-end">
+                  <div className="flex h-16 w-full items-end md:h-24">
                     <div
                       className={`w-full rounded-t-md ${a >= 0.8 ? "bg-moon" : a >= 0.3 ? "bg-moon/50" : "bg-white/15"} ${
                         current ? "ring-2 ring-white ring-offset-2 ring-offset-night" : ""
@@ -111,26 +112,26 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
       </div>
 
       {season.inSeason && (
-        <div className="mt-16 border-t border-white/15 pt-12">
-          <h4 className="text-2xl font-bold">{w.morningsTitle}</h4>
-          <p className="mt-2 max-w-2xl text-white/75">{w.morningsIntro}</p>
+        <div className="mt-8 border-t border-white/15 pt-6 md:mt-16 md:pt-12">
+          <h4 className="text-lg font-bold md:text-2xl">{w.morningsTitle}</h4>
+          <p className="mt-2 max-w-2xl text-sm text-white/75 md:text-base">{w.morningsIntroShort}</p>
           {mornings.length ? (
-            <ol className="mt-6 grid grid-cols-4 gap-3 sm:grid-cols-7">
+            <ol className="mt-4 grid grid-cols-7 gap-1 sm:gap-3 md:mt-6">
               {mornings.map((m, i) => {
                 const isBest = m.date === best?.date;
                 return (
                   <li
                     key={m.date}
-                    className={`flex flex-col items-center gap-1.5 rounded-2xl px-2 py-4 text-center ${
+                    className={`flex flex-col items-center gap-1 rounded-xl px-0.5 py-3 text-center sm:gap-1.5 sm:rounded-2xl sm:px-2 sm:py-4 ${
                       isBest ? "bg-white/10 ring-1 ring-moon/60" : ""
                     }`}
                   >
-                    <span className="text-sm font-semibold text-white/80">
+                    <span className="text-[11px] font-semibold leading-tight text-white/80 sm:text-sm">
                       {i === 0 && m.date === new Date(now.getTime() - 7 * 3600_000).toISOString().slice(0, 10)
                         ? w.thisMorning
                         : formatWeekday(m.date, lang)}
                     </span>
-                    <span className="font-display text-lg font-bold">{m.windKmh}</span>
+                    <span className="font-display text-base font-bold sm:text-lg">{m.windKmh}</span>
                     <span className="-mt-1 text-[11px] text-white/60">km/h{m.rain ? ` · ${w.rain}` : ""}</span>
                     <span className="flex gap-1" role="img" aria-label={w.ratings[m.rating]} title={w.ratings[m.rating]}>
                       {[1, 2, 3, 4].map((d) => (
@@ -145,7 +146,7 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
             <p className="mt-6 text-white/70">{w.noForecast}</p>
           )}
           {best && (
-            <p className="mt-5 font-semibold">
+            <p className="mt-4 text-sm font-semibold md:mt-5 md:text-base">
               {w.bestMorning(formatWeekday(best.date, lang))}{" "}
               <span className="font-normal text-white/70">· {w.ratings[best.rating]}</span>
             </p>
@@ -153,9 +154,8 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
         </div>
       )}
 
-      <div className="mt-16 border-t border-white/15 pt-12">
-        <h4 className="text-2xl font-bold">{w.tipsTitle}</h4>
-        <ul className="mt-6 grid gap-8 md:grid-cols-3">
+      <MobileMore title={w.tipsTitle} className="mt-8 border-t border-white/15 pt-4 md:mt-16 md:pt-12">
+        <ul className="mt-4 grid gap-6 md:mt-6 md:grid-cols-3 md:gap-8">
           {w.tips.map((tip) => (
             <li key={tip.title}>
               <p className="font-display text-lg font-bold text-moon">{tip.title}</p>
@@ -163,8 +163,8 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
             </li>
           ))}
         </ul>
-        <p className="mt-10 text-xs text-white/45">{w.source}</p>
-      </div>
+        <p className="mt-8 text-xs text-white/45 md:mt-10">{w.source}</p>
+      </MobileMore>
     </div>
   );
 }

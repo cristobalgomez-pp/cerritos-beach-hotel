@@ -313,8 +313,7 @@ const en = {
     today: "Now",
     levels: { high: "Very likely", some: "Some days", none: "Rare" },
     morningsTitle: "The next mornings",
-    morningsIntro:
-      "A calm sea makes the blows and breaches easy to spot. Here is the wind between 7 and 11 am, when it's usually lightest.",
+    morningsIntroShort: "Wind between 7 and 11 am. The calmer the sea, the easier they are to spot.",
     thisMorning: "Today",
     rain: "rain",
     ratings: { excellent: "Glassy sea: ideal", good: "Good", fair: "Some wind", poor: "Windy: hard to spot" },

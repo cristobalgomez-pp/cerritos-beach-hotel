@@ -108,7 +108,7 @@ export default function OutlookTabs({ tabs, labels }: { tabs: OutlookTab[]; labe
             id={`panel-${t.id}`}
             aria-labelledby={`tab-${t.id}`}
             hidden={i !== active}
-            className="outlook-panel pt-12"
+            className="pt-8 md:pt-12"
           >
             {t.panel}
           </div>
@@ -116,7 +116,7 @@ export default function OutlookTabs({ tabs, labels }: { tabs: OutlookTab[]; labe
       </div>
 
       {/* Dots: where you are in the slider (mostly for phones) */}
-      <div className="mt-12 flex justify-center gap-2" aria-hidden="true">
+      <div className="mt-8 flex justify-center gap-2 md:mt-12" aria-hidden="true">
         {tabs.map((t, i) => (
           <span key={t.id} className={`h-1.5 rounded-full transition-all ${i === active ? "w-6 bg-moon" : "w-1.5 bg-white/30"}`} />
         ))}

@@ -40,12 +40,12 @@ export default async function FromTheRooftop({ lang, t }: { lang: Locale; t: Dic
         ))}
       </svg>
 
-      <div className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
-        <div className="mb-10 max-w-2xl">
-          <h2 id="rooftop-title" className="text-4xl font-bold md:text-5xl">
+      <div className="mx-auto max-w-7xl px-4 py-14 md:px-8 md:py-28">
+        <div className="mb-6 max-w-2xl md:mb-10">
+          <h2 id="rooftop-title" className="text-3xl font-bold md:text-5xl">
             {r.title}
           </h2>
-          <p className="mt-4 text-lg text-white/75">{r.intro}</p>
+          <p className="mt-3 text-white/75 md:mt-4 md:text-lg">{r.intro}</p>
         </div>
 
         <OutlookTabs
