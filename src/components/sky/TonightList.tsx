@@ -10,7 +10,13 @@ function ConstellationDrawing({ k, label, className = "" }: { k: ConstellationKe
   const def = CONSTELLATIONS.find((c) => c.key === k)!;
   const shape = shapeOf(def);
   return (
-    <svg viewBox="0 0 100 100" role={label ? "img" : undefined} aria-label={label} aria-hidden={label ? undefined : true} className={className}>
+    <svg
+      viewBox="0 0 100 100"
+      role={label ? "img" : undefined}
+      aria-label={label}
+      aria-hidden={label ? undefined : true}
+      className={className}
+    >
       {shape.lines.map(([a, b], i) => (
         <line
           key={i}
@@ -63,76 +69,85 @@ export default function TonightList({ night, lang, t }: { night: Night; lang: Lo
     <DetailList
       rows={[
         ...constellations.map((item) => {
-        const text = c.items[item.key];
-        const when = item.fromDusk ? c.fromDusk : c.from(formatTime(item.from, lang));
-        const where = item.height === "overhead" ? c.heights.overhead : dir(item.direction);
-        return (
-          <DetailRow
-            key={item.key}
-            icon={<ConstellationDrawing k={item.key} className="h-9 w-9" />}
-            title={text.name}
-            meta={`${where} · ${when}`}
-            badge={item.southern ? c.rare : undefined}
-          >
-            <div className="flex gap-4">
-              <ConstellationDrawing k={item.key} label={c.drawing(text.name)} className="hidden w-28 shrink-0 sm:block" />
-              <div>
-                <p>
-                  <span className="font-semibold text-white">{c.howTo}: </span>
-                  {text.tip}
-                </p>
-                <p className="mt-2 text-white/70">
-                  <span className="font-semibold text-moon/90">{c.story}: </span>
-                  {text.story}
-                </p>
+          const text = c.items[item.key];
+          const when = item.fromDusk ? c.fromDusk : c.from(formatTime(item.from, lang));
+          const where = item.height === "overhead" ? c.heights.overhead : dir(item.direction);
+          return (
+            <DetailRow
+              key={item.key}
+              icon={<ConstellationDrawing k={item.key} className="h-9 w-9" />}
+              title={text.name}
+              meta={`${where} · ${when}`}
+              badge={item.southern ? c.rare : undefined}
+            >
+              <div className="flex gap-4">
+                <ConstellationDrawing k={item.key} label={c.drawing(text.name)} className="hidden w-28 shrink-0 sm:block" />
+                <div>
+                  <p>
+                    <span className="font-semibold text-white">{c.howTo}: </span>
+                    {text.tip}
+                  </p>
+                  <p className="mt-2 text-white/70">
+                    <span className="font-semibold text-moon/90">{c.story}: </span>
+                    {text.story}
+                  </p>
+                </div>
               </div>
-            </div>
-          </DetailRow>
-        );
+            </DetailRow>
+          );
         }),
         ...planets.map((p) => (
-        <DetailRow
-          key={p.key}
-          icon={<span className="h-3.5 w-3.5 rounded-full bg-moon shadow-[0_0_12px_rgba(243,227,179,0.8)]" />}
-          title={s.planets[p.key]}
-          meta={`${dir(p.direction)} · ${formatTime(p.best, lang)}`}
-        >
-          <p>
-            <span className="font-semibold text-white">{brightness(p.magnitude)}. </span>
-            {s.planetWindow(formatTime(p.start, lang), formatTime(p.end, lang))} {s.planetLine(s.directions[p.direction], formatTime(p.best, lang))}.
-          </p>
-        </DetailRow>
+          <DetailRow
+            key={p.key}
+            icon={<span className="h-3.5 w-3.5 rounded-full bg-moon shadow-[0_0_12px_rgba(243,227,179,0.8)]" />}
+            title={s.planets[p.key]}
+            meta={`${dir(p.direction)} · ${formatTime(p.best, lang)}`}
+          >
+            <p>
+              <span className="font-semibold text-white">{brightness(p.magnitude)}. </span>
+              {s.planetWindow(formatTime(p.start, lang), formatTime(p.end, lang))}{" "}
+              {s.planetLine(s.directions[p.direction], formatTime(p.best, lang))}.
+            </p>
+          </DetailRow>
         )),
         night.milkyWay && (
-        <DetailRow
-          key="milkyWay"
-          icon={
-            <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
-              <path d="M3 18 C8 14 14 10 21 5" stroke="currentColor" strokeWidth="5" strokeLinecap="round" opacity="0.35" />
-              <path d="M3 18 C8 14 14 10 21 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          }
-          title={s.milkyWay}
-          meta={`${formatTime(night.milkyWay.start, lang)} – ${formatTime(night.milkyWay.end, lang)}`}
-        >
-          <p>{s.milkyWayTip}</p>
-        </DetailRow>
+          <DetailRow
+            key="milkyWay"
+            icon={
+              <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
+                <path d="M3 18 C8 14 14 10 21 5" stroke="currentColor" strokeWidth="5" strokeLinecap="round" opacity="0.35" />
+                <path d="M3 18 C8 14 14 10 21 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+            }
+            title={s.milkyWay}
+            meta={`${formatTime(night.milkyWay.start, lang)} – ${formatTime(night.milkyWay.end, lang)}`}
+          >
+            <p>{s.milkyWayTip}</p>
+          </DetailRow>
         ),
         <DetailRow
           key="shower"
-        icon={
-          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" aria-hidden="true">
-            <path d="M4 4l9 9M8 3l7 7M3 9l6 6" opacity="0.5" />
-            <circle cx="17" cy="17" r="2.5" fill="currentColor" />
-          </svg>
-        }
-        title={`${s.showers[shower.key]} · ${s.showerKind}`}
-        meta={`${showerDate} · ${s.showerWhen(shower.daysAway)}`}
-      >
-        <p>
-          {s.showerRate(shower.perHour)}. {showerMoon}.
-        </p>
-      </DetailRow>,
+          icon={
+            <svg
+              viewBox="0 0 24 24"
+              className="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.6}
+              strokeLinecap="round"
+              aria-hidden="true"
+            >
+              <path d="M4 4l9 9M8 3l7 7M3 9l6 6" opacity="0.5" />
+              <circle cx="17" cy="17" r="2.5" fill="currentColor" />
+            </svg>
+          }
+          title={`${s.showers[shower.key]} · ${s.showerKind}`}
+          meta={`${showerDate} · ${s.showerWhen(shower.daysAway)}`}
+        >
+          <p>
+            {s.showerRate(shower.perHour)}. {showerMoon}.
+          </p>
+        </DetailRow>,
       ].filter(Boolean)}
     />
   );
