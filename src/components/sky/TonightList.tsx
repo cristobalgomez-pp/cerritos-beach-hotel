@@ -60,7 +60,7 @@ export default function TonightList({ night, lang, t }: { night: Night; lang: Lo
   const brightness = (mag: number) => (mag < -1 ? s.brightness.veryBright : mag < 1 ? s.brightness.bright : s.brightness.visible);
 
   return (
-    <ul className="grid border-t border-white/10 lg:grid-cols-2 lg:items-start lg:gap-x-10 lg:border-t-0">
+    <ul className="border-t border-white/10 lg:columns-2 lg:gap-x-10 lg:border-t-0">
       {constellations.map((item) => {
         const text = c.items[item.key];
         const when = item.fromDusk ? c.fromDusk : c.from(formatTime(item.from, lang));

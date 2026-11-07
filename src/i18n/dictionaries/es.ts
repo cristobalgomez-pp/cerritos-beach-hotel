@@ -401,7 +401,7 @@ const es: Dictionary = {
     next: "Siguiente",
   },
   whales: {
-    title: "Ballenas jorobadas",
+    title: "Ballenas frente a Cerritos",
     intro:
       "Cada invierno las ballenas jorobadas bajan a Baja California Sur a tener a sus crías. Desde la azotea del hotel se ven soplar y saltar frente a Playa Cerritos.",
     illustration: "Cola de ballena jorobada saliendo del agua",

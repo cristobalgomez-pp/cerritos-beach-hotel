@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 /** A list row that opens on tap (native <details>, works without JavaScript) */
 export default function DetailRow({ icon, title, meta, badge, children }: { icon: ReactNode; title: string; meta: string; badge?: string; children: ReactNode }) {
   return (
-    <li>
+    <li className="break-inside-avoid">
       <details className="group border-b border-white/10 lg:border-t">
         <summary className="flex min-h-14 cursor-pointer list-none items-center gap-3 py-3 [&::-webkit-details-marker]:hidden">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center text-moon">{icon}</span>

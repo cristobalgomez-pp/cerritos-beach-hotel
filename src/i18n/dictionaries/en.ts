@@ -395,7 +395,7 @@ const en = {
     next: "Next",
   },
   whales: {
-    title: "Humpback whales",
+    title: "Whales off Cerritos",
     intro:
       "Every winter humpback whales come down to Baja California Sur to have their calves. From the hotel rooftop you can watch them blow and breach right off Cerritos Beach.",
     illustration: "Humpback whale tail rising out of the water",

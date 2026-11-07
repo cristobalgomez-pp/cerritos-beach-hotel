@@ -143,7 +143,7 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
           <h4 className="text-lg font-bold md:text-xl">{w.species.title}</h4>
           <p className="text-sm text-white/60">{w.species.hint}</p>
         </div>
-        <ul className="mt-3 grid border-t border-white/10 lg:grid-cols-2 lg:items-start lg:gap-x-10 lg:border-t-0">
+        <ul className="mt-3 border-t border-white/10 lg:columns-2 lg:gap-x-10 lg:border-t-0">
           {SPECIES.map((sp) => {
             const text = w.species.items[sp.key];
             const inSeasonNow = sp.months.includes(season.month) && sp.months.length < 12;
