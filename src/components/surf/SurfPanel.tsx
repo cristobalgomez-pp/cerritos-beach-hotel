@@ -278,15 +278,13 @@ function SurfTimeline({
             className={`absolute -translate-x-1/2 whitespace-nowrap ${i % labelEvery ? "hidden sm:inline" : ""}`}
             style={{ left: `${x(i)}%` }}
           >
-            {hourLabel(h.hour, true)}
+            {i === 0 || h.hour === 12 ? hourLabel(h.hour) : hourLabel(h.hour, true)}
           </span>
         ))}
       </div>
 
-      {/* Wind strip */}
-      <div className="mt-3 flex items-center gap-2">
-        <span className="w-12 shrink-0 text-[11px] text-white/60 sm:w-14 sm:text-xs">{labels.wind}</span>
-        <div className="flex h-2 flex-1 overflow-hidden rounded-full">
+      {/* Wind strip, aligned hour by hour with the chart */}
+      <div className="mt-3 flex h-2 overflow-hidden rounded-full">
           {hours.map((h) => (
             <span
               key={h.hour}
@@ -294,9 +292,9 @@ function SurfTimeline({
               title={h.windKmh !== undefined ? `${hourLabel(h.hour)} · ${h.windKmh} km/h` : undefined}
             />
           ))}
-        </div>
       </div>
-      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 pl-14 text-[11px] text-white/60 sm:pl-16 sm:text-xs">
+      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-white/60 sm:text-xs">
+        <span className="font-semibold text-white/75">{labels.wind}:</span>
         {(["clean", "fair", "choppy"] as const).map((k) => (
           <span key={k} className="flex items-center gap-1.5">
             <span className={`h-2 w-2 rounded-full ${WIND_COLOR[k]}`} aria-hidden="true" />
