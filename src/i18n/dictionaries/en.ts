@@ -403,7 +403,7 @@ const en = {
     inSeason: "Whale season is on",
     startsIn: (d: number) => (d === 1 ? "Whale season starts tomorrow" : `${d} days until whale season`),
     endsIn: (d: number) => (d <= 1 ? "Last days of the season" : `${d} days of season left`),
-    seasonRange: "Humpback season runs from mid-December to mid-April, best from January to March.",
+    seasonRange: "Humpback season runs from mid-November to mid-April, best from January to March.",
     calendarTitle: "How often they're seen, month by month",
     today: "Now",
     levels: { high: "Very likely", some: "Some days", none: "Rare" },
@@ -425,7 +425,7 @@ const en = {
       items: {
         humpback: {
           name: "Humpback whale",
-          when: "Dec – Apr",
+          when: "Mid-Nov – Apr",
           size: "14 to 16 m (46–52 ft)",
           spot: "A wide, bushy blow about 3 m high. It breaches and slaps the water with its very long pectoral fins. When it dives it shows its tail, black and white underneath.",
           fact: "They come from Alaska and Canada to have their calves. Males sing songs up to 20 minutes long, and every tail pattern is unique, like a fingerprint.",
@@ -465,7 +465,7 @@ const en = {
       now: {
         north: "Right now they're feeding in Alaska",
         south: "Right now they're on their way to Cerritos",
-        here: "Right now they're here, with their calves",
+        here: "Right now they're here, off Cerritos",
         back: "Right now they're heading back north",
       },
       alaska: "Alaska",
@@ -478,7 +478,7 @@ const en = {
       phases: {
         here: {
           label: "Here in Cerritos",
-          months: "Mid-Dec – Mar",
+          months: "Mid-Nov – Mar",
           body: "Calves are born with very little blubber and couldn't handle icy water, so mothers come to this warm, calm sea. They barely eat: they live off their fat and produce hundreds of liters of milk a day. Best viewing is January to March.",
         },
         back: {
@@ -488,12 +488,12 @@ const en = {
         },
         north: {
           label: "Feeding up north",
-          months: "May – Oct",
+          months: "May – Sep",
           body: "They spend these months in the cold waters of Alaska and Canada, full of krill and small fish, eating nonstop to build a thick layer of blubber for the rest of the year.",
         },
         south: {
           label: "Traveling down the coast",
-          months: "Nov – Dec",
+          months: "Oct – Nov",
           body: "When the north gets cold, they swim south for over a month along the Pacific coast. The California Current, a cold-water current, also flows down this coast and meets warm tropical waters in Baja California Sur.",
         },
       },

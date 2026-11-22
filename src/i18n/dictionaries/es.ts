@@ -409,7 +409,7 @@ const es: Dictionary = {
     inSeason: "Ya es temporada de ballenas",
     startsIn: (d: number) => (d === 1 ? "La temporada de ballenas empieza mañana" : `Faltan ${d} días para la temporada de ballenas`),
     endsIn: (d: number) => (d <= 1 ? "Últimos días de la temporada" : `Quedan ${d} días de temporada`),
-    seasonRange: "La temporada de ballena jorobada va de mediados de diciembre a mediados de abril; lo mejor es de enero a marzo.",
+    seasonRange: "La temporada de ballena jorobada va de mediados de noviembre a mediados de abril; lo mejor es de enero a marzo.",
     calendarTitle: "Qué tanto se ven, mes a mes",
     today: "Hoy",
     levels: { high: "Muy probable", some: "Algunos días", none: "Rara vez" },
@@ -431,7 +431,7 @@ const es: Dictionary = {
       items: {
         humpback: {
           name: "Ballena jorobada",
-          when: "Dic – abr",
+          when: "Mediados de nov – abr",
           size: "14 a 16 m",
           spot: "Soplido ancho, como arbusto, de unos 3 m. Salta fuera del agua y golpea con sus aletas pectorales, que son larguísimas. Al sumergirse enseña la cola, blanca y negra por abajo.",
           fact: "Llegan desde Alaska y Canadá a tener a sus crías. Los machos cantan canciones que duran hasta 20 minutos, y el dibujo de cada cola es único, como una huella digital.",
@@ -471,7 +471,7 @@ const es: Dictionary = {
       now: {
         north: "Ahora mismo están comiendo en Alaska",
         south: "Ahora mismo vienen en camino hacia Cerritos",
-        here: "Ahora mismo están aquí, con sus crías",
+        here: "Ahora mismo están aquí, frente a Cerritos",
         back: "Ahora mismo van de regreso al norte",
       },
       alaska: "Alaska",
@@ -484,7 +484,7 @@ const es: Dictionary = {
       phases: {
         here: {
           label: "Aquí, en Cerritos",
-          months: "Mediados de dic – mar",
+          months: "Mediados de nov – mar",
           body: "Las crías nacen con muy poca grasa y no aguantarían el agua helada, así que las mamás buscan este mar tibio y tranquilo. Casi no comen: viven de su reserva de grasa y producen cientos de litros de leche al día. Lo mejor para verlas es de enero a marzo.",
         },
         back: {
@@ -494,12 +494,12 @@ const es: Dictionary = {
         },
         north: {
           label: "Comiendo en el norte",
-          months: "May – oct",
+          months: "May – sep",
           body: "Pasan esos meses en las aguas frías de Alaska y Canadá, llenas de krill y peces chicos. Comen sin parar y juntan una capa gruesa de grasa para el resto del año.",
         },
         south: {
           label: "Bajando por la costa",
-          months: "Nov – dic",
+          months: "Oct – nov",
           body: "Cuando el norte se enfría, viajan hacia el sur más de un mes, siguiendo la costa del Pacífico. Por aquí también baja la corriente de California, de agua fría, que en Baja California Sur se encuentra con las aguas tibias del trópico.",
         },
       },

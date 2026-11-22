@@ -7,8 +7,9 @@ import { average, DAY_MS, fetchMetForecast, localDay, nextMornings } from "./met
  */
 
 // How often humpbacks are seen off this coast, by month (Jan … Dec), 0–1
-export const MONTH_ACTIVITY = [1, 1, 0.85, 0.45, 0.05, 0, 0, 0, 0, 0, 0.05, 0.5];
-const SEASON_START = { month: 12, day: 15 };
+export const MONTH_ACTIVITY = [1, 1, 0.85, 0.45, 0.05, 0, 0, 0, 0, 0, 0.35, 0.7];
+// The first humpbacks show up off Cerritos around mid-November (seen from the hotel in Nov 2026)
+const SEASON_START = { month: 11, day: 15 };
 const SEASON_END = { month: 4, day: 15 };
 
 export type WhaleRating = "excellent" | "good" | "fair" | "poor";
@@ -92,7 +93,7 @@ export interface Species {
 }
 
 export const SPECIES: Species[] = [
-  { key: "humpback", months: [12, 1, 2, 3, 4], level: "common" },
+  { key: "humpback", months: [11, 12, 1, 2, 3, 4], level: "common" },
   { key: "gray", months: [1, 2, 3], level: "sometimes" },
   { key: "dolphins", months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], level: "common" },
   { key: "blue", months: [1, 2, 3, 4], level: "rare" },
@@ -114,8 +115,8 @@ export const MIGRATION_BY_MONTH: Record<number, MigrationPhase> = {
   7: "north",
   8: "north",
   9: "north",
-  10: "north",
-  11: "south",
+  10: "south",
+  11: "here",
   12: "here",
 };
 
