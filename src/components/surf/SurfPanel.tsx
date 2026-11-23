@@ -31,7 +31,9 @@ function WaveArt({ className = "" }: { className?: string }) {
 export default async function SurfPanel({ lang, t }: { lang: Locale; t: Dictionary }) {
   const u = t.surf;
   const { focus, next } = await getSurfOutlook(7);
-  const bestDay = next.reduce<SurfDay | undefined>((a, d) => (!a || RATING_DOTS[d.rating] > RATING_DOTS[a.rating] ? d : a), undefined);
+  const topDay = next.reduce<SurfDay | undefined>((a, d) => (!a || RATING_DOTS[d.rating] > RATING_DOTS[a.rating] ? d : a), undefined);
+  // Only point out a "best day" when it's actually good (3–4 dots)
+  const bestDay = topDay && RATING_DOTS[topDay.rating] >= 3 ? topDay : undefined;
 
   const fmt = (n: number) => n.toLocaleString(lang === "es" ? "es-MX" : "en-US", { maximumFractionDigits: 1 });
   const feet = (m: number) => Math.round(m * 3.28);

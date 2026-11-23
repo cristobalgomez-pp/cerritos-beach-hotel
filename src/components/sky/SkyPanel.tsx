@@ -11,6 +11,8 @@ export default async function SkyPanel({ lang, t }: { lang: Locale; t: Dictionar
   const tonight = nights[0];
   const s = t.sky;
   const best = nights.reduce((a, n) => (n.score > a.score ? n : a), nights[0]);
+  // Only point out a "best night" when it's actually good (3–4 dots); in a full-moon week none stands out
+  const showBest = RATING_DOTS[best.rating] >= 3;
   const facts: [string, string][] = [
     [s.dark, formatTime(tonight.darkStart, lang)],
     [s.clouds, tonight.clouds === undefined ? s.cloudsUnknown : `${tonight.clouds}%`],
@@ -55,7 +57,7 @@ export default async function SkyPanel({ lang, t }: { lang: Locale; t: Dictionar
           <h4 className="text-sm font-semibold text-white/80">{s.weekTitle}</h4>
           <ol className="mt-3 grid grid-cols-7 gap-1">
             {nights.map((n, i) => {
-              const isBest = n.date === best.date;
+              const isBest = showBest && n.date === best.date;
               return (
                 <li
                   key={n.date}
@@ -72,10 +74,12 @@ export default async function SkyPanel({ lang, t }: { lang: Locale; t: Dictionar
                       <span key={d} className={`h-1 w-1 rounded-full ${d <= RATING_DOTS[n.rating] ? "bg-moon" : "bg-white/20"}`} />
                     ))}
                   </span>
+                  {isBest && <span className="text-[10px] font-bold uppercase tracking-wide text-moon">{s.bestNight}</span>}
                 </li>
               );
             })}
           </ol>
+          {!showBest && <p className="mt-2 text-xs text-white/60">{s.noGoodNight}</p>}
         </div>
       </div>
 
