@@ -87,10 +87,12 @@ export default async function WhalePanel({ lang, t }: { lang: Locale; t: Diction
   const now = previewNow();
   const season = seasonStatus(now);
   const mornings = season.inSeason ? await getWhaleMornings(7) : [];
-  const best = mornings.reduce<(typeof mornings)[number] | undefined>(
+  const topMorning = mornings.reduce<(typeof mornings)[number] | undefined>(
     (a, m) => (!a || RATING_DOTS[m.rating] > RATING_DOTS[a.rating] || (m.rating === a.rating && m.windKmh < a.windKmh) ? m : a),
     undefined,
   );
+  // Only point out a "best morning" when it's actually good (3–4 dots)
+  const best = topMorning && RATING_DOTS[topMorning.rating] >= 3 ? topMorning : undefined;
   const monthNames = Array.from({ length: 12 }, (_, i) =>
     new Intl.DateTimeFormat(lang === "es" ? "es-MX" : "en-US", { month: "short", timeZone: "UTC" }).format(
       new Date(Date.UTC(2026, i, 1)),
